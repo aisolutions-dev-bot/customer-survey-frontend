@@ -1,0 +1,161 @@
+<div class="evaluation-container">
+  <!-- Success Screen -->
+  <div *ngIf="submitted" class="success-screen">
+    <div class="success-card">
+      <div class="success-icon">🎉</div>
+      <h2 class="success-title">Evaluation Submitted!</h2>
+      <p class="success-message">
+        Staff evaluation for {{ roleType?.toUpperCase() }} has been successfully submitted.
+      </p>
+      <div class="success-score">
+        <strong>Weighted Score:</strong> {{ calculateWeightedScore().toFixed(0) }}/100
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Form -->
+  <div *ngIf="!submitted" class="main-form">
+    <!-- Header -->
+    <div class="header-card">
+      <h1 class="header-title">Staff Performance Evaluation</h1>
+      <div class="header-info">
+        <div class="info-item">
+          <i class="fas fa-user-tie"></i>
+          <span><strong>Role:</strong> {{ roleType?.toUpperCase() }}</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-id-badge"></i>
+          <span><strong>Staff ID:</strong> {{ staffId }}</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-project-diagram"></i>
+          <span><strong>Project:</strong> {{ projectId }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Questions -->
+    <div *ngFor="let question of questions; let qIndex = index" class="question-card">
+      <!-- Question Header -->
+      <div class="question-header">
+        <div class="question-title-row">
+          <div class="question-info">
+            <h3 class="question-title">
+              <span class="question-number">{{ qIndex + 1 }}</span>
+              {{ question.category }}
+            </h3>
+            <span class="weight-badge">Weight: {{ question.weight }}%</span>
+          </div>
+          <button 
+            class="help-button" 
+            (click)="openExplanation(qIndex)"
+            title="Click for rating explanations">
+            <i class="fas fa-question"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Rating Section -->
+      <div class="rating-section">
+        <div class="rating-container">
+          <button 
+            *ngFor="let smiley of smileys"
+            class="smiley-button"
+            [class]="'smiley-button-' + smiley.value + (answers[qIndex] === smiley.value ? ' selected selected-' + smiley.value : '')"
+            (click)="selectAnswer(qIndex, smiley.value)">
+            <span class="smiley-icon">{{ smiley.icon }}</span>
+            <span class="smiley-value">{{ smiley.value }}</span>
+          </button>
+        </div>
+
+        <!-- Selected Answer Display -->
+        <div *ngIf="answers[qIndex] > 0" class="selected-indicator">
+          <span class="selected-badge">Selected: {{ answers[qIndex] }}/5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Section -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span>Progress</span>
+        <span>{{ getAnsweredCount() }}/{{ questions.length }}</span>
+      </div>
+      <div class="progress-bar">
+        <div 
+          class="progress-fill" 
+          [style.width.%]="getProgressPercentage()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Section -->
+    <div class="submit-section">
+      <button 
+        class="submit-button"
+        [disabled]="!canSubmit() || isLoading"
+        (click)="submitEvaluation()">
+        <span *ngIf="isLoading" class="loading-content">
+          <i class="fas fa-spinner fa-spin"></i>
+          Submitting...
+        </span>
+        <span *ngIf="!isLoading">Submit Evaluation</span>
+      </button>
+      
+      <p class="submit-help" [class.success-help]="canSubmit()">
+        {{ canSubmit() ? 'Ready to submit!' : 'Please answer all ' + questions.length + ' questions to submit' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Rating Explanation Modal -->
+  <div *ngIf="showExplanation" class="modal-backdrop" (click)="closeExplanation()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h3 class="modal-title">
+          Rating Explanations: {{ questions[selectedQuestion].category }}
+        </h3>
+        <button class="modal-close" (click)="closeExplanation()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <table class="explanation-table">
+          <thead>
+            <tr>
+              <th>Rating</th>
+              <th>Smiley</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rating of [1, 2, 3, 4, 5]">
+              <td class="rating-cell">{{ rating }}/5</td>
+              <td class="smiley-cell">{{ getSmileyIcon(rating) }}</td>
+              <td class="description-cell">
+                <div [class]="'description-content ' + getRatingBgClass(rating)">
+                  {{ getRatingDescription(selectedQuestion, rating) }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button class="modal-close-btn" (click)="closeExplanation()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
