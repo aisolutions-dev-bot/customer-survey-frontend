@@ -19,3 +19,8 @@ export const routes: Routes = [
   //// keep this last as a catch-all or root route
   // path: '', loadComponent: () => import('./survey-form/survey-form.component').then(m => m.SurveyFormComponent) }
 ];
+
+export function getPrerenderParams(route: string) {
+
+  return [];
+}

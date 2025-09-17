@@ -26,9 +26,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "server": "src/main.server.ts",
-            "outputMode": "static",
+            "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
             }
@@ -47,8 +49,7 @@
                   "maximumError": "10MB"
                 }
               ],
-              "outputHashing": "all",
-              "prerender": false
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
@@ -84,7 +85,9 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "src/styles.scss"
+            ]
           }
         }
       }
