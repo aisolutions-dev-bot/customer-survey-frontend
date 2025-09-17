@@ -19,15 +19,3 @@ export const routes: Routes = [
   //// keep this last as a catch-all or root route
   // path: '', loadComponent: () => import('./survey-form/survey-form.component').then(m => m.SurveyFormComponent) }
 ];
-
-export function getPrerenderParams(route: string) {
-  if (route === 'survey/:customer_id/project/:project_id') {
-    return []; // no static values, skip prerender
-  }
-
-  if (route === 'evaluation/:staff_id/project/:project_id/role/:role_type') {
-    return []; // no static values, skip prerender
-  }
-
-  return [];
-}
