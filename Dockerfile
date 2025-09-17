@@ -22,7 +22,7 @@ RUN ls -R /app/dist/customer-survey-frontend
 FROM nginx:alpine
 
 # Copy build output to nginx html folder
-COPY --from=build /app/dist/customer-survey-frontend/browser /usr/share/nginx/html
+COPY --from=build /app/dist/customer-survey-frontend /usr/share/nginx/html
 
 # Replace default nginx config with custom one
 COPY nginx.conf /etc/nginx/conf.d/default.conf
