@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SurveyService {
-  private apiUrl = 'http://localhost:8080/api/survey';
+  private apiUrl = 'http://customer-survey-backend-production.up.railway.app/api/survey';
 
   constructor(private http: HttpClient) {}
 
