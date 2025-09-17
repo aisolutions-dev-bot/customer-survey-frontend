@@ -22,8 +22,11 @@ FROM nginx:alpine
 # Copy build output to nginx html folder
 COPY --from=build /app/dist/customer-survey-frontend /usr/share/nginx/html
 
-# Expose port 80
-EXPOSE 80
+# Replace default nginx config with custom one
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Railway expects your app to bind to $PORT, not 80
+EXPOSE 8080
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
