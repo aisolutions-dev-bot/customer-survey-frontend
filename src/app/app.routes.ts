@@ -21,6 +21,13 @@ export const routes: Routes = [
 ];
 
 export function getPrerenderParams(route: string) {
+  if (route === 'survey/:customer_id/project/:project_id') {
+    return []; // no static values, skip prerender
+  }
+
+  if (route === 'evaluation/:staff_id/project/:project_id/role/:role_type') {
+    return []; // no static values, skip prerender
+  }
 
   return [];
 }
