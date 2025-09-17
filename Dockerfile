@@ -16,6 +16,9 @@ COPY . .
 # Build Angular app
 RUN ng build --configuration production
 
+# Rename index.csr.html to index.html
+RUN mv /app/dist/customer-survey-frontend/browser/index.csr.html /app/dist/customer-survey-frontend/browser/index.html
+
 RUN ls -R /app/dist/customer-survey-frontend/browser
 
 # Stage 2: NGINX to serve Angular app
