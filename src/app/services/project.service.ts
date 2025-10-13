@@ -13,7 +13,8 @@ export interface Project {
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:8080/api';
+  //private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = 'https://customer-survey-backend-production.up.railway.app/api';
 
   constructor(private http: HttpClient) {}
 
