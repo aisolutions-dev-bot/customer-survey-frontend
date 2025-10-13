@@ -1,14 +1,25 @@
 <div class="evaluation-container">
+  <!-- Language Toggle Button (Fixed Position) -->
+  <button class="language-toggle" (click)="toggleLanguage()" title="Switch Language / 切换语言">
+    <i class="fas fa-language"></i>
+    <span>{{ currentLang === 'en' ? '中文' : 'English' }}</span>
+  </button>
+
   <!-- Success Screen -->
   <div *ngIf="submitted" class="success-screen">
     <div class="success-card">
       <div class="success-icon">🎉</div>
-      <h2 class="success-title">Evaluation Submitted!</h2>
+      <h2 class="success-title">{{ t(translationService.translations.success.title) }}</h2>
       <p class="success-message">
-        Staff evaluation for {{ roleType?.toUpperCase() }} has been successfully submitted.
+        {{ t(translationService.translations.success.message) }}
       </p>
       <div class="success-score">
-        <strong>Weighted Score:</strong> {{ calculateWeightedScore().toFixed(0) }}/100
+        <strong>{{ t(translationService.translations.success.weightedScore) }}</strong>
+        {{ calculateWeightedScore().toFixed(0) }}/100
+      </div>
+      <div class="success-evaluator">
+        <strong>{{ t(translationService.translations.success.evaluatedBy) }}</strong>
+        {{ evaluatorName }} ({{ evaluatorId }})
       </div>
     </div>
   </div>
@@ -17,26 +28,108 @@
   <div *ngIf="!submitted" class="main-form">
     <!-- Header -->
     <div class="header-card">
-      <h1 class="header-title">Staff Performance Evaluation</h1>
+      <h1 class="header-title">{{ t(translationService.translations.header.title) }}</h1>
       <div class="header-info">
-        <div class="info-item">
-          <i class="fas fa-user-tie"></i>
-          <span><strong>Role:</strong> {{ roleType?.toUpperCase() }}</span>
-        </div>
+        <!-- Staff ID Field -->
         <div class="info-item">
           <i class="fas fa-id-badge"></i>
-          <span><strong>Staff ID:</strong> {{ staffId }}</span>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.staffId) }}:</strong>
+            <select
+              *ngIf="!isStaffIdLocked"
+              [(ngModel)]="staffId"
+              (change)="onStaffChange()"
+              class="info-select"
+              [class.input-error]="staffId.trim() === '' && errorMessage"
+              [disabled]="isLoadingStaff"
+            >
+              <option value="">
+                {{
+                  isLoadingStaff
+                    ? t(translationService.translations.fields.loading)
+                    : t(translationService.translations.fields.selectStaff)
+                }}
+              </option>
+              <option *ngFor="let staff of staffList" [value]="staff.staffId">
+                {{ staff.staffId }} - {{ staff.name }}
+              </option>
+            </select>
+
+            <div *ngIf="isStaffIdLocked" class="locked-value-container">
+              <span class="locked-value">{{ staffId }}</span>
+              <span *ngIf="staffName" class="staff-name-hint">{{ staffName }}</span>
+            </div>
+          </div>
         </div>
+
+        <!-- Project ID Field -->
         <div class="info-item">
           <i class="fas fa-project-diagram"></i>
-          <span><strong>Project:</strong> {{ projectId }}</span>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.projectId) }}:</strong>
+            <select
+              *ngIf="!isProjectIdLocked && !projectId"
+              [(ngModel)]="projectId"
+              (change)="onProjectChange()"
+              class="info-select"
+              [class.input-error]="projectId.trim() === '' && errorMessage"
+              [disabled]="isLoadingProjects"
+            >
+              <option value="">
+                {{
+                  isLoadingProjects
+                    ? t(translationService.translations.fields.loading)
+                    : t(translationService.translations.fields.selectProject)
+                }}
+              </option>
+              <option *ngFor="let project of projectList" [value]="project.projectId">
+                {{ project.projectId }} - {{ project.projectName }}
+              </option>
+            </select>
+
+            <div *ngIf="!isProjectIdLocked && projectId" class="selected-display">
+              <div class="selected-content">
+                <span class="selected-id">{{ projectId }}</span>
+                <span class="selected-name">{{ projectName }}</span>
+              </div>
+              <button
+                class="change-btn"
+                (click)="clearProjectSelection()"
+                [title]="currentLang === 'en' ? 'Change project' : '更换项目'"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+
+            <div *ngIf="isProjectIdLocked" class="locked-value-container">
+              <span class="locked-value">{{ projectId }}</span>
+              <span *ngIf="projectName" class="staff-name-hint">{{ projectName }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role Type Field -->
+        <div class="info-item">
+          <i class="fas fa-user-tie"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.role) }}:</strong>
+            <input
+              *ngIf="!isRoleTypeLocked"
+              type="text"
+              [(ngModel)]="roleType"
+              [placeholder]="t(translationService.translations.fields.enterRole)"
+              class="info-input"
+              [class.input-error]="roleType.trim() === '' && errorMessage"
+            />
+            <span *ngIf="isRoleTypeLocked" class="locked-value">{{ roleType.toUpperCase() }}</span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Error Message -->
     <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
+      {{ t(translationService.translations.errors.loadEvaluatorFailed) }}
     </div>
 
     <!-- Questions -->
@@ -47,14 +140,17 @@
           <div class="question-info">
             <h3 class="question-title">
               <span class="question-number">{{ qIndex + 1 }}</span>
-              {{ question.category }}
+              {{ t(question.category) }}
             </h3>
-            <span class="weight-badge">Weight: {{ question.weight }}%</span>
+            <span class="weight-badge"
+              >{{ t(translationService.translations.modal.weight) }} {{ question.weight }}%</span
+            >
           </div>
-          <button 
-            class="help-button" 
+          <button
+            class="help-button"
             (click)="openExplanation(qIndex)"
-            title="Click for rating explanations">
+            [title]="currentLang === 'en' ? 'Click for rating explanations' : '点击查看评分说明'"
+          >
             <i class="fas fa-question"></i>
           </button>
         </div>
@@ -63,11 +159,16 @@
       <!-- Rating Section -->
       <div class="rating-section">
         <div class="rating-container">
-          <button 
+          <button
             *ngFor="let smiley of smileys"
             class="smiley-button"
-            [class]="'smiley-button-' + smiley.value + (answers[qIndex] === smiley.value ? ' selected selected-' + smiley.value : '')"
-            (click)="selectAnswer(qIndex, smiley.value)">
+            [class]="
+              'smiley-button-' +
+              smiley.value +
+              (answers[qIndex] === smiley.value ? ' selected selected-' + smiley.value : '')
+            "
+            (click)="selectAnswer(qIndex, smiley.value)"
+          >
             <span class="smiley-icon">{{ smiley.icon }}</span>
             <span class="smiley-value">{{ smiley.value }}</span>
           </button>
@@ -75,7 +176,9 @@
 
         <!-- Selected Answer Display -->
         <div *ngIf="answers[qIndex] > 0" class="selected-indicator">
-          <span class="selected-badge">Selected: {{ answers[qIndex] }}/5</span>
+          <span class="selected-badge"
+            >{{ currentLang === 'en' ? 'Selected:' : '已选择：' }} {{ answers[qIndex] }}/5</span
+          >
         </div>
       </div>
     </div>
@@ -83,33 +186,110 @@
     <!-- Progress Section -->
     <div class="progress-section">
       <div class="progress-header">
-        <span>Progress</span>
+        <span>{{ t(translationService.translations.progress.title) }}</span>
         <span>{{ getAnsweredCount() }}/{{ questions.length }}</span>
       </div>
       <div class="progress-bar">
-        <div 
-          class="progress-fill" 
-          [style.width.%]="getProgressPercentage()">
-        </div>
+        <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
       </div>
     </div>
 
+    <!-- Add this temporarily BEFORE the evaluator section to debug -->
+    <!-- <div style="background: #fff; padding: 20px; margin: 20px 0; border: 2px solid red; border-radius: 10px;">
+      <h3 style="color: red;">DEBUG INFO (Remove this after fixing)</h3>
+      <p><strong>isEvaluatorIdLocked:</strong> {{ isEvaluatorIdLocked }}</p>
+      <p><strong>evaluatorId:</strong> "{{ evaluatorId }}"</p>
+      <p><strong>evaluatorName:</strong> "{{ evaluatorName }}"</p>
+      <p><strong>isLoadingStaff:</strong> {{ isLoadingStaff }}</p>
+      <p><strong>staffList length:</strong> {{ staffList?.length || 0 }}</p>
+      <p><strong>errorMessage:</strong> "{{ errorMessage }}"</p>
+    </div> -->
+
+    <!-- Evaluator Section (NEW - positioned above submit button) -->
+    <div class="evaluator-section">
+      <h3 class="evaluator-title">
+        <i class="fas fa-user-check"></i>
+        {{ t(translationService.translations.evaluator.title) }}
+      </h3>
+
+      <div class="evaluator-fields">
+        <!-- Evaluator ID Field -->
+        <div class="evaluator-field">
+          <label class="field-label">
+            <i class="fas fa-id-card"></i>
+            {{ t(translationService.translations.fields.evaluatorId) }}
+            <span class="required">*</span>
+          </label>
+
+          <!-- Dropdown when not locked -->
+          <select
+            *ngIf="!isEvaluatorIdLocked"
+            [(ngModel)]="evaluatorId"
+            (change)="onEvaluatorChange()"
+            class="evaluator-select"
+            [class.input-error]="evaluatorId.trim() === '' && errorMessage"
+            [disabled]="isLoadingStaff"
+          >
+            <option value="">
+              {{
+                isLoadingStaff
+                  ? t(translationService.translations.fields.loading)
+                  : t(translationService.translations.fields.selectEvaluator)
+              }}
+            </option>
+            <option *ngFor="let staff of staffList" [value]="staff.staffId">
+              {{ staff.staffId }} - {{ staff.name }}
+            </option>
+          </select>
+
+          <!-- Locked display -->
+          <div *ngIf="isEvaluatorIdLocked" class="locked-value">
+            {{ evaluatorId }}
+          </div>
+        </div>
+
+        <!-- Evaluator Name Field (Auto-populated) -->
+        <div class="evaluator-field">
+          <label class="field-label">
+            <i class="fas fa-user"></i>
+            {{ t(translationService.translations.fields.evaluatorName) }}
+            <span class="required">*</span>
+          </label>
+
+          <div
+            class="evaluator-name-display"
+            [class.empty]="!evaluatorName"
+            [class.input-error]="evaluatorName.trim() === '' && errorMessage"
+          >
+            {{ evaluatorName || t(translationService.translations.fields.nameWillAppear) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Evaluator Section -->
+
     <!-- Submit Section -->
     <div class="submit-section">
-      <button 
+      <button
         class="submit-button"
         [disabled]="!canSubmit() || isLoading"
-        (click)="submitEvaluation()">
+        (click)="submitEvaluation()"
+      >
         <span *ngIf="isLoading" class="loading-content">
           <i class="fas fa-spinner fa-spin"></i>
-          Submitting...
+          {{ t(translationService.translations.submit.submitting) }}
         </span>
-        <span *ngIf="!isLoading">Submit Evaluation</span>
+        <span *ngIf="!isLoading">{{ t(translationService.translations.submit.button) }}</span>
       </button>
-      
+
       <p class="submit-help" [class.success-help]="canSubmit()">
-        {{ canSubmit() ? 'Ready to submit!' : 'Please answer all ' + questions.length + ' questions to submit' }}
+        {{ getSubmitHelpText() }}
       </p>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ t(translationService.translations.errors.loadEvaluatorFailed) }}
     </div>
   </div>
 
@@ -119,7 +299,8 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h3 class="modal-title">
-          Rating Explanations: {{ questions[selectedQuestion].category }}
+          {{ t(translationService.translations.modal.ratingExplanations) }}
+          {{ t(questions[selectedQuestion].category) }}
         </h3>
         <button class="modal-close" (click)="closeExplanation()">
           <i class="fas fa-times"></i>
@@ -131,9 +312,9 @@
         <table class="explanation-table">
           <thead>
             <tr>
-              <th>Rating</th>
-              <th>Smiley</th>
-              <th>Description</th>
+              <th>{{ t(translationService.translations.modal.rating) }}</th>
+              <th>{{ t(translationService.translations.modal.smiley) }}</th>
+              <th>{{ t(translationService.translations.modal.description) }}</th>
             </tr>
           </thead>
           <tbody>
@@ -153,7 +334,7 @@
       <!-- Modal Footer -->
       <div class="modal-footer">
         <button class="modal-close-btn" (click)="closeExplanation()">
-          Close
+          {{ t(translationService.translations.modal.close) }}
         </button>
       </div>
     </div>

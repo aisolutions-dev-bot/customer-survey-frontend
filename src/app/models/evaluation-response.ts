@@ -2,6 +2,8 @@ export interface EvaluationResponse {
   staffId: string;
   projectId: string;
   roleType: string;
+  evaluatorId: string;
+  evaluatorName: string;
   q1: number; // workProgressManagement
   q2: number; // accuracy
   q3: number; // jobKnowledgeSkills
