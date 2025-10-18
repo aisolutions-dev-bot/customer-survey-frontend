@@ -28,10 +28,24 @@ export const routes: Routes = [
       import('./evaluation-form/evaluation-form.component').then((m) => m.EvaluationFormComponent),
   },
 
+  // Carpenters evaluation with all parameters
+  {
+    path: 'carpenters-evaluation/:staff_id/project/:project_id/role/:role_type/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./carpenters-evaluation-form/carpenters-eval-form.component').then((m) => m.CarpentersEvaluationFormComponent),
+  },
+
+  // Carpenters evaluation without parameters (all fields editable)
+  {
+    path: 'carpenters-evaluation',
+    loadComponent: () =>
+      import('./carpenters-evaluation-form/carpenters-eval-form.component').then((m) => m.CarpentersEvaluationFormComponent),
+  },
+
   // keep this last as a catch-all or root route
   {
     path: '',
     loadComponent: () =>
-      import('./survey-form/survey-form.component').then((m) => m.SurveyFormComponent),
+      import('./evaluation-form/evaluation-form.component').then((m) => m.EvaluationFormComponent),
   },
 ];
