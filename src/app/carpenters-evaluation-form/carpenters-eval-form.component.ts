@@ -3,24 +3,26 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { EvaluationService } from '../services/evaluation.service';
+import { CarpentersEvaluationService } from '../services/carpenters-evaluation.service';
 import { StaffService, Staff } from '../services/staff.service';
 import { ProjectService, Project } from '../services/project.service';
-import { EvaluationResponse } from '../models/evaluation-response';
-import { DRAFTER_QUESTIONS, SMILEYS, QuestionDefinition } from '../models/evaluation-questions';
+import { CarpentersEvaluationResponse } from '../models/carpenters-eval-response';
+import { CARPENTER_LEVELS, CarpenterLevel, SMILEYS, QuestionDefinition } from '../models/carpenters-eval-questions';
 import { TranslationService, Language, Translation } from '../services/translation.service';
 
 @Component({
   selector: 'app-evaluation-form',
-  templateUrl: './evaluation-form.component.html',
-  styleUrls: ['./evaluation-form.component.scss'],
+  templateUrl: './carpenters-eval-form.component.html',
+  styleUrls: ['./carpenters-eval-form.component.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
-export class EvaluationFormComponent implements OnInit, OnDestroy {
-  questions = DRAFTER_QUESTIONS;
+export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
+  carpenterLevels = CARPENTER_LEVELS;
+  selectedLevel : string = ''; // Will store 'junior', 'journeyman', or 'senior'
+  questions: QuestionDefinition[] = []; // Fixed: Added proper type annotation with colon
   smileys = SMILEYS;
-  answers = Array(6).fill(0);
+  answers: number[] = [];
   submitted = false;
   isLoading = false;
   errorMessage = '';
@@ -46,6 +48,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   isProjectIdLocked: boolean = false;
   isRoleTypeLocked: boolean = false;
   isEvaluatorIdLocked: boolean = false;
+  isCarpenterLevelLocked: boolean = false;
 
   // Staff list for dropdown (SHARED by both Staff ID and Evaluator ID)
   staffList: Staff[] = [];
@@ -57,7 +60,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private evaluationService: EvaluationService,
+    private carpentersEvaluationService: CarpentersEvaluationService,
     private staffService: StaffService,
     private projectService: ProjectService,
     public translationService: TranslationService,
@@ -76,12 +79,14 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     const projectIdParam = this.route.snapshot.paramMap.get('project_id');
     const roleTypeParam = this.route.snapshot.paramMap.get('role_type');
     const evaluatorParam = this.route.snapshot.paramMap.get('evaluator');
+    const carpenterLevelParam = this.route.snapshot.paramMap.get('carpenter_level');
 
     // Capture query parameters (for flexible individual parameters) ie. http://localhost:4200/evaluation?staff_id=123&project_id=456&role_type=designer&evaluator=789
     const queryStaffId = this.route.snapshot.queryParamMap.get('staff_id');
     const queryProjectId = this.route.snapshot.queryParamMap.get('project_id');
     const queryRoleType = this.route.snapshot.queryParamMap.get('role_type');
     const queryEvaluator = this.route.snapshot.queryParamMap.get('evaluator');
+    const queryCarpenterLevel = this.route.snapshot.queryParamMap.get('carpenter_level');
 
     // Load both staff list and project list in parallel
     Promise.all([this.loadStaffList(), this.loadProjectList()]).then(() => {
@@ -115,11 +120,20 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
         this.loadEvaluatorName(finalEvaluator);
       }
       
+      // Handle Carpenter Level parameter
+      const finalCarpenterLevel = carpenterLevelParam || queryCarpenterLevel;
+      if (finalCarpenterLevel && ['junior', 'journeyman', 'senior'].includes(finalCarpenterLevel)) {
+        this.selectedLevel = finalCarpenterLevel;
+        this.isCarpenterLevelLocked = true;
+        this.loadQuestionsForLevel(finalCarpenterLevel);
+      }
+      
       console.log('=== Parameter Capture Summary ===');
       console.log('Staff ID:', this.staffId, '(Locked:', this.isStaffIdLocked + ')');
       console.log('Project ID:', this.projectId, '(Locked:', this.isProjectIdLocked + ')');
       console.log('Role Type:', this.roleType, '(Locked:', this.isRoleTypeLocked + ')');
       console.log('Evaluator ID:', this.evaluatorId, '(Locked:', this.isEvaluatorIdLocked + ')');
+      console.log('Carpenter Level:', this.selectedLevel, '(Locked:', this.isCarpenterLevelLocked + ')');
       console.log('================================');
       
       this.cdr.detectChanges();
@@ -139,6 +153,58 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   // Toggle language
   toggleLanguage(): void {
     this.translationService.toggleLanguage();
+  }
+
+  // Load questions based on carpenter level
+  loadQuestionsForLevel(level: string): void {
+    const carpenterLevel = this.carpenterLevels.find(l => l.id === level);
+    if (carpenterLevel) {
+      this.questions = carpenterLevel.questions;
+      this.answers = Array(this.questions.length).fill(0);
+      console.log(`Loaded ${this.questions.length} questions for ${level} carpenter`);
+    }
+  }
+
+  // Handle carpenter level selection
+  onCarpenterLevelChange(level: string): void {
+    this.selectedLevel = level;
+    this.loadQuestionsForLevel(level);
+    this.errorMessage = '';
+    console.log('Carpenter level changed to:', level);
+    this.cdr.detectChanges();
+  }
+
+  // Check if we should show category header for this question
+  shouldShowCategoryHeader(questionIndex: number): boolean {
+    if (questionIndex === 0) return true; // Always show for first question
+    
+    const currentQuestion = this.questions[questionIndex];
+    const previousQuestion = this.questions[questionIndex - 1];
+    
+    // Show header if groupCategory exists and is different from previous question
+    if (currentQuestion.groupCategory && previousQuestion.groupCategory) {
+      const currentCategory = this.t(currentQuestion.groupCategory);
+      const previousCategory = this.t(previousQuestion.groupCategory);
+      return currentCategory !== previousCategory;
+    }
+    
+    return false;
+  }
+
+  // Get icon for each category
+  getCategoryIcon(groupCategory: Translation | undefined): string {
+    if (!groupCategory) return 'fa-folder';
+    
+    const categoryEn = groupCategory.en.toLowerCase();
+    
+    if (categoryEn.includes('technical')) return 'fa-tools';
+    if (categoryEn.includes('problem')) return 'fa-lightbulb';
+    if (categoryEn.includes('adaptability')) return 'fa-sync-alt';
+    if (categoryEn.includes('self-management')) return 'fa-clock';
+    if (categoryEn.includes('project standard')) return 'fa-check-circle';
+    if (categoryEn.includes('teamwork') || categoryEn.includes('communication')) return 'fa-users';
+    
+    return 'fa-folder';
   }
 
   loadStaffList(): Promise<void> {
@@ -306,7 +372,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
       this.projectId.trim() !== '' &&
       this.roleType.trim() !== '' &&
       this.evaluatorId.trim() !== '' &&
-      this.evaluatorName.trim() !== '';
+      this.evaluatorName.trim() !== '' &&
+      this.selectedLevel.trim() !== '';
 
     return allQuestionsAnswered && allFieldsFilled;
   }
@@ -320,6 +387,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   getProgressPercentage(): number {
+    if (this.questions.length === 0) return 0;
     return (this.answers.filter((a) => a > 0).length / this.questions.length) * 100;
   }
 
@@ -345,24 +413,24 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const payload: EvaluationResponse = {
+    const payload: any = {
       staffId: this.staffId.trim(),
       projectId: this.projectId.trim(),
       roleType: this.roleType.trim(),
       evaluatorId: this.evaluatorId.trim(),
       evaluatorName: this.evaluatorName.trim(),
-      q1: this.answers[0],
-      q2: this.answers[1],
-      q3: this.answers[2],
-      q4: this.answers[3],
-      q5: this.answers[4],
-      q6: this.answers[5],
+      carpenterLevel: this.selectedLevel,
     };
+    
+    // Add all question answers dynamically
+    this.answers.forEach((answer, index) => {
+      payload[`q${index + 1}`] = answer;
+    });
 
     console.log('Submitting evaluation:', payload);
     console.log('Weighted Score:', this.calculateWeightedScore());
 
-    this.evaluationService.submitEvaluation(payload).subscribe({
+    this.carpentersEvaluationService.submitEvaluation(payload).subscribe({
       next: (response) => {
         this.submitted = true;
         this.isLoading = false;
@@ -401,7 +469,20 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     if (this.canSubmit()) {
       return this.t(this.translationService.translations.submit.ready);
     }
+    
+    if (this.questions.length === 0) {
+      return this.t({
+        en: 'Please select a carpenter level to begin',
+        zh: '请选择木工级别开始'
+      });
+    }
+    
     const text = this.t(this.translationService.translations.submit.pleaseAnswer);
     return text.replace('{count}', this.questions.length.toString());
+  }
+  
+  getCarpenterLevelLabel(level: string): string {
+    const carpenterLevel = this.carpenterLevels.find(l => l.id === level);
+    return carpenterLevel ? this.t(carpenterLevel.label) : level;
   }
 }
