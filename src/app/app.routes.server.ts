@@ -14,7 +14,11 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    path: 'carpenters-evaluation/:staff_id/project/:project_id/role/:role_type/evaluator/:evaluator',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: '**',
-    renderMode: RenderMode.Prerender, //  keep prerender for static routes
+    renderMode: RenderMode.Prerender,
   },
 ];
