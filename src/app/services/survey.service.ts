@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SurveyResponse } from '../models/survey-response';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SurveyService {
-  private apiUrl = 'https://customer-survey-backend-production.up.railway.app/api/survey';
+  private apiUrl = `${environment.apiUrl}/survey`;
+  //private apiUrl = 'https://customer-survey-backend-production.up.railway.app/api/survey';
 
   constructor(private http: HttpClient) {}
 

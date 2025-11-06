@@ -72,8 +72,8 @@ export class TranslationService {
         zh: '项目编号' 
       },
       role: { 
-        en: 'Role', 
-        zh: '角色' 
+        en: 'Role/Dept', 
+        zh: '角色/部门' 
       },
       evaluatorId: { 
         en: 'Evaluator ID', 
@@ -90,6 +90,10 @@ export class TranslationService {
       selectProject: { 
         en: 'Select Project', 
         zh: '选择项目' 
+      },
+      selectDepartment: { 
+        en: 'Select Role/Department', 
+        zh: '选择角色/部门' 
       },
       selectEvaluator: { 
         en: 'Select Evaluator', 
@@ -202,6 +206,10 @@ export class TranslationService {
       loadProjectFailed: { 
         en: 'Failed to load project list. Please refresh the page.', 
         zh: '加载项目列表失败。请刷新页面。' 
+      },
+      loadDepartmentFailed: { 
+        en: 'Failed to load department list. Please refresh the page.', 
+        zh: '加载角色/部门列表失败。请刷新页面。' 
       },
       loadEvaluatorFailed: { 
         en: 'Failed to load evaluator information.', 
