@@ -14,7 +14,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
-    path: 'carpenters-evaluation/:staff_id/project/:project_id/role/:role_type/evaluator/:evaluator',
+    path: 'carpenters-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
     renderMode: RenderMode.Client,
   },
   {

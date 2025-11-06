@@ -2,6 +2,7 @@ export interface CarpentersEvaluationResponse {
   staffId: string;
   projectId: string;
   roleType: string;
+  departmentId: string;
   evaluatorId: string;
   evaluatorName: string;
   carpenterLevel:string;

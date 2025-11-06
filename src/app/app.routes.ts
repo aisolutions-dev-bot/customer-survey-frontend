@@ -30,7 +30,8 @@ export const routes: Routes = [
 
   // Carpenters evaluation with all parameters
   {
-    path: 'carpenters-evaluation/:staff_id/project/:project_id/role/:role_type/evaluator/:evaluator',
+    //path: 'carpenters-evaluation/:staff_id/project/:project_id/role/:role_type/evaluator/:evaluator',
+    path: 'carpenters-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
     loadComponent: () =>
       import('./carpenters-evaluation-form/carpenters-eval-form.component').then((m) => m.CarpentersEvaluationFormComponent),
   },
@@ -46,6 +47,6 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./evaluation-form/evaluation-form.component').then((m) => m.EvaluationFormComponent),
+      import('./carpenters-evaluation-form/carpenters-eval-form.component').then((m) => m.CarpentersEvaluationFormComponent),
   },
 ];

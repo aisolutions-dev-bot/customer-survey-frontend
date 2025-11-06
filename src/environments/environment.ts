@@ -1,0 +1,14 @@
+export const environment = {
+  production: false,
+  apiUrl: 'https://customer-survey-production.up.railway.app/api',
+  //apiUrl: 'http://localhost:8080/api',
+  // wsUrl: 'ws://localhost:8080/ws',
+  // shellUrl: 'http://localhost:4000/remoteEntry.js',
+  // bookingMfeUrl: 'http://localhost:4001/remoteEntry.js',
+  // uiMfeUrl: 'http://localhost:4100/remoteEntry.js',
+  // evaluationMfeUrl: 'http://localhost:4002/remoteEntry.js',
+  // surveyUrl: 'https://customer-survey-production.up.railway.app/',
+  // authUrl: 'http://localhost:8081/',
+  // authRealm: 'ai-solutions-realm',
+  // authClientId: 'ai-solutions-dev',
+};

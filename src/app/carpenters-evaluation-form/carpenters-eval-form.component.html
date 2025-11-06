@@ -112,7 +112,7 @@
 
         <!-- Role Type Field -->
         <div class="info-item">
-          <i class="fas fa-user-tie"></i>
+          <!-- <i class="fas fa-user-tie"></i>
           <div class="info-content">
             <strong>{{ t(translationService.translations.fields.role) }}:</strong>
             <input
@@ -124,6 +124,47 @@
               [class.input-error]="roleType.trim() === '' && errorMessage"
             />
             <span *ngIf="isRoleTypeLocked" class="locked-value">{{ roleType.toUpperCase() }}</span>
+          </div> -->
+          <i class="fas fa-building"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.role) }}:</strong>
+            <select
+              *ngIf="!isDepartmentIdLocked && !departmentId"
+              [(ngModel)]="departmentId"
+              (change)="onDepartmentChange()"
+              class="info-select"
+              [class.input-error]="departmentName.trim() === '' && errorMessage"
+              [disabled]="isLoadingDepartments"
+            >
+              <option value="">
+                {{
+                  isLoadingDepartments
+                    ? t(translationService.translations.fields.loading)
+                    : t(translationService.translations.fields.selectDepartment)
+                }}
+              </option>
+              <option *ngFor="let department of departmentList" [value]="department.departmentId">
+                {{ department.departmentId }} - {{ department.departmentName }}
+              </option>
+            </select>
+            <div *ngIf="!isDepartmentIdLocked && departmentId" class="selected-display">
+              <div class="selected-content">
+                <span class="selected-id">{{ departmentId }}</span>
+                <span class="selected-name">{{ departmentName }}</span>
+              </div>
+              <button
+                class="change-btn"
+                (click)="clearDepartmentSelection()"
+                [title]="currentLang === 'en' ? 'Change role/dept' : '更换角色/部门'"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+
+            <div *ngIf="isDepartmentIdLocked" class="locked-value-container">
+              <span class="locked-value">{{ departmentId }}</span>
+              <span *ngIf="departmentName" class="staff-name-hint">{{ departmentName }}</span>
+            </div>
           </div>
         </div>
       </div>
