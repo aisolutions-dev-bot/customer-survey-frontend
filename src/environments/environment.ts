@@ -1,7 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://customer-survey-production.up.railway.app/api',
-  //apiUrl: 'http://localhost:8080/api',
+  apiUrl: 'http://localhost:8080/api',
   // wsUrl: 'ws://localhost:8080/ws',
   // shellUrl: 'http://localhost:4000/remoteEntry.js',
   // bookingMfeUrl: 'http://localhost:4001/remoteEntry.js',
