@@ -242,6 +242,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
       if (finalDepartmentId) { 
         this.departmentId = finalDepartmentId;
         this.isDepartmentIdLocked = true;
+        this.loadDepartmentName(finalDepartmentId);
       }
       // Handle Evaluator parameter
       const finalEvaluator = evaluatorParam || queryEvaluator;
