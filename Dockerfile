@@ -14,7 +14,7 @@ RUN npm install -g @angular/cli && npm install
 COPY . .
 
 # Build Angular app
-RUN ng build --configuration production
+RUN ng build --configuration production --no-prerender
 
 # Rename index.csr.html to index.html
 RUN mv /app/dist/customer-survey-frontend/browser/index.csr.html /app/dist/customer-survey-frontend/browser/index.html
