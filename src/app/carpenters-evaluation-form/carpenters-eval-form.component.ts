@@ -9,8 +9,14 @@ import { ProjectService, Project } from '../services/project.service';
 import { DepartmentService, Department } from '../services/department.service';
 import { EvaluationDistributionService } from '../services/evaluation-distribution.service';
 import { CarpentersEvaluationResponse } from '../models/carpenters-eval-response';
-import { CARPENTER_LEVELS, CarpenterLevel, SMILEYS, QuestionDefinition } from '../models/carpenters-eval-questions';
+import {
+  CARPENTER_LEVELS,
+  CarpenterLevel,
+  SMILEYS,
+  QuestionDefinition,
+} from '../models/carpenters-eval-questions';
 import { TranslationService, Language, Translation } from '../services/translation.service';
+import { switchMap, catchError, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-evaluation-form',
@@ -20,8 +26,11 @@ import { TranslationService, Language, Translation } from '../services/translati
   imports: [CommonModule, FormsModule],
 })
 export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
+  // Constant(s)
+  static readonly FORM_TYPE = 'CARPENTER';
+
   carpenterLevels = CARPENTER_LEVELS;
-  selectedLevel : string = ''; // Will store 'junior', 'journeyman', or 'senior'
+  selectedLevel: string = ''; // Will store 'junior', 'journeyman', or 'senior'
   questions: QuestionDefinition[] = []; // Fixed: Added proper type annotation with colon
   smileys = SMILEYS;
   answers: number[] = [];
@@ -67,9 +76,9 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   isLoadingProjects: boolean = false;
 
   // Department/Role list for dropdown
-  departmentList: Department[] = [] ;
+  departmentList: Department[] = [];
   isLoadingDepartments: boolean = false;
-  
+
   // NEW: Track if data is being loaded from uniq_id
   isLoadingFromUniqId: boolean = false;
 
@@ -81,7 +90,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     private departmentService: DepartmentService,
     private evaluationDistributionService: EvaluationDistributionService,
     public translationService: TranslationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +102,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
 
     // Check for uniq_id query parameter first - NEW
     const uniqId = this.route.snapshot.queryParamMap.get('uniq_id');
-    
+
     if (uniqId) {
       // Store the uniqId for later use
       this.currentUniqId = parseInt(uniqId, 10);
@@ -104,95 +113,109 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
       this.initializeFromRouteParams();
     }
   }
-  
+
   // NEW: Load data from m17EvaluationDistributionMgmt table using uniq_id
   private loadFromUniqId(uniqId: number): void {
     console.log('Loading evaluation distribution from uniq_id:', uniqId);
     this.isLoadingFromUniqId = true;
 
     // Load all dropdown lists first
-    Promise.all([
-      this.loadStaffList(),
-      this.loadProjectList(),
-      this.loadDepartmentList()
-    ]).then(() => {
-      // Then fetch the evaluation distribution data
-      this.evaluationDistributionService.getByUniqId(uniqId).subscribe({
-        next: (distribution) => {
-          console.log('Evaluation distribution loaded:', distribution);
+    Promise.all([this.loadStaffList(), this.loadProjectList(), this.loadDepartmentList()]).then(
+      () => {
+        // Then fetch the evaluation distribution data
+        this.evaluationDistributionService.getByUniqId(uniqId).subscribe({
+          next: (distribution) => {
+            console.log('Evaluation distribution loaded:', distribution);
 
-          // Map EvaluateeId to staffId (only if not null/empty)
-          if (distribution.evaluateeId && distribution.evaluateeId.trim() !== '') {
-            this.staffId = distribution.evaluateeId;
-            this.isStaffIdLocked = true;
-            this.loadStaffName(this.staffId);
-          }
-
-          // Map ProjectId and ProjectName (only if not null/empty)
-          if (distribution.projectId && distribution.projectId.trim() !== '') {
-            this.projectId = distribution.projectId;
-            this.isProjectIdLocked = true;
-            if (distribution.projectName && distribution.projectName.trim() !== '') {
-              this.projectName = distribution.projectName;
-            } else {
-              this.loadProjectName(this.projectId);
+            // Map EvaluateeId to staffId (only if not null/empty)
+            if (distribution.evaluateeId && distribution.evaluateeId.trim() !== '') {
+              this.staffId = distribution.evaluateeId;
+              this.isStaffIdLocked = true;
+              this.loadStaffName(this.staffId);
             }
-          }
 
-          // Map DepartmentId and DepartmentName (only if not null/empty)
-          if (distribution.departmentId && distribution.departmentId.trim() !== '') {
-            this.departmentId = distribution.departmentId;
-            this.isDepartmentIdLocked = true;
-            if (distribution.departmentName && distribution.departmentName.trim() !== '') {
-              this.departmentName = distribution.departmentName;
-            } else {
-              this.loadDepartmentName(this.departmentId);
+            // Map ProjectId and ProjectName (only if not null/empty)
+            if (distribution.projectId && distribution.projectId.trim() !== '') {
+              this.projectId = distribution.projectId;
+              this.isProjectIdLocked = true;
+              if (distribution.projectName && distribution.projectName.trim() !== '') {
+                this.projectName = distribution.projectName;
+              } else {
+                this.loadProjectName(this.projectId);
+              }
             }
-          }
 
-          // Map EvaluatorId and EvaluatorName (only if not null/empty)
-          if (distribution.evaluatorId && distribution.evaluatorId.trim() !== '') {
-            this.evaluatorId = distribution.evaluatorId;
-            this.isEvaluatorIdLocked = true;
-            if (distribution.evaluatorName && distribution.evaluatorName.trim() !== '') {
-              this.evaluatorName = distribution.evaluatorName;
-            } else {
-              this.loadEvaluatorName(this.evaluatorId);
+            // Map DepartmentId and DepartmentName (only if not null/empty)
+            if (distribution.departmentId && distribution.departmentId.trim() !== '') {
+              this.departmentId = distribution.departmentId;
+              this.isDepartmentIdLocked = true;
+              if (distribution.departmentName && distribution.departmentName.trim() !== '') {
+                this.departmentName = distribution.departmentName;
+              } else {
+                this.loadDepartmentName(this.departmentId);
+              }
             }
-          }
 
-          // Map SkillSet to carpenter_level (only if not null/empty and valid)
-          if (distribution.skillSet && distribution.skillSet.trim() !== '') {
-            const skillSetLower = distribution.skillSet.toLowerCase();
-            if (['junior', 'journeyman', 'senior'].includes(skillSetLower)) {
-              this.selectedLevel = skillSetLower;
-              this.isCarpenterLevelLocked = true;
-              this.loadQuestionsForLevel(skillSetLower);
+            // Map EvaluatorId and EvaluatorName (only if not null/empty)
+            if (distribution.evaluatorId && distribution.evaluatorId.trim() !== '') {
+              this.evaluatorId = distribution.evaluatorId;
+              this.isEvaluatorIdLocked = true;
+              if (distribution.evaluatorName && distribution.evaluatorName.trim() !== '') {
+                this.evaluatorName = distribution.evaluatorName;
+              } else {
+                this.loadEvaluatorName(this.evaluatorId);
+              }
             }
-          }
 
-          this.isLoadingFromUniqId = false;
-          
-          console.log('=== Data Loaded from uniq_id ===');
-          console.log('Staff ID:', this.staffId, '(Locked:', this.isStaffIdLocked + ')');
-          console.log('Project ID:', this.projectId, '(Locked:', this.isProjectIdLocked + ')');
-          console.log('Department ID:', this.departmentId, '(Locked:', this.isDepartmentIdLocked + ')');
-          console.log('Evaluator ID:', this.evaluatorId, '(Locked:', this.isEvaluatorIdLocked + ')');
-          console.log('Carpenter Level:', this.selectedLevel, '(Locked:', this.isCarpenterLevelLocked + ')');
-          console.log('================================');
-          
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error('Failed to load evaluation distribution:', error);
-          this.errorMessage = this.currentLang === 'en' 
-            ? 'Failed to load evaluation data. Please check the uniq_id and try again.' 
-            : '无法加载评估数据。请检查 uniq_id 并重试。';
-          this.isLoadingFromUniqId = false;
-          this.cdr.detectChanges();
-        }
-      });
-    });
+            // Map SkillSet to carpenter_level (only if not null/empty and valid)
+            if (distribution.skillSet && distribution.skillSet.trim() !== '') {
+              const skillSetLower = distribution.skillSet.toLowerCase();
+              if (['junior', 'journeyman', 'senior'].includes(skillSetLower)) {
+                this.selectedLevel = skillSetLower;
+                this.isCarpenterLevelLocked = true;
+                this.loadQuestionsForLevel(skillSetLower);
+              }
+            }
+
+            this.isLoadingFromUniqId = false;
+
+            console.log('=== Data Loaded from uniq_id ===');
+            console.log('Staff ID:', this.staffId, '(Locked:', this.isStaffIdLocked + ')');
+            console.log('Project ID:', this.projectId, '(Locked:', this.isProjectIdLocked + ')');
+            console.log(
+              'Department ID:',
+              this.departmentId,
+              '(Locked:',
+              this.isDepartmentIdLocked + ')',
+            );
+            console.log(
+              'Evaluator ID:',
+              this.evaluatorId,
+              '(Locked:',
+              this.isEvaluatorIdLocked + ')',
+            );
+            console.log(
+              'Carpenter Level:',
+              this.selectedLevel,
+              '(Locked:',
+              this.isCarpenterLevelLocked + ')',
+            );
+            console.log('================================');
+
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            console.error('Failed to load evaluation distribution:', error);
+            this.errorMessage =
+              this.currentLang === 'en'
+                ? 'Failed to load evaluation data. Please check the uniq_id and try again.'
+                : '无法加载评估数据。请检查 uniq_id 并重试。';
+            this.isLoadingFromUniqId = false;
+            this.cdr.detectChanges();
+          },
+        });
+      },
+    );
   }
 
   // Initialize from route parameters (existing functionality)
@@ -214,63 +237,78 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     const queryCarpenterLevel = this.route.snapshot.queryParamMap.get('carpenter_level');
 
     // Load all staff list , project list and department list in parallel
-    Promise.all([this.loadStaffList(), this.loadProjectList(), this.loadDepartmentList()]).then(() => {
-      // After all lists are loaded, handle URL parameters
+    Promise.all([this.loadStaffList(), this.loadProjectList(), this.loadDepartmentList()]).then(
+      () => {
+        // After all lists are loaded, handle URL parameters
 
-      // Handle Staff ID parameter
-      const finalStaffId = staffIdParam || queryStaffId;
-      if (finalStaffId) {
-        this.staffId = finalStaffId;
-        this.isStaffIdLocked = true;
-        this.loadStaffName(finalStaffId);
-      }
-      // Handle Project ID parameter
-      const finalProjectId = projectIdParam || queryProjectId;
-      if (finalProjectId) {
-        this.projectId = finalProjectId;
-        this.isProjectIdLocked = true;
-        this.loadProjectName(finalProjectId);
-      }
-      // Handle Role Type parameter
-      const finalRoleType = roleTypeParam || queryRoleType;
-      if (finalRoleType) {
-        this.roleType = finalRoleType;
-        this.isRoleTypeLocked = true;
-      }
-      // Handle Department ID parameter
-      const finalDepartmentId = departmentIdParam || queryDepartmentId;
-      if (finalDepartmentId) { 
-        this.departmentId = finalDepartmentId;
-        this.isDepartmentIdLocked = true;
-        this.loadDepartmentName(finalDepartmentId);
-      }
-      // Handle Evaluator parameter
-      const finalEvaluator = evaluatorParam || queryEvaluator;
-      if (finalEvaluator) {
-        this.evaluatorId = finalEvaluator;
-        this.isEvaluatorIdLocked = true;
-        this.loadEvaluatorName(finalEvaluator);
-      }
-      
-      // Handle Carpenter Level parameter
-      const finalCarpenterLevel = carpenterLevelParam || queryCarpenterLevel;
-      if (finalCarpenterLevel && ['junior', 'journeyman', 'senior'].includes(finalCarpenterLevel)) {
-        this.selectedLevel = finalCarpenterLevel;
-        this.isCarpenterLevelLocked = true;
-        this.loadQuestionsForLevel(finalCarpenterLevel);
-      }
-      
-      console.log('=== Parameter Capture Summary ===');
-      console.log('Staff ID:', this.staffId, '(Locked:', this.isStaffIdLocked + ')');
-      console.log('Project ID:', this.projectId, '(Locked:', this.isProjectIdLocked + ')');
-      console.log('Role Type:', this.roleType, '(Locked:', this.isRoleTypeLocked + ')');
-      console.log('Department ID:', this.departmentId, '(Locked:', this.isDepartmentIdLocked + ')');
-      console.log('Evaluator ID:', this.evaluatorId, '(Locked:', this.isEvaluatorIdLocked + ')');
-      console.log('Carpenter Level:', this.selectedLevel, '(Locked:', this.isCarpenterLevelLocked + ')');
-      console.log('================================');
-      
-      this.cdr.detectChanges();
-    });
+        // Handle Staff ID parameter
+        const finalStaffId = staffIdParam || queryStaffId;
+        if (finalStaffId) {
+          this.staffId = finalStaffId;
+          this.isStaffIdLocked = true;
+          this.loadStaffName(finalStaffId);
+        }
+        // Handle Project ID parameter
+        const finalProjectId = projectIdParam || queryProjectId;
+        if (finalProjectId) {
+          this.projectId = finalProjectId;
+          this.isProjectIdLocked = true;
+          this.loadProjectName(finalProjectId);
+        }
+        // Handle Role Type parameter
+        const finalRoleType = roleTypeParam || queryRoleType;
+        if (finalRoleType) {
+          this.roleType = finalRoleType;
+          this.isRoleTypeLocked = true;
+        }
+        // Handle Department ID parameter
+        const finalDepartmentId = departmentIdParam || queryDepartmentId;
+        if (finalDepartmentId) {
+          this.departmentId = finalDepartmentId;
+          this.isDepartmentIdLocked = true;
+          this.loadDepartmentName(finalDepartmentId);
+        }
+        // Handle Evaluator parameter
+        const finalEvaluator = evaluatorParam || queryEvaluator;
+        if (finalEvaluator) {
+          this.evaluatorId = finalEvaluator;
+          this.isEvaluatorIdLocked = true;
+          this.loadEvaluatorName(finalEvaluator);
+        }
+
+        // Handle Carpenter Level parameter
+        const finalCarpenterLevel = carpenterLevelParam || queryCarpenterLevel;
+        if (
+          finalCarpenterLevel &&
+          ['junior', 'journeyman', 'senior'].includes(finalCarpenterLevel)
+        ) {
+          this.selectedLevel = finalCarpenterLevel;
+          this.isCarpenterLevelLocked = true;
+          this.loadQuestionsForLevel(finalCarpenterLevel);
+        }
+
+        console.log('=== Parameter Capture Summary ===');
+        console.log('Staff ID:', this.staffId, '(Locked:', this.isStaffIdLocked + ')');
+        console.log('Project ID:', this.projectId, '(Locked:', this.isProjectIdLocked + ')');
+        console.log('Role Type:', this.roleType, '(Locked:', this.isRoleTypeLocked + ')');
+        console.log(
+          'Department ID:',
+          this.departmentId,
+          '(Locked:',
+          this.isDepartmentIdLocked + ')',
+        );
+        console.log('Evaluator ID:', this.evaluatorId, '(Locked:', this.isEvaluatorIdLocked + ')');
+        console.log(
+          'Carpenter Level:',
+          this.selectedLevel,
+          '(Locked:',
+          this.isCarpenterLevelLocked + ')',
+        );
+        console.log('================================');
+
+        this.cdr.detectChanges();
+      },
+    );
   }
 
   ngOnDestroy(): void {
@@ -290,7 +328,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
 
   // Load questions based on carpenter level
   loadQuestionsForLevel(level: string): void {
-    const carpenterLevel = this.carpenterLevels.find(l => l.id === level);
+    const carpenterLevel = this.carpenterLevels.find((l) => l.id === level);
     if (carpenterLevel) {
       this.questions = carpenterLevel.questions;
       this.answers = Array(this.questions.length).fill(0);
@@ -310,33 +348,33 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   // Check if we should show category header for this question
   shouldShowCategoryHeader(questionIndex: number): boolean {
     if (questionIndex === 0) return true; // Always show for first question
-    
+
     const currentQuestion = this.questions[questionIndex];
     const previousQuestion = this.questions[questionIndex - 1];
-    
+
     // Show header if groupCategory exists and is different from previous question
     if (currentQuestion.groupCategory && previousQuestion.groupCategory) {
       const currentCategory = this.t(currentQuestion.groupCategory);
       const previousCategory = this.t(previousQuestion.groupCategory);
       return currentCategory !== previousCategory;
     }
-    
+
     return false;
   }
 
   // Get icon for each category
   getCategoryIcon(groupCategory: Translation | undefined): string {
     if (!groupCategory) return 'fa-folder';
-    
+
     const categoryEn = groupCategory.en.toLowerCase();
-    
+
     if (categoryEn.includes('technical')) return 'fa-tools';
     if (categoryEn.includes('problem')) return 'fa-lightbulb';
     if (categoryEn.includes('adaptability')) return 'fa-sync-alt';
     if (categoryEn.includes('self-management')) return 'fa-clock';
     if (categoryEn.includes('project standard')) return 'fa-check-circle';
     if (categoryEn.includes('teamwork') || categoryEn.includes('communication')) return 'fa-users';
-    
+
     return 'fa-folder';
   }
 
@@ -408,7 +446,9 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           console.error('Failed to load department list:', error);
-          this.errorMessage = this.t(this.translationService.translations.errors.loadDepartmentFailed);
+          this.errorMessage = this.t(
+            this.translationService.translations.errors.loadDepartmentFailed,
+          );
           this.isLoadingDepartments = false;
           this.cdr.detectChanges();
           this.departmentList = [];
@@ -494,7 +534,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
         error: (error) => {
           console.error('Failed to load evaluator name:', error);
           this.errorMessage = this.t(
-            this.translationService.translations.errors.loadEvaluatorFailed
+            this.translationService.translations.errors.loadEvaluatorFailed,
           );
         },
       });
@@ -527,7 +567,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     this.projectName = '';
     console.log('Project selection cleared');
   }
-  
+
   onDepartmentChange(): void {
     console.log('Role/Dept changed to:', this.departmentId);
     const selectedDept = this.departmentList.find((p) => p.departmentId === this.departmentId);
@@ -541,7 +581,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   clearDepartmentSelection(): void {
     this.departmentId = '';
     console.log('Role/Department selection cleared');
-  } 
+  }
 
   onEvaluatorChange(): void {
     const selectedStaff = this.staffList.find((s) => s.staffId === this.evaluatorId);
@@ -610,13 +650,15 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     const payload: any = {
       staffId: this.staffId.trim(),
       projectId: this.projectId.trim(),
+      projectName: this.projectName.trim(),
       departmentId: this.departmentId.trim(),
       evaluatorId: this.evaluatorId.trim(),
       evaluatorName: this.evaluatorName.trim(),
-      carpenterLevel: this.selectedLevel,
+      formType: CarpentersEvaluationFormComponent.FORM_TYPE.trim(),
+      carpenterLevel: this.selectedLevel.toUpperCase(),
       weightedScore: this.calculateWeightedScore(),
     };
-    
+
     // Add all question answers dynamically
     this.answers.forEach((answer, index) => {
       payload[`q${index + 1}`] = answer;
@@ -628,25 +670,31 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     this.carpentersEvaluationService.submitEvaluation(payload).subscribe({
       next: (response) => {
         console.log('Evaluation submitted successfully', response);
-        
+
         // NEW: Update status to "SUBMITTED" if we have a uniqId
         if (this.currentUniqId !== null) {
           console.log('Updating status to SUBMITTED for uniqId:', this.currentUniqId);
-          this.evaluationDistributionService.updateStatus(this.currentUniqId, 'SUBMITTED').subscribe({
-            next: (statusResponse) => {
-              console.log('Status updated successfully:', statusResponse);
+          this.evaluationDistributionService
+            .updateStatus(this.currentUniqId, 'SUBMITTED')
+            .pipe(
+              switchMap((statusResponse) => {
+                console.log('Status updated:', statusResponse);
+                return this.evaluationDistributionService.notifyEvaluator(payload); // next call
+              }),
+              catchError((err) => {
+                console.error('Update or SMS failed:', err);
+                this.submitted = true;
+                this.isLoading = false;
+                this.cdr.detectChanges();
+                return EMPTY;
+              }),
+            )
+            .subscribe((smsResponse) => {
+              console.log('SMS sent:', smsResponse);
               this.submitted = true;
               this.isLoading = false;
-              this.cdr.detectChanges(); // Trigger change detection
-            },
-            error: (statusError) => {
-              console.error('Failed to update status, but evaluation was submitted:', statusError);
-              // Still mark as submitted since the evaluation was saved
-              this.submitted = true;
-              this.isLoading = false;
-              this.cdr.detectChanges(); // Trigger change detection
-            }
-          });
+              this.cdr.detectChanges();
+            });
         } else {
           // If no uniqId, just mark as submitted
           this.submitted = true;
@@ -688,20 +736,20 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     if (this.canSubmit()) {
       return this.t(this.translationService.translations.submit.ready);
     }
-    
+
     if (this.questions.length === 0) {
       return this.t({
         en: 'Please select a carpenter level to begin',
-        zh: '请选择木工级别开始'
+        zh: '请选择木工级别开始',
       });
     }
-    
+
     const text = this.t(this.translationService.translations.submit.pleaseAnswer);
     return text.replace('{count}', this.questions.length.toString());
   }
-  
+
   getCarpenterLevelLabel(level: string): string {
-    const carpenterLevel = this.carpenterLevels.find(l => l.id === level);
+    const carpenterLevel = this.carpenterLevels.find((l) => l.id === level);
     return carpenterLevel ? this.t(carpenterLevel.label) : level;
   }
 }

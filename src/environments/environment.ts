@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080/api',
+  evaluationApiUrl: 'http://localhost:8082/api',
   // wsUrl: 'ws://localhost:8080/ws',
   // shellUrl: 'http://localhost:4000/remoteEntry.js',
   // bookingMfeUrl: 'http://localhost:4001/remoteEntry.js',

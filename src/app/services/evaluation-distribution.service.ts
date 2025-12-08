@@ -6,10 +6,11 @@ import { EvaluationDistribution } from '../models/evaluation-distribution';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EvaluationDistributionService {
   private apiUrl = `${environment.apiUrl}/evaluation-distributions`; // Adjust based on your Java API endpoint
+  private evaluationApiUrl = `${environment.evaluationApiUrl}/v1`;
 
   constructor(private http: HttpClient) {}
 
@@ -18,11 +19,11 @@ export class EvaluationDistributionService {
    */
   getByUniqId(uniqId: number): Observable<EvaluationDistribution> {
     return this.http.get<EvaluationDistribution>(`${this.apiUrl}/${uniqId}`).pipe(
-      map(response => {
+      map((response) => {
         console.log('Evaluation distribution loaded:', response);
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -32,16 +33,19 @@ export class EvaluationDistributionService {
    * @param status - The new status value (e.g., 'SUBMITTED', 'PENDING', 'COMPLETED')
    */
   updateStatus(uniqId: number, status: string): Observable<EvaluationDistribution> {
-    return this.http.patch<EvaluationDistribution>(
-      `${this.apiUrl}/${uniqId}/status`,
-      { status: status }
-    ).pipe(
-      map(response => {
-        console.log('Evaluation distribution status updated:', response);
-        return response;
-      }),
-      catchError(this.handleError)
-    );
+    return this.http
+      .patch<EvaluationDistribution>(`${this.apiUrl}/${uniqId}/status`, { status: status })
+      .pipe(
+        map((response) => {
+          console.log('Evaluation distribution status updated:', response);
+          return response;
+        }),
+        catchError(this.handleError),
+      );
+  }
+
+  notifyEvaluator(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.evaluationApiUrl}/notify-completion`, payload);
   }
 
   /**
@@ -49,7 +53,7 @@ export class EvaluationDistributionService {
    */
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An error occurred';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Client-side error
       errorMessage = `Error: ${error.error.message}`;
@@ -57,7 +61,7 @@ export class EvaluationDistributionService {
       // Server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    
+
     console.error('Evaluation Distribution Service Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
