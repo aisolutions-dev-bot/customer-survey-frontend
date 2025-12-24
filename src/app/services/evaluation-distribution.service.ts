@@ -28,6 +28,19 @@ export class EvaluationDistributionService {
   }
 
   /**
+   * Get evaluation distribution by groupId from m17EvaluationDistributionMgmt table
+   */
+  getByGroupId(groupId: number): Observable<EvaluationDistribution[]> {
+    return this.http.get<EvaluationDistribution[]>(`${this.apiUrl}/group-id/${groupId}`).pipe(
+      map((response) => {
+        console.log('Evaluation distribution loaded:', response);
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
+  /**
    * Update the status of an evaluation distribution
    * @param uniqId - The unique ID of the evaluation distribution
    * @param status - The new status value (e.g., 'SUBMITTED', 'PENDING', 'COMPLETED')

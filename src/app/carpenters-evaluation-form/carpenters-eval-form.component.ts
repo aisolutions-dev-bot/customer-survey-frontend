@@ -17,6 +17,7 @@ import {
 } from '../models/carpenters-eval-questions';
 import { TranslationService, Language, Translation } from '../services/translation.service';
 import { switchMap, catchError, EMPTY } from 'rxjs';
+import { EvaluationDistribution } from '../models/evaluation-distribution';
 
 @Component({
   selector: 'app-evaluation-form',
@@ -47,6 +48,12 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
 
   // NEW: Store the uniqId for status updates
   currentUniqId: number | null = null;
+
+  // groupId related
+  currentGroupId: number | null = null;
+  currentEvaluateeId: string = '';
+
+  groupEvaluations: EvaluationDistribution[] = [];
 
   // These will hold the values (from URL or user input)
   staffId: string = '';
@@ -102,12 +109,16 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
 
     // Check for uniq_id query parameter first - NEW
     const uniqId = this.route.snapshot.queryParamMap.get('uniq_id');
+    const groupId = this.route.snapshot.queryParamMap.get('group_id');
 
     if (uniqId) {
       // Store the uniqId for later use
       this.currentUniqId = parseInt(uniqId, 10);
       // If uniq_id is provided, load data from m17EvaluationDistributionMgmt
       this.loadFromUniqId(this.currentUniqId);
+    } else if (groupId) {
+      this.currentGroupId = parseInt(groupId, 10);
+      this.loadFromGroupId(this.currentGroupId);
     } else {
       // Otherwise, proceed with normal parameter handling
       this.initializeFromRouteParams();
@@ -216,6 +227,81 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
         });
       },
     );
+  }
+
+  private loadFromGroupId(groupId: number): void {
+    console.log('Loading evaluation group:', groupId);
+    this.isLoadingFromUniqId = true;
+
+    Promise.all([this.loadStaffList(), this.loadProjectList(), this.loadDepartmentList()]).then(
+      () => {
+        this.evaluationDistributionService.getByGroupId(groupId).subscribe({
+          next: (records) => {
+            if (!records || records.length === 0) {
+              this.errorMessage =
+                this.currentLang === 'en'
+                  ? 'No evaluation records found for this group.'
+                  : '该分组未找到评估记录。';
+              this.isLoadingFromUniqId = false;
+              this.cdr.detectChanges();
+              return;
+            }
+
+            this.groupEvaluations = records;
+
+            // Default to first evaluatee
+            const first = records[0];
+            this.applyDistributionForGroup(first);
+
+            this.isLoadingFromUniqId = false;
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error(err);
+            this.errorMessage = 'Failed to load group evaluation data';
+            this.isLoadingFromUniqId = false;
+            this.cdr.detectChanges();
+          },
+        });
+      },
+    );
+  }
+
+  private applyDistributionForGroup(distribution: EvaluationDistribution): void {
+    this.currentEvaluateeId = distribution.evaluateeId;
+
+    // Only evaluatee dropdown editable
+    this.staffId = distribution.evaluateeId;
+    this.staffName = distribution.evaluateeId;
+    this.isStaffIdLocked = false;
+
+    // Lock all other fields
+    this.projectId = distribution.projectId;
+    this.projectName = distribution.projectName;
+    this.isProjectIdLocked = true;
+
+    this.departmentId = distribution.departmentId;
+    this.departmentName = distribution.departmentName;
+    this.isDepartmentIdLocked = true;
+
+    this.evaluatorId = distribution.evaluatorId;
+    this.evaluatorName = distribution.evaluatorName;
+    this.isEvaluatorIdLocked = true;
+
+    this.selectedLevel = distribution.skillSet.toLowerCase();
+    this.isCarpenterLevelLocked = true;
+    this.loadQuestionsForLevel(this.selectedLevel);
+
+    this.currentUniqId = distribution.uniqId;
+  }
+
+  onEvaluateeChangeForGroup(newEvaluateeId: string): void {
+    const selected = this.groupEvaluations.find((e) => e.evaluateeId === newEvaluateeId);
+    if (!selected) return;
+
+    this.applyDistributionForGroup(selected);
+    this.currentEvaluateeId = newEvaluateeId;
+    this.cdr.detectChanges();
   }
 
   // Initialize from route parameters (existing functionality)
