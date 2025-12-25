@@ -35,7 +35,23 @@
       <h1 class="header-title">{{ t(translationService.translations.header.title) }}</h1>
       <div class="header-info">
         <!-- Staff ID Field -->
-        <div class="info-item">
+        <div *ngIf="isGroupMode" class="info-item">
+          <i class="fas fa-id-badge"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.staffId) }}:</strong>
+            <select
+              [(ngModel)]="staffId"
+              (change)="onEvaluateeChangeForGroup()"
+              class="info-select"
+            >
+              <option *ngFor="let rec of groupEvaluations" [value]="rec.evaluateeId">
+                {{ rec.evaluateeId }} - {{ rec.evaluateeName }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="!isGroupMode" class="info-item">
           <i class="fas fa-id-badge"></i>
           <div class="info-content">
             <strong>{{ t(translationService.translations.fields.staffId) }}:</strong>

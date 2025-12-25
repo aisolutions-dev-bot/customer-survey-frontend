@@ -1,6 +1,7 @@
 export interface EvaluationDistribution {
   uniqId: number;
   evaluateeId: string;
+  evaluateeName: string;
   projectId: string;
   projectName: string;
   departmentId: string;

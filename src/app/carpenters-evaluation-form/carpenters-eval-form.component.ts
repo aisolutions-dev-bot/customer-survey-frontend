@@ -50,9 +50,9 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   currentUniqId: number | null = null;
 
   // groupId related
+  isGroupMode = false;
   currentGroupId: number | null = null;
   currentEvaluateeId: string = '';
-
   groupEvaluations: EvaluationDistribution[] = [];
 
   // These will hold the values (from URL or user input)
@@ -117,6 +117,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
       // If uniq_id is provided, load data from m17EvaluationDistributionMgmt
       this.loadFromUniqId(this.currentUniqId);
     } else if (groupId) {
+      this.isGroupMode = true;
       this.currentGroupId = parseInt(groupId, 10);
       this.loadFromGroupId(this.currentGroupId);
     } else {
@@ -230,41 +231,42 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   private loadFromGroupId(groupId: number): void {
-    console.log('Loading evaluation group:', groupId);
-    this.isLoadingFromUniqId = true;
-
     Promise.all([this.loadStaffList(), this.loadProjectList(), this.loadDepartmentList()]).then(
       () => {
         this.evaluationDistributionService.getByGroupId(groupId).subscribe({
-          next: (records) => {
-            if (!records || records.length === 0) {
-              this.errorMessage =
-                this.currentLang === 'en'
-                  ? 'No evaluation records found for this group.'
-                  : '该分组未找到评估记录。';
-              this.isLoadingFromUniqId = false;
+          next: (list) => {
+            if (!list || !list.length) {
+              this.errorMessage = 'No evaluation records for this group.';
               this.cdr.detectChanges();
               return;
             }
+            this.groupEvaluations = list; // keep entire server list
+            const first = this.groupEvaluations[0];
+            this.staffId = list[0].evaluateeId; // editable dropdown will show this
+            this.patchForm(list[0]);
 
-            this.groupEvaluations = records;
-
-            // Default to first evaluatee
-            const first = records[0];
             this.applyDistributionForGroup(first);
-
-            this.isLoadingFromUniqId = false;
             this.cdr.detectChanges();
           },
           error: (err) => {
             console.error(err);
-            this.errorMessage = 'Failed to load group evaluation data';
-            this.isLoadingFromUniqId = false;
+            this.errorMessage = 'Failed to load group data.';
             this.cdr.detectChanges();
           },
         });
       },
     );
+  }
+
+  /** Called ONLY when user changes the evaluatee dropdown */
+  onEvaluateeChangeForGroup(): void {
+    if (!this.isGroupMode) {
+      return;
+    } // safety
+    const record = this.groupEvaluations.find((r) => r.evaluateeId === this.staffId);
+    if (record) {
+      this.patchForm(record);
+    }
   }
 
   private applyDistributionForGroup(distribution: EvaluationDistribution): void {
@@ -295,12 +297,17 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     this.currentUniqId = distribution.uniqId;
   }
 
-  onEvaluateeChangeForGroup(newEvaluateeId: string): void {
-    const selected = this.groupEvaluations.find((e) => e.evaluateeId === newEvaluateeId);
-    if (!selected) return;
-
-    this.applyDistributionForGroup(selected);
-    this.currentEvaluateeId = newEvaluateeId;
+  /** Rewrite ALL form fields from the chosen record */
+  private patchForm(record: EvaluationDistribution): void {
+    this.currentUniqId = record.uniqId;
+    this.projectId = record.projectId;
+    this.projectName = record.projectName ?? ''; // whatever fields you have
+    this.departmentId = record.departmentId;
+    this.departmentName = record.departmentName ?? '';
+    this.evaluatorId = record.evaluatorId;
+    this.evaluatorName = record.evaluatorName ?? '';
+    this.selectedLevel = (record.skillSet ?? 'junior').toLowerCase();
+    this.loadQuestionsForLevel(this.selectedLevel);
     this.cdr.detectChanges();
   }
 
