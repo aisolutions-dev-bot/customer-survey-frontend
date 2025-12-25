@@ -423,13 +423,14 @@
 
 .success-icon {
   font-size: 5rem;
-  margin-bottom: 25px;
+  margin-bottom: 3.5rem;
   animation: bounce 1s ease infinite alternate;
 }
 
 .success-title {
   font-size: 2rem;
   font-weight: 700;
+  line-height: 1.2;
   color: #1e293b;
   margin-bottom: 15px;
 }
@@ -1350,4 +1351,3 @@
     transform: scale(1.1);
   }
 }
-
