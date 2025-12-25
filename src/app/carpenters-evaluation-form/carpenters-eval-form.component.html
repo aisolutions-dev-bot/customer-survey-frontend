@@ -25,11 +25,31 @@
         <strong>{{ t(translationService.translations.success.evaluatedBy) }}</strong>
         {{ evaluatorName }} ({{ evaluatorId }})
       </div>
+      <div *ngIf="isGroupMode" class="success-evaluator">
+        Please wait for a moment. You will be redirected to the previous page to complete the rest
+        of the evaluation. If it doesn't, please refresh the page.
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isGroupMode && allGroupEvaluationsCompleted" class="success-screen">
+    <div class="success-card">
+      <div class="success-icon">🎉</div>
+      <h2 class="success-title">
+        {{ currentLang === 'en' ? 'All evaluations completed!' : '本组评估已全部完成！' }}
+      </h2>
+      <p class="success-message">
+        {{
+          currentLang === 'en'
+            ? 'Congratulations, you have finished every evaluation in this group.'
+            : '恭喜，您已完成本组中的所有评估。'
+        }}
+      </p>
     </div>
   </div>
 
   <!-- Main Form -->
-  <div *ngIf="!submitted" class="main-form">
+  <div *ngIf="!submitted && !allGroupEvaluationsCompleted" class="main-form">
     <!-- Header -->
     <div class="header-card">
       <h1 class="header-title">{{ t(translationService.translations.header.title) }}</h1>

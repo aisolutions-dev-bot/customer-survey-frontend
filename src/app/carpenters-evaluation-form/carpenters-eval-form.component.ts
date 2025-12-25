@@ -54,6 +54,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   currentGroupId: number | null = null;
   currentEvaluateeId: string = '';
   groupEvaluations: EvaluationDistribution[] = [];
+  allGroupEvaluationsCompleted = false;
 
   // These will hold the values (from URL or user input)
   staffId: string = '';
@@ -236,7 +237,8 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
         this.evaluationDistributionService.getByGroupId(groupId).subscribe({
           next: (list) => {
             if (!list || !list.length) {
-              this.errorMessage = 'No evaluation records for this group.';
+              this.allGroupEvaluationsCompleted = true;
+              this.isLoadingFromUniqId = false;
               this.cdr.detectChanges();
               return;
             }
@@ -787,10 +789,10 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
               this.submitted = true;
               this.isLoading = false;
               this.cdr.detectChanges();
-              if (this.isGroupMode) {
+              if (this.isGroupMode && !this.allGroupEvaluationsCompleted) {
                 setTimeout(() => {
                   window.location.reload();
-                }, 5000);
+                }, 10000);
               }
             });
         } else {
@@ -849,5 +851,9 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   getCarpenterLevelLabel(level: string): string {
     const carpenterLevel = this.carpenterLevels.find((l) => l.id === level);
     return carpenterLevel ? this.t(carpenterLevel.label) : level;
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 }
