@@ -787,6 +787,11 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
               this.submitted = true;
               this.isLoading = false;
               this.cdr.detectChanges();
+              if (this.isGroupMode) {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 5000);
+              }
             });
         } else {
           // If no uniqId, just mark as submitted
