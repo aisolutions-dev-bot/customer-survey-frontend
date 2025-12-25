@@ -789,10 +789,10 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
               this.submitted = true;
               this.isLoading = false;
               this.cdr.detectChanges();
-              if (this.isGroupMode && !this.allGroupEvaluationsCompleted) {
+              if (this.isGroupMode) {
                 setTimeout(() => {
                   window.location.reload();
-                }, 10000);
+                }, 5000);
               }
             });
         } else {
