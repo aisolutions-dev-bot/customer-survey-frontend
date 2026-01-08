@@ -38,6 +38,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   submitted = false;
   isLoading = false;
   errorMessage = '';
+  remarks: string = '';
 
   showExplanation = false;
   selectedQuestion = 0;
@@ -702,17 +703,26 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
       this.departmentId.trim() !== '' &&
       this.evaluatorId.trim() !== '' &&
       this.evaluatorName.trim() !== '' &&
-      this.selectedLevel.trim() !== '';
+      this.selectedLevel.trim() !== '' &&
+      this.remarks.trim() !== '';
 
     return allQuestionsAnswered && allFieldsFilled;
   }
 
   calculateWeightedScore(): number {
-    let totalScore = 0;
-    this.questions.forEach((question, index) => {
-      totalScore += this.answers[index] * (question.weight / 5);
+    if (!this.questions.length) return 0;
+
+    let rawScore = 0;
+    let totalWeight = 0;
+    this.questions.forEach((q, index) => {
+      const answer = this.answers[index] ?? 0;
+      rawScore += answer * q.weight;
+      totalWeight += q.weight;
     });
-    return totalScore;
+
+    const maxScore = 5 * totalWeight;
+    if (maxScore === 0) return 0;
+    return Math.round((rawScore / maxScore) * 100);
   }
 
   getProgressPercentage(): number {
@@ -734,6 +744,10 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   submitEvaluation(): void {
+    if (this.remarks.length > 8000) {
+      this.remarks = this.remarks.substring(0, 8000);
+    }
+
     if (!this.canSubmit()) {
       this.errorMessage = this.t(this.translationService.translations.errors.allFieldsRequired);
       return;
@@ -752,6 +766,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
       formType: CarpentersEvaluationFormComponent.FORM_TYPE.trim(),
       carpenterLevel: this.selectedLevel.toUpperCase(),
       weightedScore: this.calculateWeightedScore(),
+      remarks: this.remarks.trim(),
     };
 
     // Add all question answers dynamically
@@ -766,7 +781,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
       next: (response) => {
         console.log('Evaluation submitted successfully', response);
 
-        // NEW: Update status to "SUBMITTED" if we have a uniqId
+        // Update status to "SUBMITTED" if we have a uniqId
         if (this.currentUniqId !== null) {
           console.log('Updating status to SUBMITTED for uniqId:', this.currentUniqId);
           this.evaluationDistributionService
@@ -774,7 +789,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
             .pipe(
               switchMap((statusResponse) => {
                 console.log('Status updated:', statusResponse);
-                return this.evaluationDistributionService.notifyEvaluator(payload); // next call
+                return this.evaluationDistributionService.notifyEvaluator(payload);
               }),
               catchError((err) => {
                 console.error('Update or SMS failed:', err);
@@ -799,13 +814,13 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
           // If no uniqId, just mark as submitted
           this.submitted = true;
           this.isLoading = false;
-          this.cdr.detectChanges(); // Trigger change detection
+          this.cdr.detectChanges();
         }
       },
       error: (error) => {
         this.errorMessage = this.t(this.translationService.translations.errors.submitFailed);
         this.isLoading = false;
-        this.cdr.detectChanges(); // Trigger change detection for error state
+        this.cdr.detectChanges();
         console.error('Submission failed:', error);
       },
     });

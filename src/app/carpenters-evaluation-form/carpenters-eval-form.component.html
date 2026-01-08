@@ -353,6 +353,44 @@
         </div>
       </ng-container>
 
+      <!-- Remark Section -->
+      <div class="remark-section" *ngIf="questions.length > 0">
+        <div class="remark-title">
+          <i class="fas fa-comment-dots"></i>
+          {{ currentLang === 'en' ? 'Remark' : '备注' }}
+          <span class="required">*</span>
+        </div>
+        <div class="remark-description">
+          {{
+            currentLang === 'en'
+              ? "Please provide comments, observations, or feedback about the carpenter's performance. This field is required."
+              : '请提供关于木工表现的评论、观察或反馈。此字段为必填。'
+          }}
+        </div>
+        <textarea
+          [(ngModel)]="remarks"
+          name="remark"
+          #remarkRef="ngModel"
+          required
+          class="remark-textarea"
+          [class.input-error]="remarkRef.invalid && (remarkRef.touched || submitted)"
+          [maxlength]="8000"
+          rows="6"
+          [placeholder]="
+            currentLang === 'en'
+              ? 'Enter your remarks here... (e.g., strengths, areas for improvement, specific examples)'
+              : '在此输入您的备注...（例如：优势、改进领域、具体例子）'
+          "
+        ></textarea>
+
+        <!-- Error message -->
+        <div class="error-message" *ngIf="remarkRef.invalid && (remarkRef.touched || submitted)">
+          <small *ngIf="remarkRef.errors?.['required']">
+            {{ currentLang === 'en' ? 'Remark is required.' : '备注为必填项。' }}
+          </small>
+        </div>
+      </div>
+
       <!-- Progress Section -->
       <div class="progress-section">
         <div class="progress-header">
