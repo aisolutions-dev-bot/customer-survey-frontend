@@ -10,4 +10,5 @@ export interface EvaluationDistribution {
   evaluatorName: string;
   skillSet: string; // 'junior', 'journeyman', or 'senior'
   status?: string; // NEW: Status field - Values: 'PENDING', 'SUBMITTED', 'COMPLETED', etc.
+  formType: string;
 }

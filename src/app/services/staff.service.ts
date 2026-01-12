@@ -6,12 +6,13 @@ import { environment } from '../../environments/environment';
 export interface Staff {
   staffId: string;
   name: string;
+  formType: string;
   telMobile?: string;
   emailCompany?: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StaffService {
   private apiUrl = `${environment.apiUrl}`;

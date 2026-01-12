@@ -67,6 +67,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
   departmentName: string = '';
   evaluatorId: string = '';
   evaluatorName: string = '';
+  formType = '';
 
   // Track if values came from URL (locked) or are user-editable
   isStaffIdLocked: boolean = false;
@@ -298,6 +299,8 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     this.loadQuestionsForLevel(this.selectedLevel);
 
     this.currentUniqId = distribution.uniqId;
+
+    this.fetchFormType(this.staffId);
   }
 
   /** Rewrite ALL form fields from the chosen record */
@@ -310,8 +313,25 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     this.evaluatorId = record.evaluatorId;
     this.evaluatorName = record.evaluatorName ?? '';
     this.selectedLevel = (record.skillSet ?? 'junior').toLowerCase();
+
+    this.fetchFormType(record.evaluateeId);
+
     this.loadQuestionsForLevel(this.selectedLevel);
     this.cdr.detectChanges();
+  }
+
+  private fetchFormType(evaluateeId: string): void {
+    this.staffService.getStaffById(evaluateeId).subscribe({
+      next: (staff) => {
+        if (staff) {
+          this.formType = staff.formType;
+          console.log('Form Type:', this.formType);
+        }
+      },
+      error: (error) => {
+        console.error('Failed to load staff name:', error);
+      },
+    });
   }
 
   // Initialize from route parameters (existing functionality)
@@ -558,12 +578,16 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     const staff = this.staffList.find((s) => s.staffId === staffId);
     if (staff) {
       this.staffName = staff.name;
+      this.formType = staff.formType;
+      console.log(this.formType);
       console.log('Staff name loaded from list:', this.staffName);
+      console.log('Form Type:', this.formType); // Debug log
     } else {
       this.staffService.getStaffById(staffId).subscribe({
         next: (staff) => {
           if (staff && staff.name) {
             this.staffName = staff.name;
+            this.formType = staff.formType;
             console.log('Staff name loaded from API:', this.staffName);
           }
         },
@@ -642,6 +666,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     const selectedStaff = this.staffList.find((s) => s.staffId === this.staffId);
     if (selectedStaff) {
       this.staffName = selectedStaff.name;
+      this.formType = selectedStaff.formType;
       console.log('Staff selected:', this.staffId, '-', this.staffName);
     } else {
       this.staffName = '';
@@ -756,6 +781,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.errorMessage = '';
 
+    console.log(this.formType);
     const payload: any = {
       staffId: this.staffId.trim(),
       projectId: this.projectId.trim(),
@@ -763,7 +789,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
       departmentId: this.departmentId.trim(),
       evaluatorId: this.evaluatorId.trim(),
       evaluatorName: this.evaluatorName.trim(),
-      formType: CarpentersEvaluationFormComponent.FORM_TYPE.trim(),
+      formType: this.formType.trim(),
       carpenterLevel: this.selectedLevel.toUpperCase(),
       weightedScore: this.calculateWeightedScore(),
       remarks: this.remarks.trim(),
