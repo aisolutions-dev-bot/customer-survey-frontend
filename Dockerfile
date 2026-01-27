@@ -13,8 +13,14 @@ RUN npm install -g @angular/cli && npm install
 # Copy rest of the app
 COPY . .
 
+ARG GIT_BRANCH=$GIT_BRANCH
+
 # Build Angular app
-RUN ng build --configuration production --no-prerender
+RUN if [ "$GIT_BRANCH" = "staging" ]; then \
+  npm run build:staging; \
+  else \
+  npm run build:prod; \
+  fi
 
 # Rename index.csr.html to index.html
 RUN mv /app/dist/customer-survey-frontend/browser/index.csr.html /app/dist/customer-survey-frontend/browser/index.html

@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:staging": "ng build --configuration=staging --no-prerender",
+    "build:prod": "ng build --configuration=production --no-prerender",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:customer-survey-frontend": "node dist/customer-survey-frontend/server/server.mjs"
