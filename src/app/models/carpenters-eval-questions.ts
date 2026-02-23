@@ -37,6 +37,10 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Able to assist in material handling (timber, plywood, boards)',
       zh: '能协助搬运、移动和整理材料（木料、板材），且不造成损坏'
@@ -51,6 +55,10 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Performs simple, repetitive tasks: sanding, cutting assistance, nailing',
       zh: '能在指导下完成简单的重复性工作：打磨、在切割时扶稳板材、基本清洁、取送工具/材料'
@@ -65,6 +73,10 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Reads simple instructions but cannot interpret technical drawings',
       zh: '能阅读简单说明，但无法理解技术图纸'
@@ -202,6 +214,10 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Able to read and follow simple carpentry drawings',
       zh: '能独立根据简单图纸完成标准柜子、架子或家具的测量、切割和组装'
@@ -216,6 +232,10 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Understands different types of boards (plywood, MDF, particleboard) and basic joinery',
       zh: '能分辨常用材料（MDF，胶合板，刨花板）并选择合适的螺丝和连接件'
@@ -230,6 +250,10 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Can operate woodworking machines (table saw, band saw, router, edge-banding machine)',
       zh: '能够操作木工机械（台锯、带锯、刨床、边带机）'
@@ -244,6 +268,10 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Assists in installation of doors, panels, cabinets under supervision',
       zh: '在监督下协助安装门、面板和橱柜'
@@ -258,6 +286,10 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Maintains tools and ensures safe work practices',
       zh: '维护工具并确保安全的工作实践'
@@ -395,6 +427,10 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Skilled in custom furniture making, fit-out works, and joinery details',
       zh: '会独立定制家具制作、装修工程和木工细节'
@@ -409,6 +445,10 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Knowledge of finishing methods (laminate, veneer, painting, polishing)',
       zh: '对表面处理方法（层压、单板、喷漆、抛光）的了解很强'
@@ -423,6 +463,10 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Can troubleshoot installation issues on-site',
       zh: '可以在现场排除安装问题。不需要指导'
@@ -437,6 +481,10 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Understands material properties (solid wood vs. engineered boards, fittings, adhesives)',
       zh: '理解材料特性（例如：实木与人造板，五金配件，胶水）'
@@ -451,6 +499,10 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
   {
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
     category: {
       en: 'Uses precision tools and ensures quality standards',
       zh: '使用精密工具并确保质量标准'
