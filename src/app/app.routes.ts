@@ -35,7 +35,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./carpenters-evaluation-form/carpenters-eval-form.component').then((m) => m.CarpentersEvaluationFormComponent),
   },
-
+  // Business Support - Project evaluation with all parameters
+  {
+   path: 'bs-project-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./bs-project-evaluation-form/bs-proj-eval-form.component').then((m) => m.BSProjectEvaluationFormComponent),
+  },
   // Carpenters evaluation without parameters (all fields editable)
   {
     path: 'carpenters-evaluation',
