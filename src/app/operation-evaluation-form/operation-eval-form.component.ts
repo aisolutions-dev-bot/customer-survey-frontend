@@ -3,35 +3,35 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { BSProjectEvaluationService } from '../services/bs-project-evaluation.service';
+import { OperationEvaluationService } from '../services/operation-evaluation.service';
 import { StaffService, Staff } from '../services/staff.service';
 import { ProjectService, Project } from '../services/project.service';
 import { DepartmentService, Department } from '../services/department.service';
 import { EvaluationDistributionService } from '../services/evaluation-distribution.service';
-import { CarpentersEvaluationResponse } from '../models/carpenters-eval-response';
+
 import {
-  BS_PROJECT_STANDARD_QUESTIONS,
+  OPERATION_STANDARD_QUESTIONS,
   SMILEYS,
   QuestionDefinition,
-} from '../models/bs-proj-eval-questions';
+} from '../models/operation-eval-questions';
 import { TranslationService, Language, Translation } from '../services/translation.service';
 import { switchMap, catchError, EMPTY } from 'rxjs';
 import { EvaluationDistribution } from '../models/evaluation-distribution';
 
 @Component({
   selector: 'app-evaluation-form',
-  templateUrl: './bs-proj-eval-form.component.html',
-  styleUrls: ['./bs-proj-eval-form.component.scss'],
+  templateUrl: './operation-eval-form.component.html',
+  styleUrls: ['./operation-eval-form.component.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
-export class BSProjectEvaluationFormComponent implements OnInit, OnDestroy {
+export class OperationEvaluationFormComponent implements OnInit, OnDestroy {
   // Constant(s)
-  static readonly FORM_TYPE = 'BUSINESS SUPPORT - PROJECT';
+  static readonly FORM_TYPE = 'BUSINESS SUPPORT - OPERATION EXECUTIVE';
 
-  questions: QuestionDefinition[] = BS_PROJECT_STANDARD_QUESTIONS; // Fixed: Added proper type annotation with colon
+  questions: QuestionDefinition[] = OPERATION_STANDARD_QUESTIONS; // Fixed: Added proper type annotation with colon
   smileys = SMILEYS;
-  answers: number[] = Array(BS_PROJECT_STANDARD_QUESTIONS.length).fill(0);
+  answers: number[] = Array(OPERATION_STANDARD_QUESTIONS.length).fill(0);
   submitted = false;
   isLoading = false;
   errorMessage = '';
@@ -90,7 +90,7 @@ export class BSProjectEvaluationFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private bsprojectEvaluationService: BSProjectEvaluationService,
+    private operationEvaluationService: OperationEvaluationService,
     private staffService: StaffService,
     private projectService: ProjectService,
     private departmentService: DepartmentService,
@@ -726,7 +726,7 @@ export class BSProjectEvaluationFormComponent implements OnInit, OnDestroy {
       departmentId: this.departmentId?.trim() || '',
       evaluatorId: this.evaluatorId?.trim() || '',
       evaluatorName: this.evaluatorName?.trim() || '',
-      formType: this.formType?.trim() || 'BS-PROJECT', // Default to 'BS-PROJECT' if undefined,
+      formType: this.formType?.trim() || 'DRAFTER', // Default to 'DRAFTER' if undefined,
       carpenterLevel: 'STANDARD', // Always use 'STANDARD' for the single form
       weightedScore: this.calculateWeightedScore(),
       remarks: this.remarks.trim() || '',
@@ -740,7 +740,7 @@ export class BSProjectEvaluationFormComponent implements OnInit, OnDestroy {
     console.log('Submitting evaluation:', payload);
     console.log('Weighted Score:', this.calculateWeightedScore());
 
-    this.bsprojectEvaluationService.submitEvaluation(payload).subscribe({
+    this.operationEvaluationService.submitEvaluation(payload).subscribe({
       next: (response) => {
         console.log('Evaluation submitted successfully', response);
 
