@@ -16,7 +16,7 @@ export interface CarpenterLevel {
 }
 
 // Standard Questionnaire with Categories (7 questions)
-export const STANDARD_QUESTIONS: QuestionDefinition[] = [
+export const BS_PROJECT_STANDARD_QUESTIONS: QuestionDefinition[] = [
   // ========== COSTING CATEGORY (2 questions - 50%) ==========
   {
     groupCategory: {
@@ -83,7 +83,7 @@ export const STANDARD_QUESTIONS: QuestionDefinition[] = [
       en: 'On-time closing of Final Account (Upon handover) - Proactively and accurately * excluding DLP ',
       zh: '按时完成最终结算（交接时）- 主动且准确地*（不包括数据丢失防护措施）'
     },
-    weight: 20,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - Account closed with/ not within required duration after project handover, with missed items causing damage of reputation/ loss of revenue, no follow up with counterparts.', zh: '较差 - 项目移交后，账户未在规定时间内关闭，遗漏事项导致声誉受损/收入损失，且未与对方进行后续跟进。' },
       2: { en: 'Needs Improvement - Account closed not within required duration after project handover, not actively follow up with counterparts causing delay .', zh: '需改进 - 项目移交后未在规定时间内关闭账户，且未积极与对口部门跟进，导致延误。' },
@@ -142,7 +142,7 @@ export const STANDARD_QUESTIONS: QuestionDefinition[] = [
       en: 'Responsive to Enquires - Based on project duration, actions to requests & queries. Refer to employee handbook (both Internally & Externally)',
       zh: '对客户咨询的响应能力 - 根据项目周期，对请求和查询的响应动作。参考员工手册（内部和外部）。'
     },
-    weight: 5,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - Slow response, unresolved issues.', zh: '较差 - 响应缓慢，问题未解决。' },
       2: { en: 'Needs Improvement - Delayed responses, incomplete resolutions.', zh: '需改进 - 响应延迟，问题未完全解决。' },
