@@ -89,7 +89,42 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./operation-evaluation-form/operation-eval-form.component').then((m) => m.OperationEvaluationFormComponent),
   },
-
+  // Ceiling evaluation with all parameters
+  {
+   path: 'ceiling-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./ceiling-evaluation-form/ceiling-eval-form.component').then((m) => m.CeilingEvaluationFormComponent),
+  },
+  // Ceiling evaluation without parameters (all fields editable)
+  {
+   path: 'ceiling-evaluation',
+    loadComponent: () =>
+      import('./ceiling-evaluation-form/ceiling-eval-form.component').then((m) => m.CeilingEvaluationFormComponent),
+  },
+  // Spraypaint evaluation with all parameters
+  {
+   path: 'spraypaint-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./spraypaint-evaluation-form/spraypaint-eval-form.component').then((m) => m.SpraypaintEvaluationFormComponent),
+  },
+  // Spraypaint evaluation without parameters (all fields editable)
+  {
+   path: 'spraypaint-evaluation',
+    loadComponent: () =>
+      import('./spraypaint-evaluation-form/spraypaint-eval-form.component').then((m) => m.SpraypaintEvaluationFormComponent),
+  },
+  // Metal evaluation with all parameters
+  {
+   path: 'metal-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./metal-evaluation-form/metal-eval-form.component').then((m) => m.MetalEvaluationFormComponent),
+  },
+  // Metal evaluation without parameters (all fields editable)
+  {
+   path: 'metal-evaluation',
+    loadComponent: () =>
+      import('./metal-evaluation-form/metal-eval-form.component').then((m) => m.MetalEvaluationFormComponent),
+  },
   // keep this last as a catch-all or root route
   {
     path: '',

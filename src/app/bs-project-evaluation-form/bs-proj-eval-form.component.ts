@@ -674,17 +674,14 @@ export class BSProjectEvaluationFormComponent implements OnInit, OnDestroy {
   calculateWeightedScore(): number {
     if (!this.questions.length) return 0;
 
-    let rawScore = 0;
     let totalWeight = 0;
     this.questions.forEach((q, index) => {
       const answer = this.answers[index] ?? 0;
-      rawScore += answer * q.weight;
-      totalWeight += q.weight;
+      totalWeight += answer / 5 * q.weight;
     });
 
-    const maxScore = 5 * totalWeight;
-    if (maxScore === 0) return 0;
-    return Math.round((rawScore / maxScore) * 100);
+    if (totalWeight === 0) return 0;
+    return Math.round(( totalWeight) );
   }
 
   getProgressPercentage(): number {
