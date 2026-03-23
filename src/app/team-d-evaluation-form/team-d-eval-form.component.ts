@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { MetalCutEvaluationService } from '../services/metalcut-evaluation-services';
+import { TeamDEvaluationService } from '../services/team-d-evaluation.service';
 import { StaffService, Staff } from '../services/staff.service';
 import { ProjectService, Project } from '../services/project.service';
 import { DepartmentService, Department } from '../services/department.service';
@@ -13,21 +13,21 @@ import {
   CeilingLevel,
   SMILEYS,
   QuestionDefinition,
-} from '../models/metalcut-eval-questions';
+} from '../models/team-d-eval-questions';
 import { TranslationService, Language, Translation } from '../services/translation.service';
 import { switchMap, catchError, EMPTY } from 'rxjs';
 import { EvaluationDistribution } from '../models/evaluation-distribution';
 
 @Component({
   selector: 'app-evaluation-form',
-  templateUrl: './metalcut-eval-form.component.html',
-  styleUrls: ['./metalcut-eval-form.component.scss'],
+  templateUrl: './team-d-eval-form.component.html',
+  styleUrls: ['./team-d-eval-form.component.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
-export class MetalCutEvaluationFormComponent implements OnInit, OnDestroy {
+export class TeamDEvaluationFormComponent implements OnInit, OnDestroy {
   // Constant(s)
-  static readonly FORM_TYPE = 'METALCUT';
+  static readonly FORM_TYPE = 'TEAM-D';
 
   carpenterLevels = CARPENTER_LEVELS;
   selectedLevel: string = ''; // Will store 'level1', 'level2', or 'level3'
@@ -93,7 +93,7 @@ export class MetalCutEvaluationFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private mEvaluationService: MetalCutEvaluationService,
+    private mEvaluationService: TeamDEvaluationService,
     private staffService: StaffService,
     private projectService: ProjectService,
     private departmentService: DepartmentService,
@@ -786,7 +786,7 @@ export class MetalCutEvaluationFormComponent implements OnInit, OnDestroy {
       departmentId: this.departmentId.trim(),
       evaluatorId: this.evaluatorId.trim(),
       evaluatorName: this.evaluatorName.trim(),
-      formType: this.formType?.trim() || 'METALCUT', // default to 'METALCUT' if formType is empty
+      formType: this.formType?.trim() || 'METAL', // default to 'METAL' if formType is empty
       carpenterLevel: this.selectedLevel.toUpperCase(),
       weightedScore: this.calculateWeightedScore(),
       remarks: this.remarks.trim(),

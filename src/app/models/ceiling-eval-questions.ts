@@ -17,7 +17,7 @@ export interface CeilingLevel {
 
 // Level 1 Questionnaire with Categories (10 questions)
 const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
-  // ========== TECHNICAL SKILLS CATEGORY (4 questions - 50%) ==========
+  // ========== TECHNICAL SKILLS CATEGORY (4 questions - 60%) ==========
   {
     groupCategory: {
       en: 'Technical Skills',
@@ -27,7 +27,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       en: 'Understand the use of basic tools (drill, screw gun, measuring tools, putty knife, etc.)',
       zh: '能分辨基础施工工具的使用（电钻、螺丝枪、测量工具、腻子刀等）'
     },
-    weight: 10,
+    weight: 15,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
@@ -45,7 +45,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       en: 'Understand basic ceiling systems, plastering, and putty work',
       zh: '了解基本天花板、批灰及腻子工序'
     },
-    weight: 10,
+    weight: 15,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },

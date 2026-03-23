@@ -125,6 +125,42 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./metal-evaluation-form/metal-eval-form.component').then((m) => m.MetalEvaluationFormComponent),
   },
+  // MetalCut evaluation with all parameters
+  {
+   path: 'metalcut-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./metalcut-evaluation-form/metalcut-eval-form.component').then((m) => m.MetalCutEvaluationFormComponent),
+  },
+  // MetalCut evaluation without parameters (all fields editable)
+  {
+   path: 'metalcut-evaluation',
+    loadComponent: () =>
+      import('./metalcut-evaluation-form/metalcut-eval-form.component').then((m) => m.MetalCutEvaluationFormComponent),
+  },
+  // Me-Project evaluation with all parameters
+  {
+   path: 'me-project-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./me-project-evaluation-form/me-project-eval-form.component').then((m) => m.MeProjectEvaluationFormComponent),
+  },
+  // Me-Project evaluation without parameters (all fields editable)
+  {
+   path: 'me-project-evaluation',
+    loadComponent: () =>
+      import('./me-project-evaluation-form/me-project-eval-form.component').then((m) => m.MeProjectEvaluationFormComponent),
+  },
+  // Team-D evaluation with all parameters
+  {
+   path: 'team-d-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./team-d-evaluation-form/team-d-eval-form.component').then((m) => m.TeamDEvaluationFormComponent),
+  },
+  // Team-D evaluation without parameters (all fields editable)
+  {
+   path: 'team-d-evaluation',
+    loadComponent: () =>
+      import('./team-d-evaluation-form/team-d-eval-form.component').then((m) => m.TeamDEvaluationFormComponent),
+  },
   // keep this last as a catch-all or root route
   {
     path: '',

@@ -17,8 +17,8 @@ export interface CeilingLevel {
 
 // Level 1 Questionnaire with Categories (10 questions)
 const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
-  // ========== TECHNICAL SKILLS CATEGORY (6 questions - 50%) ==========
-  {
+  // ========== TECHNICAL SKILLS CATEGORY (6 questions - 60%) ==========
+  { //Q1
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -36,7 +36,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
+  { //Q2
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -45,7 +45,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       en: 'Able to identify basic material types (e.g. metal, boards, panels, paint, thinner, hardener etc.)  for required works',
       zh: '能辨认基本材料类型（如金属、板材、面板等）以满足施工要求'
     },
-    weight: 5,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
@@ -54,7 +54,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
+  { //Q3
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -63,7 +63,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       en: 'Assist with racking, de-racking, and proper placement of workpieces',
       zh: '协助工件上架、下架及正确摆放'
     },
-    weight: 5,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
@@ -72,7 +72,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
+  { //Q4
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -90,7 +90,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
+  { //Q5
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -108,7 +108,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
+  { //Q6
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -128,7 +128,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 question - 5%) ==========
-  {
+  { //Q7
     groupCategory: {
       en: 'Problem Solving',
       zh: '问题解决'
@@ -148,7 +148,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== ADAPTABILITY CATEGORY (1 question - 5%) ==========
-  {
+  { //Q8
     groupCategory: {
       en: 'Adaptability',
       zh: '适应能力'
@@ -168,7 +168,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== SELF-MANAGEMENT CATEGORY (1 question - 15%) ==========
-  {
+  { //Q9
     groupCategory: {
       en: 'Self-Management',
       zh: '自我管理'
@@ -188,7 +188,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROJECT STANDARD CATEGORY (1 question - 5%) ==========
-  {
+  { //Q10
     groupCategory: {
       en: 'Project Standard',
       zh: '项目标准'
@@ -208,7 +208,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 question - 10%) ==========
-  {
+  { //Q11
     groupCategory: {
       en: 'Teamwork & Communication',
       zh: '团队合作与沟通'
@@ -231,7 +231,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
 // Level 2 Questionnaire (11 questions)
 const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   // ========== TECHNICAL SKILLS CATEGORY (6 questions - 50%) ==========
-  {
+  { //Q1
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -249,7 +249,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
+  { //Q2
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -267,7 +267,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
+  { //Q3
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -285,7 +285,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
+  { //Q4
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -303,7 +303,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
+  { //Q5
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -321,7 +321,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
+  { //Q6
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -341,7 +341,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
-  {
+  { //Q7
     groupCategory: {
       en: 'Problem Solving',
       zh: '问题解决'
@@ -361,7 +361,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== ADAPTIBILITY CATEGORY (1 questions - 5%) ==========
-  {
+  { //Q8
     groupCategory: {
       en: 'Adaptability',
       zh: '适应能力'
@@ -381,7 +381,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== ADAPTIBILITY CATEGORY (1 questions - 10%) ==========
-  {
+  { //Q9
     groupCategory: {
       en: 'Self-Management',
       zh: '自我管理'
@@ -401,7 +401,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== PROJECT STANDARD CATEGORY (1 questions - 10%) ==========
-  {
+  { //Q10
     groupCategory: {
       en: 'Project Standard',
       zh: '项目标准'
@@ -421,7 +421,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 questions - 15%) ==========
-  {
+  { //Q11
     groupCategory: {
       en: 'Teamwork & Communication',
       zh: '团队合作与沟通'
@@ -444,7 +444,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
 // Senior Carpenter Questionnaire (11 questions)
 const LEVEL_3_QUESTIONS: QuestionDefinition[] = [  
   // ========== TECHNICAL SKILLS CATEGORY (6 questions - 35%) ==========
-  {
+  { //Q1
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -462,7 +462,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
+  { //Q2
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -480,7 +480,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
+  { //Q3
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -498,7 +498,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
+  { //Q4
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -516,7 +516,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
+  { //Q5
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -534,7 +534,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
+  { //Q6
     groupCategory: {
       en: 'Technical Skills',
       zh: '技术技能'
@@ -554,7 +554,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 20%) ==========
-  {
+  { //Q7
     groupCategory: {
       en: 'Problem Solving',
       zh: '问题解决'
@@ -574,7 +574,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 5%) ==========
-  {
+  { //Q8
     groupCategory: {
       en: 'Adaptability',
       zh: '适应能力'
@@ -594,7 +594,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
-  {
+  { //Q9
     groupCategory: {
       en: 'Self-Management',
       zh: '自我管理'
@@ -614,7 +614,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROJECT STANDARD CATEGORY (1 questions - 15%) ==========
-  {
+  { //Q10
     groupCategory: {
       en: 'Project Standard',
       zh: '项目标准'
@@ -634,7 +634,7 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 questions - 15%) ==========
-  {
+  { //Q11
     groupCategory: {
       en: 'Teamwork & Communication',
       zh: '团队合作与沟通'

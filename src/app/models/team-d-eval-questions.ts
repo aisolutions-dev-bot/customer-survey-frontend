@@ -15,16 +15,16 @@ export interface CeilingLevel {
   questions: QuestionDefinition[];
 }
 
-// Level 1 Questionnaire with Categories (9 questions)
+// Level 1 Questionnaire with Categories (10 questions)
 const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
-  // ========== TECHNICAL SKILLS CATEGORY (4 questions - 60%) ==========
+  // ========== TECHNICAL SKILLS CATEGORY (5 questions - 60%) ==========
   { //Q1
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Understands basic V-Cut and Laser process flow, machine purpose, materials, and terminology',
-      zh: '员工了解 V-Cut 与激光加工工序及使用材料'
+      en: 'Follows factory safety rules, PPE requirements, and basic housekeeping standards',
+      zh: '遵守工厂安全规章、个人防护装备要求和基本清洁标准'
     },
-    weight: 10,
+    weight: 15,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
@@ -36,10 +36,10 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   { //Q2
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Assists in material preparation, loading/unloading, fixture setup, and tool change under supervision',
-      zh: '员工能在监督下协助 材料准备、上下料及夹具安装 '
+      en: 'Performs manual tasks such as carrying materials, loading/unloading, and basic site cleaning as instructed',
+      zh: '按照指示执行搬运材料、装卸以及基础现场清理等手工任务'
     },
-    weight: 20,
+    weight: 15,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
@@ -51,10 +51,10 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   { //Q3
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Supports machine operation under supervision and follows standard work instructions (WI/SOP)',
-      zh: '员工能在监督下观察并协助操作 V-Cut 或激光设备'
+      en: 'Keeps work areas clean and organised, including removal of debris and waste',
+      zh: '保持工作区域的清洁和有序，包括清理垃圾和废弃物'
     },
-    weight: 20,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
@@ -66,10 +66,25 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   { //Q4
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Consistently follows safety rules, PPE usage, lockout/tagout awareness, and housekeeping (5S)',
-      zh: '员工遵守安全操作规程并使用防护设备'
+      en: 'Uses basic tools and equipment safely for cleaning and support work',
+      zh: '安全使用基本工具和设备进行清洁和辅助工作'
     },
-    weight: 10,
+    weight: 15,
+    ratings: {
+      1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
+      2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
+      3: { en: 'Meets Expectations - The carpenter performs the skill about half of the time, with some errors or reminders.', zh: '符合期望 - 约有一半时间能做到，但仍有错误或需要提醒。' },
+      4: { en: 'Exceeds Expectations - The carpenter performs the skill well most of the time with minimal supervision and few mistakes.', zh: '超出期望 - 大部分时间能稳定完成任务，几乎不需监督。' },
+      5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
+    }
+  },
+  { //Q5
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
+    category: {
+      en: 'Reports hazards, damages, or abnormalities to the team leader promptly',
+      zh: '及时向组长报告危险、损害或异常情况'
+    },
+    weight: 5,
     ratings: {
       1: { en: 'Poor - The carpenter rarely or never demonstrates this skill, even when shown or instructed.', zh: '较差 - 即使在指导下，也几乎无法表现出此技能。' },
       2: { en: 'Needs Improvement - The carpenter can perform the task occasionally, but often needs close supervision and correction.', zh: '需改进 - 偶尔能完成任务，但需要密切监督与纠正。' },
@@ -80,7 +95,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 question - 5%) ==========
-  { //Q5
+  { //Q6
     groupCategory: {
       en: 'Problem Solving',
       zh: '问题解决'
@@ -100,7 +115,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== ADAPTABILITY CATEGORY (1 question - 5%) ==========
-  { //Q6
+  { //Q7
     groupCategory: {
       en: 'Adaptability',
       zh: '适应能力'
@@ -120,7 +135,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== SELF-MANAGEMENT CATEGORY (1 question - 15%) ==========
-  { //Q7
+  { //Q8
     groupCategory: {
       en: 'Self-Management',
       zh: '自我管理'
@@ -140,7 +155,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROJECT STANDARD CATEGORY (1 question - 5%) ==========
-  { //Q8
+  { //Q9
     groupCategory: {
       en: 'Project Standard',
       zh: '项目标准'
@@ -160,7 +175,7 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 question - 10%) ==========
-  { //Q9
+  { //Q10
     groupCategory: {
       en: 'Teamwork & Communication',
       zh: '团队合作与沟通'
@@ -182,14 +197,14 @@ const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
 
 // Level 2 Questionnaire (10 questions)
 const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
-  // ========== TECHNICAL SKILLS CATEGORY (6 questions - 50%) ==========
+  // ========== TECHNICAL SKILLS CATEGORY (5 questions - 50%) ==========
   { //Q1
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Independently operates V-Cut and Laser machines according to SOP, drawings, and production plan',
-      zh: '员工能按标准图纸及流程独立完成 V-Cut 与激光加工'
+      en: 'Leads a small team in material carrying, site cleaning, and preparation works',
+      zh: '领导一小队进行物料搬运、工地清理和准备工作'
     },
-    weight: 5,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
       2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
@@ -201,8 +216,8 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   { //Q2
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Correctly sets and maintains cutting depth, blade angle, laser parameters, feed rate, and alignment',
-      zh: '员工能正确调整 切割深度、刀片角度、激光参数及机器设置'
+      en: 'Ensures team members follow safety rules and proper lifting practices',
+      zh: '确保团队成员遵守安全规则和正确的搬运操作'
     },
     weight: 10,
     ratings: {
@@ -216,8 +231,8 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   { //Q3
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Performs daily/weekly checks, blade inspection, laser head inspection, cleaning, lubrication, and basic adjustments',
-      zh: '员工能进行日常检查、激光头检查、清洁润滑及基本维护'
+      en: 'Allocates manpower for daily cleaning zones and material movement tasks',
+      zh: '分配人力进行日常清洁区域和物料搬运任务'
     },
     weight: 10,
     ratings: {
@@ -231,10 +246,10 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   { //Q4
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Can the worker identify and correct minor cutting errors independently?',
-      zh: '员工能否独立发现并修正小型切割错误?'
+      en: 'Monitors cleanliness and tidiness of site and rectifies issues immediately',
+      zh: '监督现场的清洁和整齐，并立即解决问题'
     },
-    weight: 5,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
       2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
@@ -246,23 +261,8 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   { //Q5
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Able to identify and correct minor cutting or laser marking errors independently',
-      zh: '员工能独立发现并修正 切割或激光加工的小型问题'
-    },
-    weight: 10,
-    ratings: {
-      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
-      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
-      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
-      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
-    }
-  },
-  { //Q6
-    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
-    category: {
-      en: 'Consistently deliver work that meets cutting accuracy and finishing standards',
-      zh: '稳定输出符合 切割精度及表面质量要求 的成品'
+      en: 'Communicates work progress and site issues to the foreman clearly',
+      zh: '清楚地向工头汇报工作进展和现场问题'
     },
     weight: 10,
     ratings: {
@@ -275,7 +275,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
-  { //Q7
+  { //Q6
     groupCategory: { en: 'Problem Solving', zh: '问题解决'},
     category: {
       en: 'Able to solve problems when faced with challenges',
@@ -292,7 +292,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== ADAPTIBILITY CATEGORY (1 questions - 5%) ==========
-  { //Q8
+  { //Q7
     groupCategory: { en: 'Adaptability', zh: '适应能力' },
     category: {
       en: 'Able to adapt to changes to tasks and things happening at site/factory',
@@ -309,7 +309,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== ADAPTIBILITY CATEGORY (1 questions - 10%) ==========
-  { //Q9
+  { //Q8
     groupCategory: { en: 'Self-Management', zh: '自我管理' },
     category: {
       en: 'Able to handle assigned tasks and complete tasks on time',
@@ -326,7 +326,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== PROJECT STANDARD CATEGORY (1 questions - 10%) ==========
-  { //Q10
+  { //Q9
     groupCategory: { en: 'Project Standard', zh: '项目标准' },
     category: {
       en: 'Delivers work that meets project standards',
@@ -343,7 +343,7 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 questions - 15%) ==========
-  { //Q11
+  { //Q10
     groupCategory: { en: 'Teamwork & Communication', zh: '团队合作与沟通'},
     category: {
       en: 'Works well with team and able to communicate updates clearly',
@@ -360,103 +360,103 @@ const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
   }
 ];
 
-// Senior Carpenter Questionnaire (11 questions)
-const LEVEL_3_QUESTIONS: QuestionDefinition[] = [  
+// Level 3 Questionnaire (10 questions)
+const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
   // ========== TECHNICAL SKILLS CATEGORY (5 questions - 35%) ==========
   { //Q1
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Able to lead a team handling complex V-Cut and Laser operations',
-      zh: '员工能带领团队完成 复杂的 V-Cut 与激光加工任务'
+      en: 'Plans and supervises daily site cleaning, waste removal, and material handling activities',
+      zh: '计划并监督每日现场清洁、垃圾清理和材料搬运活动'
     },
     weight: 10,
     ratings: {
-      1: { en: 'Poor - Cannot perform the skill even when instructed or shown; lacks required technical understanding.', zh: '较差 - 即使在指导或示范下，也无法完成技能操作，对相关技术缺乏理解。' },
-      2: { en: 'Needs Improvement - Can perform the skill occasionally with frequent supervision; results are inconsistent or inaccurate.', zh: '需改进 - 偶尔能完成，但需要频繁监督或指导，结果不稳定或不准确。' },
-      3: { en: 'Meets Expectations - Performs the skill correctly about half of the time; still needs guidance on complex tasks.', zh: '符合期望 - 能在一般情况下完成，但遇到复杂工作时仍需指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision; work meets project standards.', zh: '超出期望 - 大部分时间能独立完成，偶尔需监督，工作质量符合项目标准。' },
-      5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
   { //Q2
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Able to plan and coordinate multiple V-Cut and Laser tasks efficiently',
-      zh: '员工能高效规划多个 V-Cut 与激光加工任务的施工流程'
+      en: 'Coordinates with other trades to ensure clean and safe work areas are maintained',
+      zh: '与其他工种协调，确保工作区域保持清洁和安全'
     },
     weight: 5,
     ratings: {
-      1: { en: 'Poor - Cannot perform the skill even when instructed or shown; lacks required technical understanding.', zh: '较差 - 即使在指导或示范下，也无法完成技能操作，对相关技术缺乏理解。' },
-      2: { en: 'Needs Improvement - Can perform the skill occasionally with frequent supervision; results are inconsistent or inaccurate.', zh: '需改进 - 偶尔能完成，但需要频繁监督或指导，结果不稳定或不准确。' },
-      3: { en: 'Meets Expectations - Performs the skill correctly about half of the time; still needs guidance on complex tasks.', zh: '符合期望 - 能在一般情况下完成，但遇到复杂工作时仍需指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision; work meets project standards.', zh: '超出期望 - 大部分时间能独立完成，偶尔需监督，工作质量符合项目标准。' },
-      5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
   { //Q3
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Able to execute intricate V-Cut patterns and detailed laser work, including precision finishing',
-      zh: '员工能处理 复杂 V-Cut 图案及精细激光加工'
+      en: 'Manages manpower deployment and productivity of general workers',
+      zh: '管理普通工人的人力调配和生产力'
     },
     weight: 10,
     ratings: {
-      1: { en: 'Poor - Cannot perform the skill even when instructed or shown; lacks required technical understanding.', zh: '较差 - 即使在指导或示范下，也无法完成技能操作，对相关技术缺乏理解。' },
-      2: { en: 'Needs Improvement - Can perform the skill occasionally with frequent supervision; results are inconsistent or inaccurate.', zh: '需改进 - 偶尔能完成，但需要频繁监督或指导，结果不稳定或不准确。' },
-      3: { en: 'Meets Expectations - Performs the skill correctly about half of the time; still needs guidance on complex tasks.', zh: '符合期望 - 能在一般情况下完成，但遇到复杂工作时仍需指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision; work meets project standards.', zh: '超出期望 - 大部分时间能独立完成，偶尔需监督，工作质量符合项目标准。' },
-      5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
   { //Q4
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Ensure all V-Cut and Laser works meet precision, quality, and safety requirements',
-      zh: '员工能检查所有 V-Cut 与激光加工 的精度、质量及安全性 '
+      en: 'Ensures compliance with site safety, housekeeping, and environmental requirements',
+      zh: '确保遵守现场安全、清洁和环境要求'
     },
     weight: 5,
     ratings: {
-      1: { en: 'Poor - Cannot perform the skill even when instructed or shown; lacks required technical understanding.', zh: '较差 - 即使在指导或示范下，也无法完成技能操作，对相关技术缺乏理解。' },
-      2: { en: 'Needs Improvement - Can perform the skill occasionally with frequent supervision; results are inconsistent or inaccurate.', zh: '需改进 - 偶尔能完成，但需要频繁监督或指导，结果不稳定或不准确。' },
-      3: { en: 'Meets Expectations - Performs the skill correctly about half of the time; still needs guidance on complex tasks.', zh: '符合期望 - 能在一般情况下完成，但遇到复杂工作时仍需指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision; work meets project standards.', zh: '超出期望 - 大部分时间能独立完成，偶尔需监督，工作质量符合项目标准。' },
-      5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
   { //Q5
     groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Able to train junior staff on V-Cut and Laser techniques, machine handling, and safety standards',
-      zh: '员工能培训新手掌握 V-Cut 与激光设备操作及安全规范'
+      en: 'Reports site conditions, manpower needs, and issues to the site supervisor',
+      zh: '向现场主管报告现场情况、人力需求和问题'
     },
-    weight: 5,
+    weight: 10,
     ratings: {
-      1: { en: 'Poor - Cannot perform the skill even when instructed or shown; lacks required technical understanding.', zh: '较差 - 即使在指导或示范下，也无法完成技能操作，对相关技术缺乏理解。' },
-      2: { en: 'Needs Improvement - Can perform the skill occasionally with frequent supervision; results are inconsistent or inaccurate.', zh: '需改进 - 偶尔能完成，但需要频繁监督或指导，结果不稳定或不准确。' },
-      3: { en: 'Meets Expectations - Performs the skill correctly about half of the time; still needs guidance on complex tasks.', zh: '符合期望 - 能在一般情况下完成，但遇到复杂工作时仍需指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision; work meets project standards.', zh: '超出期望 - 大部分时间能独立完成，偶尔需监督，工作质量符合项目标准。' },
-      5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
 
-  // ========== PROBLEM SOLVING CATEGORY (1 questions - 20%) ==========
+  // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
   { //Q6
     groupCategory: { en: 'Problem Solving', zh: '问题解决'},
     category: {
       en: 'Able to solve problems when faced with challenges',
       zh: '在面对挑战时能否解决问题'
     },
-    weight: 20,
+    weight: 15,
     ratings: {
-      1: { en: 'Poor - Cannot solve complex problems independently, requires constant guidance.', zh: '较差 - 不能独立解决复杂问题，需要持续指导。' },
-      2: { en: 'Needs Improvement - Inconsistently solves complex problems independently, limited effectiveness in guiding others.', zh: '需改进 - 独立解决复杂问题不稳定，指导他人效果有限。' },
-      3: { en: 'Meets Expectations - Can solve complex problems independently and guide others.', zh: '符合期望 - 能独立解决复杂问题并指导他人。' },
-      4: { en: 'Exceeds Expectations - Solves complex problems independently and guides the team effectively.', zh: '超出期望 - 独立解决复杂问题并有效指导团队。' },
-      5: { en: 'Exceptional - Solves complex problems at a high level, introduces innovative solutions, and develops team capability.', zh: '卓越 - 高水平解决复杂问题，创新方法并培养团队能力。' }
+      1: { en: 'Poor - Frequently requires assistance and cannot solve common problems independently.', zh: '较差 - 经常需要他人帮助，无法独立解决常见问题。' },
+      2: { en: 'Needs Improvement - Sometimes solves common problems independently but often makes mistakes.', zh: '需改进 - 有时能独立解决问题，但出现错误。' },
+      3: { en: 'Meets Expectations - Can solve common problems independently.', zh: '符合期望 - 能独立解决常见问题。' },
+      4: { en: 'Exceeds Expectations - Solves problems independently and identifies potential issues proactively.', zh: '超出期望 - 能独立解决问题并主动发现潜在问题。' },
+      5: { en: 'Exceptional - Solves problems at a high level independently and guides other carpenters.', zh: '卓越 - 高水平独立解决问题，并指导其他木工。' }
     }
   },
   
-  // ========== PROBLEM SOLVING CATEGORY (1 questions - 5%) ==========
+  // ========== ADAPTIBILITY CATEGORY (1 questions - 5%) ==========
   { //Q7
     groupCategory: { en: 'Adaptability', zh: '适应能力' },
     category: {
@@ -465,15 +465,15 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
     },
     weight: 5,
     ratings: {
-      1: { en: 'Poor - Cannot adapt to changes and does not guide others.', zh: '较差 - 无法适应变更，也无法指导他人 。' },
-      2: { en: 'Needs Improvement - Adapts to changes inconsistently and guidance to others is limited.', zh: '需改进 - 适应变更不稳定，指导他人效果有限 。' },
-      3: { en: 'Meets Expectations - Can adapt to changes and guide others.', zh: '符合期望 - 能适应变更并指导他人 。' },
-      4: { en: 'Exceeds Expectations - Proactively guides others to adapt and suggests improvements.', zh: '超出期望 - 主动指导他人适应变更并提出改进建议。' },
-      5: { en: 'Exceptional - Provides high-level guidance for adaptation, optimizes processes, and trains the team.', zh: '卓越 - 高水平指导他人适应变更，优化流程并培训团队 。' }
+      1: { en: 'Poor - Cannot adapt independently to changes.', zh: '较差 - 无法独立适应图纸或要求变更。' },
+      2: { en: 'Needs Improvement - Occasionally adapts independently but still requires frequent guidance.', zh: '需改进 - 偶尔能独立适应，但仍需频繁指导。' },
+      3: { en: 'Meets Expectations - Can adapt independently to changes in drawings or requirements.', zh: '符合期望 - 能独立适应图纸或要求变更。' },
+      4: { en: 'Exceeds Expectations - Adapts independently to changes and suggests improvements.', zh: '超出期望 - 独立适应变更并能提出改进建议。' },
+      5: { en: 'Exceptional - Adapts independently to changes and actively improves processes.', zh: '卓越 - 独立适应变更并主动优化流程。' }
     }
   },
-  
-  // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
+
+  // ========== ADAPTIBILITY CATEGORY (1 questions - 10%) ==========
   { //Q8
     groupCategory: { en: 'Self-Management', zh: '自我管理' },
     category: {
@@ -482,15 +482,15 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
     },
     weight: 10,
     ratings: {
-      1: { en: 'Poor - Cannot manage any portion of the site independently and fails to supervise others.', zh: '较差 - 无法独立管理现场，也不能监督他人。' },
-      2: { en: 'Needs Improvement - Site management is inconsistent and supervision of others is limited.', zh: '需改进 - 独立管理现场不稳定，对他人监督有限 。' },
-      3: { en: 'Meets Expectations - Can independently manage a portion of the site and supervise others.', zh: '符合期望 - 能独立负责一部分现场并监督他人。' },
-      4: { en: 'Exceeds Expectations - Manages site independently and guides team effectively.', zh: '超出期望 - 独立管理现场并有效指导团队。' },
-      5: { en: 'Exceptional - Manages site at a high level, optimizes workflow, and develops subordinates.', zh: '卓越 - 高水平管理现场，优化团队工作流程并培养下属。' }
+      1: { en: 'Poor - Requires frequent supervision to complete tasks.', zh: '较差 - 需要频繁监督才能完成任务 。' },
+      2: { en: 'Needs Improvement - Occasionally completes tasks independently but often makes errors.', zh: '需改进 - 独立完成任务不稳定，错误较多。' },
+      3: { en: 'Meets Expectations - Completes tasks independently and corrects minor mistakes.', zh: '符合期望 - 独立完成任务并自我纠错。' },
+      4: { en: 'Exceeds Expectations - Completes tasks independently and proactively improves methods.', zh: '超出期望 - 独立完成任务并主动优化方法。' },
+      5: { en: 'Exceptional - Completes tasks independently at high quality and guides others to improve.', zh: '卓越 - 高质量独立完成任务并指导他人优化工作。' }
     }
   },
-
-  // ========== PROJECT STANDARD CATEGORY (1 questions - 15%) ==========
+  
+  // ========== PROJECT STANDARD CATEGORY (1 questions - 10%) ==========
   { //Q9
     groupCategory: { en: 'Project Standard', zh: '项目标准' },
     category: {
@@ -499,11 +499,11 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
     },
     weight: 15,
     ratings: {
-      1: { en: 'Poor - Work fails to meet Project needs and does not communicate proactively.', zh: '较差 - 工作无法满足项目需求，也不主动沟通。' },
-      2: { en: 'Needs Improvement - Occasionally meets project requirements but communication is insufficient.', zh: '需改进 - 偶尔满足项目要求，但沟通不充分。' },
-      3: { en: 'Meets Expectations - Anticipates project needs and communicates proactively.', zh: '符合期望 - 能预见项目需求并主动沟通。' },
-      4: { en: 'Exceeds Expectations - Proactively identifies potential needs and optimizes communication.', zh: '超出期望 - 主动识别潜在需求并优化项目沟通。' },
-      5: { en: 'Exceptional - Anticipates project needs at a high level, resolves potential issues in advance, and guides the team.', zh: '卓越 - 高度预见项目需求，提前解决潜在问题并指导团队。' }
+      1: { en: 'Poor - Work is frequently inaccurate and fails to meet Project requirements.', zh: '较差 - 工作经常不准确，无法满足项目要求。' },
+      2: { en: 'Needs Improvement - Occasionally meets requirements but often contains errors.', zh: '需改进 - 偶尔能满足要求，但错误较多。' },
+      3: { en: 'Meets Expectations - Ensures accuracy and client satisfaction reliably.', zh: '符合期望 - 确保准确度并满足客户要求。' },
+      4: { en: 'Exceeds Expectations - Accurate work and proactively improves processes.', zh: '超出期望 - 工作准确且经常主动改善。' },
+      5: { en: 'Exceptional - Consistently accurate and anticipates Project needs proactively.', zh: '卓越 - 高度准确并主动预见项目需求。' }
     }
   },
   
@@ -516,11 +516,176 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
     },
     weight: 15,
     ratings: {
-      1: { en: 'Poor - Does not communicate or guide team members.', zh: '较差 - 不与团队沟通，也不指导他人。' },
-      2: { en: 'Needs Improvement - Occasionally guides team members or coordinates with management, but inconsistently.', zh: '需改进 - 偶尔指导同事或协调管理层，但不稳定。' },
-      3: { en: 'Meets Expectations - Guides junior/intermediate carpenters and coordinates with management.', zh: '符合期望 - 指导初中级木工并与管理层协调。' },
-      4: { en: 'Exceeds Expectations - Actively guides team and suggests improvements.', zh: '超出期望 - 主动指导团队并提出改进建议。' },
-      5: { en: 'Exceptional - Provides high-level guidance, optimizes collaboration, and enhances overall team performance.', zh: '卓越 - 高水平指导团队，优化协作并提升整体团队绩效。' }
+      1: { en: 'Poor - Does not communicate or support team members.', zh: '较差 - 不与团队沟通，也不支持同事。' },
+      2: { en: 'Needs Improvement - Occasionally shares information or supports peers, but inconsistently.', zh: '需改进 - 偶尔分享信息或支持同事，但不稳定。' },
+      3: { en: 'Meets Expectations - Actively shares information and supports peers.', zh: '符合期望 - 主动分享信息并支持同事。' },
+      4: { en: 'Exceeds Expectations - Supports peers and suggests process improvements.', zh: '超出期望 - 不仅支持同事，还提出改进建议。' },
+      5: { en: 'Exceptional - Guides and assists peers proactively and enhances team collaboration.', zh: '卓越 - 主动指导和协助同事，并推动团队协作。' }
+    }
+  }
+];
+
+// Level 4 Questionnaire (10 questions)
+const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
+  // ========== TECHNICAL SKILLS CATEGORY (5 questions - 35%) ==========
+  { //Q1
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
+    category: {
+      en: 'Possesses solid working knowledge of M&E systems and understands the limits of assigned supporting scope',
+      zh: '员工具备扎实的机电系统工作知识，并清楚自身被分配支援范围的界限'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
+    }
+  },
+  { //Q2
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
+    category: {
+      en: 'Able to interpret single line drawings and coordinate M&E installation sequencing with clear understanding of system interdependencies',
+      zh: '员工能够解读单线图，并清楚掌握各机电系统之间的相互关联性，协调安装先后顺序'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
+    }
+  },
+  { //Q3
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
+    category: {
+      en: 'Provides on-site technical demonstration of correct installation methods and proper tool handling to junior staff',
+      zh: '员工在现场向初级员工示范正确的安装方法及工具使用方式'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
+    }
+  },
+  { //Q4
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
+    category: {
+      en: 'Able to identify non-conformance or abnormal technical conditions within assigned scope and take corrective action on simple technical issues independently before escalating when necessary',
+      zh: '员工能够识别自身职责范围内的不符合项或异常技术状况，并能独立处理简单技术问题；在必要时才向上级汇报'
+    },
+    weight: 10,
+    ratings: {
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
+    }
+  },
+  { //Q5
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
+    category: {
+      en: 'Able to identify non-conformance or abnormal technical conditions within assigned scope and take corrective action on simple technical issues independently before escalating when necessary',
+      zh: '员工能够识别自身职责范围内的不符合项或异常技术状况，并能独立处理简单技术问题；在必要时才向上级汇报'
+    },
+    weight: 10,
+    ratings: {
+      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
+      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
+      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
+      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
+      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
+    }
+  },
+
+  // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
+  { //Q6
+    groupCategory: { en: 'Problem Solving', zh: '问题解决'},
+    category: {
+      en: 'Able to solve problems when faced with challenges',
+      zh: '在面对挑战时能否解决问题'
+    },
+    weight: 20,
+    ratings: {
+      1: { en: 'Poor - Frequently requires assistance and cannot solve common problems independently.', zh: '较差 - 经常需要他人帮助，无法独立解决常见问题。' },
+      2: { en: 'Needs Improvement - Sometimes solves common problems independently but often makes mistakes.', zh: '需改进 - 有时能独立解决问题，但出现错误。' },
+      3: { en: 'Meets Expectations - Can solve common problems independently.', zh: '符合期望 - 能独立解决常见问题。' },
+      4: { en: 'Exceeds Expectations - Solves problems independently and identifies potential issues proactively.', zh: '超出期望 - 能独立解决问题并主动发现潜在问题。' },
+      5: { en: 'Exceptional - Solves problems at a high level independently and guides other carpenters.', zh: '卓越 - 高水平独立解决问题，并指导其他木工。' }
+    }
+  },
+  
+  // ========== ADAPTIBILITY CATEGORY (1 questions - 5%) ==========
+  { //Q7
+    groupCategory: { en: 'Adaptability', zh: '适应能力' },
+    category: {
+      en: 'Able to adapt to changes to tasks and things happening at site/factory',
+      zh: '是否能够适应现场或任务中发生的变化'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Cannot adapt independently to changes.', zh: '较差 - 无法独立适应图纸或要求变更。' },
+      2: { en: 'Needs Improvement - Occasionally adapts independently but still requires frequent guidance.', zh: '需改进 - 偶尔能独立适应，但仍需频繁指导。' },
+      3: { en: 'Meets Expectations - Can adapt independently to changes in drawings or requirements.', zh: '符合期望 - 能独立适应图纸或要求变更。' },
+      4: { en: 'Exceeds Expectations - Adapts independently to changes and suggests improvements.', zh: '超出期望 - 独立适应变更并能提出改进建议。' },
+      5: { en: 'Exceptional - Adapts independently to changes and actively improves processes.', zh: '卓越 - 独立适应变更并主动优化流程。' }
+    }
+  },
+
+  // ========== ADAPTIBILITY CATEGORY (1 questions - 10%) ==========
+  { //Q8
+    groupCategory: { en: 'Self-Management', zh: '自我管理' },
+    category: {
+      en: 'Able to handle assigned tasks and complete tasks on time',
+      zh: '是否能够处理分配的任务并按时完成任务'
+    },
+    weight: 10,
+    ratings: {
+      1: { en: 'Poor - Requires frequent supervision to complete tasks.', zh: '较差 - 需要频繁监督才能完成任务 。' },
+      2: { en: 'Needs Improvement - Occasionally completes tasks independently but often makes errors.', zh: '需改进 - 独立完成任务不稳定，错误较多。' },
+      3: { en: 'Meets Expectations - Completes tasks independently and corrects minor mistakes.', zh: '符合期望 - 独立完成任务并自我纠错。' },
+      4: { en: 'Exceeds Expectations - Completes tasks independently and proactively improves methods.', zh: '超出期望 - 独立完成任务并主动优化方法。' },
+      5: { en: 'Exceptional - Completes tasks independently at high quality and guides others to improve.', zh: '卓越 - 高质量独立完成任务并指导他人优化工作。' }
+    }
+  },
+  
+  // ========== PROJECT STANDARD CATEGORY (1 questions - 10%) ==========
+  { //Q9
+    groupCategory: { en: 'Project Standard', zh: '项目标准' },
+    category: {
+      en: 'Delivers work that meets project standards',
+      zh: '是否做到项目标准的工作'
+    },
+    weight: 15,
+    ratings: {
+      1: { en: 'Poor - Work is frequently inaccurate and fails to meet Project requirements.', zh: '较差 - 工作经常不准确，无法满足项目要求。' },
+      2: { en: 'Needs Improvement - Occasionally meets requirements but often contains errors.', zh: '需改进 - 偶尔能满足要求，但错误较多。' },
+      3: { en: 'Meets Expectations - Ensures accuracy and client satisfaction reliably.', zh: '符合期望 - 确保准确度并满足客户要求。' },
+      4: { en: 'Exceeds Expectations - Accurate work and proactively improves processes.', zh: '超出期望 - 工作准确且经常主动改善。' },
+      5: { en: 'Exceptional - Consistently accurate and anticipates Project needs proactively.', zh: '卓越 - 高度准确并主动预见项目需求。' }
+    }
+  },
+  
+  // ========== TEAMWORK & COMMUNICATION CATEGORY (1 questions - 15%) ==========
+  { //Q10
+    groupCategory: { en: 'Teamwork & Communication', zh: '团队合作与沟通'},
+    category: {
+      en: 'Works well with team and able to communicate updates clearly',
+      zh: '是否能够很好地与团队合作，并能够清晰地传达任务或项目进展'
+    },
+    weight: 15,
+    ratings: {
+      1: { en: 'Poor - Does not communicate or support team members.', zh: '较差 - 不与团队沟通，也不支持同事。' },
+      2: { en: 'Needs Improvement - Occasionally shares information or supports peers, but inconsistently.', zh: '需改进 - 偶尔分享信息或支持同事，但不稳定。' },
+      3: { en: 'Meets Expectations - Actively shares information and supports peers.', zh: '符合期望 - 主动分享信息并支持同事。' },
+      4: { en: 'Exceeds Expectations - Supports peers and suggests process improvements.', zh: '超出期望 - 不仅支持同事，还提出改进建议。' },
+      5: { en: 'Exceptional - Guides and assists peers proactively and enhances team collaboration.', zh: '卓越 - 主动指导和协助同事，并推动团队协作。' }
     }
   }
 ];
@@ -550,6 +715,14 @@ export const CARPENTER_LEVELS: CeilingLevel[] = [
       zh: '高级'
     },
     questions: LEVEL_3_QUESTIONS
+  },
+  {
+    id: 'level4',
+    label: {
+      en: 'Level 4',
+      zh: '专家'
+    },
+    questions: LEVEL_4_QUESTIONS
   }
 ];
 
