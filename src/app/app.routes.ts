@@ -161,6 +161,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./team-d-evaluation-form/team-d-eval-form.component').then((m) => m.TeamDEvaluationFormComponent),
   },
+  // PM evaluation with all parameters
+  {
+    path: 'pm-evaluation/:staff_id/project/:project_id/dept_id/:dept_id/evaluator/:evaluator',
+    loadComponent: () =>
+      import('./pm-evaluation-form/pm-eval-form.component').then((m) => m.PMEvaluationFormComponent),
+  },
+  // PM evaluation without parameters (all fields editable)
+  {
+    path: 'pm-evaluation',
+    loadComponent: () =>
+      import('./pm-evaluation-form/pm-eval-form.component').then((m) => m.PMEvaluationFormComponent),
+  },
   // keep this last as a catch-all or root route
   {
     path: '',
