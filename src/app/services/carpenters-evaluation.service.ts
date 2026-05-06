@@ -6,8 +6,8 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CarpentersEvaluationService {
-  private apiUrl = `${environment.apiUrl}/carpenters-evaluation`;
-  //private apiUrl = 'https://customer-survey-backend-production.up.railway.app/api/carpenters-evaluation';
+  private apiUrl = `${environment.apiUrl}/api/evaluation-ratings`;
+  //private apiUrl = 'https://customer-survey-backend-production.up.railway.app/api/evaluation-ratings';
   
   constructor(private http: HttpClient) {}
 
