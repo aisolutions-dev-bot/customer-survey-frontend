@@ -9,7 +9,10 @@
     "build:prod": "ng build --configuration=production --no-prerender",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:customer-survey-frontend": "node dist/customer-survey-frontend/server/server.mjs"
+    "serve:ssr:customer-survey-frontend": "node dist/customer-survey-frontend/server/server.mjs",
+    "test:e2e": "npx playwright test",
+    "test:e2e:ui": "npx playwright test --ui",
+    "test:e2e:headed": "npx playwright test --headed"
   },
   "prettier": {
     "printWidth": 100,
@@ -43,6 +46,7 @@
     "@angular/build": "^20.2.0",
     "@angular/cli": "^20.2.0",
     "@angular/compiler-cli": "^20.2.0",
+    "@playwright/test": "^1.59.1",
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
