@@ -1,4 +1,4 @@
-export interface CarpentersEvaluationResponse {
+export interface EvaluationRatingResponse {
   staffId: string;
   projectId: string;
   roleType: string;
