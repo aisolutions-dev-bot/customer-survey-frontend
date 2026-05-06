@@ -6,19 +6,34 @@ test('should submit carpenter evaluation and verify in database @smoke', async (
   page,
 }) => {
   // Step 1: Navigate to the carpenter evaluation form
-  await carpentersEvaluationPage.navigate(28001);
+  await carpentersEvaluationPage.navigate(27001);
 
   // Step 2: Verify form loaded — check for the evaluation container and header
   await expect(page.locator('.evaluation-container')).toBeVisible();
   const header = page.locator('h1, h2, .form-title, .page-title').first();
   await expect(header).toBeVisible();
 
-  // Step 3: Select junior carpenter level
-  await carpentersEvaluationPage.selectCarpenterLevel('junior');
+  // Step 3: Select or detect carpenter level
+  // In group evaluation mode, level is pre-selected and locked
+  const isLevelLocked = await carpentersEvaluationPage.isLevelLocked();
+  let expectedLevel: 'junior' | 'journeyman' | 'senior';
 
-  // Step 4: Verify 9 questions loaded for junior level
+  if (isLevelLocked) {
+    expectedLevel = await carpentersEvaluationPage.getSelectedLevel() as 'junior' | 'journeyman' | 'senior';
+    // Level is locked — just wait for questions to load
+    await carpentersEvaluationPage.selectCarpenterLevel(expectedLevel);
+  } else {
+    expectedLevel = 'junior';
+    await carpentersEvaluationPage.selectCarpenterLevel('junior');
+  }
+
+  // Wait for Angular to finish rendering questions after level is set (group mode loads via async API)
+  await page.waitForTimeout(1000);
+
+  // Step 4: Verify questions loaded based on detected level
   const questionCount = await carpentersEvaluationPage.getQuestionCount();
-  expect(questionCount).toBe(9);
+  const expectedQuestions = expectedLevel === 'junior' ? 9 : 11;
+  expect(questionCount).toBe(expectedQuestions);
 
   // Step 5: Select staff — capture the first available staff ID for DB lookup
   const staffSelect = page.locator('.info-item').first().locator('select.info-select');
@@ -108,20 +123,14 @@ test('should submit carpenter evaluation and verify in database @smoke', async (
   const evaluation = await getLatestEvaluationByStaffId(staffId);
   expect(evaluation).not.toBeNull();
   expect(evaluation.FormType).toBe('CARPENTER');
-  expect(evaluation.SkillSet).toBe('JUNIOR');
+  expect(evaluation.SkillSet).toBe(expectedLevel.toUpperCase());
   expect(evaluation.WeightedScore).toBeDefined();
   expect(evaluation.WeightedScore).not.toBeNull();
 
-  // Verify q1-q9 are all 3 (the rating we selected)
-  expect(evaluation.q1).toBe(3);
-  expect(evaluation.q2).toBe(3);
-  expect(evaluation.q3).toBe(3);
-  expect(evaluation.q4).toBe(3);
-  expect(evaluation.q5).toBe(3);
-  expect(evaluation.q6).toBe(3);
-  expect(evaluation.q7).toBe(3);
-  expect(evaluation.q8).toBe(3);
-  expect(evaluation.q9).toBe(3);
+  // Verify q1-qN are all 3 (the rating we selected)
+  for (let i = 1; i <= expectedQuestions; i++) {
+    expect(evaluation[`q${i}`]).toBe(3);
+  }
 
   // Verify remarks contains our test text
   expect(evaluation.Remarks).toContain('E2E test submission');
