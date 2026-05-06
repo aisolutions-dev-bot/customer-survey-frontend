@@ -57,16 +57,63 @@ export class CarpentersEvaluationPage {
 
   /**
    * Select the carpenter level (junior, journeyman, or senior).
-   * Clicks the radio button for the given level and waits for questions to load.
+   * If level is pre-selected and locked (group evaluation mode), this is a no-op.
    * @param level - The carpenter level to select.
    */
   async selectCarpenterLevel(level: 'junior' | 'journeyman' | 'senior'): Promise<void> {
-    const radio = this.page.locator(
-      `input[type="radio"][name="carpenterLevel"][value="${level}"]`,
-    );
-    await radio.click();
-    // Wait for question cards to appear after level selection triggers question load
-    await this.questionCards.first().waitFor({ state: 'visible' });
+    // Check if level is already locked (group evaluation mode)
+    const isLocked = await this.isLevelLocked();
+    if (isLocked) {
+      // Level is pre-selected — just wait for questions to load
+      await this.questionCards.first().waitFor({ state: 'visible', timeout: 10000 });
+      return;
+    }
+
+    // Normal mode: click the level card by matching the title text
+    const levelOption = this.page.locator('.level-option').filter({
+      has: this.page.locator('.level-title'),
+      hasText: new RegExp(level, 'i'),
+    });
+    await levelOption.locator('.level-card').click();
+
+    // Wait for questions to appear
+    await this.questionCards.first().waitFor({ state: 'visible', timeout: 10000 });
+  }
+
+  /**
+   * Check if the carpenter level is pre-selected and locked (group evaluation mode).
+   * @returns true if level selection is locked.
+   */
+  async isLevelLocked(): Promise<boolean> {
+    const lockNotice = this.page.locator('.lock-notice');
+    return lockNotice.isVisible().catch(() => false);
+  }
+
+  /**
+   * Get the pre-selected carpenter level from the page (group evaluation mode).
+   * Falls back to checking the lock notice heading if level is locked.
+   */
+  async getSelectedLevel(): Promise<string> {
+    // Check for selected level via the .selected class on .level-option
+    const selectedOption = this.page.locator('.level-option.selected .level-title');
+    const text = await selectedOption.textContent().catch(() => '');
+    const lower = text.toLowerCase();
+    if (lower.includes('junior')) return 'junior';
+    if (lower.includes('journeyman')) return 'journeyman';
+    if (lower.includes('senior')) return 'senior';
+
+    // Fallback: check lock notice text
+    const lockNotice = this.page.locator('.lock-notice');
+    if (await lockNotice.isVisible().catch(() => false)) {
+      // Level is locked — try to read from heading
+      const heading = this.page.locator('.carpenter-level-section h3, .carpenter-level-section h4').first();
+      const headingText = await heading.textContent().catch(() => '');
+      if (headingText.toLowerCase().includes('junior')) return 'junior';
+      if (headingText.toLowerCase().includes('journeyman')) return 'journeyman';
+      if (headingText.toLowerCase().includes('senior')) return 'senior';
+    }
+
+    return 'unknown';
   }
 
   /**
