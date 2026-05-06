@@ -61,22 +61,24 @@ export class CarpentersEvaluationPage {
    * @param level - The carpenter level to select.
    */
   async selectCarpenterLevel(level: 'junior' | 'journeyman' | 'senior'): Promise<void> {
-    // Check if level is already locked (group evaluation mode)
+    // Wait for Angular to finish async group data loading before any interaction.
+    // Either lock notice appears (group mode) or level options become clickable (normal mode).
+    await Promise.race([
+      this.page.locator('.lock-notice').waitFor({ state: 'attached', timeout: 10000 }),
+      this.page.locator('.level-option').first().waitFor({ state: 'visible', timeout: 10000 }),
+    ]);
+
     const isLocked = await this.isLevelLocked();
     if (isLocked) {
-      // Level is pre-selected — just wait for questions to load
       await this.questionCards.first().waitFor({ state: 'visible', timeout: 10000 });
       return;
     }
 
-    // Normal mode: click the level card by matching the title text
     const levelOption = this.page.locator('.level-option').filter({
       has: this.page.locator('.level-title'),
       hasText: new RegExp(level, 'i'),
     });
     await levelOption.locator('.level-card').click();
-
-    // Wait for questions to appear
     await this.questionCards.first().waitFor({ state: 'visible', timeout: 10000 });
   }
 
@@ -86,7 +88,13 @@ export class CarpentersEvaluationPage {
    */
   async isLevelLocked(): Promise<boolean> {
     const lockNotice = this.page.locator('.lock-notice');
-    return lockNotice.isVisible().catch(() => false);
+    // Wait for lock notice to appear in DOM (handles *ngIf async rendering)
+    try {
+      await lockNotice.waitFor({ state: 'attached', timeout: 5000 });
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   /**

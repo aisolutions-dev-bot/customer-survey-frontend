@@ -6,7 +6,7 @@ test('should submit carpenter evaluation and verify in database @smoke', async (
   page,
 }) => {
   // Step 1: Navigate to the carpenter evaluation form
-  await carpentersEvaluationPage.navigate(27001);
+  await carpentersEvaluationPage.navigate(25005);
 
   // Step 2: Verify form loaded — check for the evaluation container and header
   await expect(page.locator('.evaluation-container')).toBeVisible();
@@ -19,7 +19,10 @@ test('should submit carpenter evaluation and verify in database @smoke', async (
   let expectedLevel: 'junior' | 'journeyman' | 'senior';
 
   if (isLevelLocked) {
-    expectedLevel = await carpentersEvaluationPage.getSelectedLevel() as 'junior' | 'journeyman' | 'senior';
+    expectedLevel = (await carpentersEvaluationPage.getSelectedLevel()) as
+      | 'junior'
+      | 'journeyman'
+      | 'senior';
     // Level is locked — just wait for questions to load
     await carpentersEvaluationPage.selectCarpenterLevel(expectedLevel);
   } else {
