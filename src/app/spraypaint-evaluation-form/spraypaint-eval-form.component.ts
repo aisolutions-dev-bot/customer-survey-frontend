@@ -299,7 +299,12 @@ export class SpraypaintEvaluationFormComponent implements OnInit, OnDestroy {
 
     this.currentUniqId = distribution.uniqId;
 
-    this.fetchFormType(this.staffId);
+    if (distribution.formType && distribution.formType.trim()) {
+      this.formType = distribution.formType.trim();
+      console.log('Form Type from distribution:', this.formType);
+    } else {
+      this.fetchFormType(this.staffId);
+    }
   }
 
   /** Rewrite ALL form fields from the chosen record */
@@ -313,7 +318,12 @@ export class SpraypaintEvaluationFormComponent implements OnInit, OnDestroy {
     this.evaluatorName = record.evaluatorName ?? '';
     this.selectedLevel = (record.skillSet ?? 'level1').toLowerCase();
 
-    this.fetchFormType(record.evaluateeId);
+    if (record.formType && record.formType.trim()) {
+      this.formType = record.formType.trim();
+      console.log('Form Type from distribution:', this.formType);
+    } else {
+      this.fetchFormType(record.evaluateeId);
+    }
 
     this.loadQuestionsForLevel(this.selectedLevel);
     this.cdr.detectChanges();

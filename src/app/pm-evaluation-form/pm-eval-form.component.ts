@@ -201,7 +201,12 @@ export class PMEvaluationFormComponent implements OnInit, OnDestroy {
     this.isEvaluatorIdLocked = true;
 
     this.currentUniqId = distribution.uniqId;
-    this.fetchFormType(this.staffId);
+    if (distribution.formType && distribution.formType.trim()) {
+      this.formType = distribution.formType.trim();
+      console.log('Form Type from distribution:', this.formType);
+    } else {
+      this.fetchFormType(this.staffId);
+    }
   }
 
   private patchForm(record: EvaluationDistribution): void {
@@ -212,7 +217,12 @@ export class PMEvaluationFormComponent implements OnInit, OnDestroy {
     this.departmentName = record.departmentName ?? '';
     this.evaluatorId = record.evaluatorId;
     this.evaluatorName = record.evaluatorName ?? '';
-    this.fetchFormType(record.evaluateeId);
+    if (record.formType && record.formType.trim()) {
+      this.formType = record.formType.trim();
+      console.log('Form Type from distribution:', this.formType);
+    } else {
+      this.fetchFormType(record.evaluateeId);
+    }
     this.cdr.detectChanges();
   }
 

@@ -279,7 +279,12 @@ export class BSProjectEvaluationFormComponent implements OnInit, OnDestroy {
 
     this.currentUniqId = distribution.uniqId;
 
-    this.fetchFormType(this.staffId);
+    if (distribution.formType && distribution.formType.trim()) {
+      this.formType = distribution.formType.trim();
+      console.log('Form Type from distribution:', this.formType);
+    } else {
+      this.fetchFormType(this.staffId);
+    }
   }
 
   /** Rewrite ALL form fields from the chosen record */
@@ -292,7 +297,12 @@ export class BSProjectEvaluationFormComponent implements OnInit, OnDestroy {
     this.evaluatorId = record.evaluatorId;
     this.evaluatorName = record.evaluatorName ?? '';
     
-    this.fetchFormType(record.evaluateeId);
+    if (record.formType && record.formType.trim()) {
+      this.formType = record.formType.trim();
+      console.log('Form Type from distribution:', this.formType);
+    } else {
+      this.fetchFormType(record.evaluateeId);
+    }
 
     this.cdr.detectChanges();
   }
