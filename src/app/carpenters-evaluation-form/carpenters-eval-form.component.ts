@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { CarpentersEvaluationService } from '../services/carpenters-evaluation.service';
+import { EvaluationRatingsService } from '../services/evaluation-ratings.service';
 import { StaffService, Staff } from '../services/staff.service';
 import { ProjectService, Project } from '../services/project.service';
 import { DepartmentService, Department } from '../services/department.service';
 import { EvaluationDistributionService } from '../services/evaluation-distribution.service';
-import { CarpentersEvaluationResponse } from '../models/carpenters-eval-response';
+import { EvaluationRatingResponse } from '../models/evaluation-rating-response';
 import {
   CARPENTER_LEVELS,
   CarpenterLevel,
@@ -94,7 +94,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private carpentersEvaluationService: CarpentersEvaluationService,
+    private evaluationRatingsService: EvaluationRatingsService,
     private staffService: StaffService,
     private projectService: ProjectService,
     private departmentService: DepartmentService,
@@ -803,7 +803,7 @@ export class CarpentersEvaluationFormComponent implements OnInit, OnDestroy {
     console.log('Submitting evaluation:', payload);
     console.log('Weighted Score:', this.calculateWeightedScore());
 
-    this.carpentersEvaluationService.submitEvaluation(payload).subscribe({
+    this.evaluationRatingsService.submitEvaluation(payload).subscribe({
       next: (response) => {
         console.log('Evaluation submitted successfully', response);
 

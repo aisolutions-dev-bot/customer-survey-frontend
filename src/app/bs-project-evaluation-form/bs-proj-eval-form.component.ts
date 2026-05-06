@@ -8,7 +8,7 @@ import { StaffService, Staff } from '../services/staff.service';
 import { ProjectService, Project } from '../services/project.service';
 import { DepartmentService, Department } from '../services/department.service';
 import { EvaluationDistributionService } from '../services/evaluation-distribution.service';
-import { CarpentersEvaluationResponse } from '../models/carpenters-eval-response';
+import { EvaluationRatingResponse } from '../models/evaluation-rating-response';
 import {
   BS_PROJECT_STANDARD_QUESTIONS,
   SMILEYS,
