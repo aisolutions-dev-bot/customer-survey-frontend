@@ -555,6 +555,7 @@ export class PMEvaluationFormComponent implements OnInit, OnDestroy {
       carpenterLevel: 'STANDARD',
       weightedScore: this.calculateWeightedScore(),
       remarks: this.remarks.trim() || '',
+      evaluationDistributionMgmtUniqId: this.currentUniqId || null,
     };
 
     this.answers.forEach((answer, index) => {

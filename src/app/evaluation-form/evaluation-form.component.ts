@@ -40,6 +40,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   roleType: string = '';
   evaluatorId: string = '';
   evaluatorName: string = '';
+  evaluationDistributionMgmtUniqId?: number;
 
   // Track if values came from URL (locked) or are user-editable
   isStaffIdLocked: boolean = false;
@@ -82,6 +83,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     const queryProjectId = this.route.snapshot.queryParamMap.get('project_id');
     const queryRoleType = this.route.snapshot.queryParamMap.get('role_type');
     const queryEvaluator = this.route.snapshot.queryParamMap.get('evaluator');
+    const queryUniqId = this.route.snapshot.queryParamMap.get('uniq_id');
 
     // Load both staff list and project list in parallel
     Promise.all([this.loadStaffList(), this.loadProjectList()]).then(() => {
@@ -120,6 +122,12 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
       console.log('Project ID:', this.projectId, '(Locked:', this.isProjectIdLocked + ')');
       console.log('Role Type:', this.roleType, '(Locked:', this.isRoleTypeLocked + ')');
       console.log('Evaluator ID:', this.evaluatorId, '(Locked:', this.isEvaluatorIdLocked + ')');
+      
+      // Handle uniq_id parameter
+      if (queryUniqId) {
+        this.evaluationDistributionMgmtUniqId = Number(queryUniqId);
+        console.log('Eval Dist Mgmt UniqId:', this.evaluationDistributionMgmtUniqId);
+      }
       console.log('================================');
       
       this.cdr.detectChanges();
@@ -357,6 +365,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
       q4: this.answers[3],
       q5: this.answers[4],
       q6: this.answers[5],
+      evaluationDistributionMgmtUniqId: this.evaluationDistributionMgmtUniqId,
     };
 
     console.log('Submitting evaluation:', payload);

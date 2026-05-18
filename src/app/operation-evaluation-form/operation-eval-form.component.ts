@@ -737,6 +737,7 @@ export class OperationEvaluationFormComponent implements OnInit, OnDestroy {
       carpenterLevel: 'STANDARD', // Always use 'STANDARD' for the single form
       weightedScore: this.calculateWeightedScore(),
       remarks: this.remarks.trim() || '',
+      evaluationDistributionMgmtUniqId: this.currentUniqId || null,
     };
 
     // Add all question answers dynamically

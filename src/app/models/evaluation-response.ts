@@ -10,4 +10,5 @@ export interface EvaluationResponse {
   q4: number; // teamwork
   q5: number; // dependabilityInitiative
   q6: number; // communicationResponsiveness
+  evaluationDistributionMgmtUniqId?: number;
 }

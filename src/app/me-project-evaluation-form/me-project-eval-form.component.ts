@@ -790,6 +790,7 @@ export class MeProjectEvaluationFormComponent implements OnInit, OnDestroy {
       carpenterLevel: this.selectedLevel.toUpperCase(),
       weightedScore: this.calculateWeightedScore(),
       remarks: this.remarks.trim(),
+      evaluationDistributionMgmtUniqId: this.currentUniqId || null,
     };
 
     // Add all question answers dynamically
