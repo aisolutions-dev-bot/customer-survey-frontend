@@ -124,24 +124,32 @@
         </div>
       </div>
 
-      <!-- Skill Set / Level Card -->
-      @if (skillSet()) {
+      <!-- Skill Set / Level Cards — shows all levels for this form type -->
+      @if (availableSkillSets().length > 0) {
         <div class="carpenter-level-section">
           <h3 class="section-title">
             <i class="fas fa-layer-group"></i>
             {{ currentLang() === 'en' ? 'Skill Level' : '技能级别' }}
           </h3>
           <div class="carpenter-level-options">
-            <div class="level-option selected">
-              <div class="level-card">
-                <div class="level-icon"><i class="fas fa-star"></i></div>
-                <div class="level-info">
-                  <h4 class="level-title">{{ skillSet().toUpperCase() }}</h4>
-                  <span class="level-questions">{{ questions().length }} {{ currentLang() === 'en' ? 'Questions' : '个问题' }}</span>
+            @for (level of availableSkillSets(); track level) {
+              <div class="level-option" [class.selected]="skillSet().toUpperCase() === level" [class.disabled]="skillSet().toUpperCase() !== level">
+                <div class="level-card">
+                  <div class="level-icon">
+                    <i class="fas" [class]="skillSet().toUpperCase() === level ? 'fa-check-circle' : 'fa-circle'"></i>
+                  </div>
+                  <div class="level-info">
+                    <h4 class="level-title">{{ level }}</h4>
+                    @if (skillSet().toUpperCase() === level) {
+                      <span class="level-questions">{{ questions().length }} {{ currentLang() === 'en' ? 'Questions' : '个问题' }}</span>
+                    }
+                  </div>
+                  @if (skillSet().toUpperCase() === level) {
+                    <div class="level-checkmark"><i class="fas fa-check-circle"></i></div>
+                  }
                 </div>
-                <div class="level-checkmark"><i class="fas fa-check-circle"></i></div>
               </div>
-            </div>
+            }
           </div>
           <div class="lock-notice">
             <i class="fas fa-lock"></i>

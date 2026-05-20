@@ -16,6 +16,10 @@ export class FormQuestionsService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/form-questions`;
 
+  getSkillSets(formType: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/${formType}/skill-sets`);
+  }
+
   getFormQuestions(formType: string, skillSet: string): Observable<FormQuestion[]> {
     return this.http.get<FormQuestion[]>(`${this.apiUrl}/${formType}/${skillSet}`);
   }

@@ -80,6 +80,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   formType = signal('');
   currentUniqId = signal<number | null>(null);
   isGroupMode = signal(false);
+  availableSkillSets = signal<string[]>([]);
 
   // Lock flags
   isStaffLocked = signal(false);
@@ -258,6 +259,15 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   private loadQuestionsForDistribution(dist: EvaluationDistribution): void {
     const ft = (dist.formType ?? '').toUpperCase();
     const ss = (dist.skillSet ?? '').toUpperCase();
+
+    // Load all available skill sets for this form type to show the cards
+    if (ft && this.availableSkillSets().length === 0) {
+      this.formQuestionsService.getSkillSets(ft).subscribe({
+        next: (sets) => { this.availableSkillSets.set(sets); this.cdr.markForCheck(); },
+        error: () => {},
+      });
+    }
+
     if (!ft || !ss) {
       this.loadingState.set('error');
       this.errorMessage.set(
@@ -377,7 +387,9 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     const answersArr = this.answers();
     const payload: Record<string, unknown> = {
       staffId: this.staffId().trim(),
+      staffName: this.staffName().trim(),
       projectId: this.projectId().trim(),
+      projectName: this.projectName().trim(),
       departmentId: this.departmentId().trim(),
       evaluatorId: this.evaluatorId().trim(),
       evaluatorName: this.evaluatorName().trim(),
@@ -399,7 +411,9 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
             .updateStatus(this.currentUniqId()!, 'SUBMITTED')
             .pipe(
               switchMap(() => this.distributionService.notifyEvaluator(payload)),
-              catchError(() => {
+              catchError((err) => {
+                console.error('[EvalForm] Status update or notification failed:', err);
+                // Still mark as submitted — rating was saved; notify failure is non-blocking
                 this.submitted.set(true);
                 this.isSubmitting.set(false);
                 this.cdr.markForCheck();
