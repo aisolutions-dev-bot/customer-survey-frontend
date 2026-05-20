@@ -314,6 +314,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     const selected = this.groupEvaluations().find((r) => r.evaluateeId === this.staffId());
     if (!selected) return;
     this.answers.set([]);
+    this.availableSkillSets.set([]);
     this.applyDistribution(selected);
     this.loadQuestionsForDistribution(selected);
     this.cdr.markForCheck();
