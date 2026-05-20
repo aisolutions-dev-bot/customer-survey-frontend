@@ -14,7 +14,8 @@ import { Subject, catchError, switchMap, takeUntil } from 'rxjs';
 import { EMPTY } from 'rxjs';
 import { EvaluationDistributionService } from '../services/evaluation-distribution.service';
 import { EvaluationRatingsService } from '../services/evaluation-ratings.service';
-import { FormQuestionsService, FormQuestion } from '../services/form-questions.service';
+import { FormQuestion } from '../services/form-questions.service';
+import { QUESTION_REGISTRY } from './question-registry';
 import { StaffService } from '../services/staff.service';
 import { ProjectService } from '../services/project.service';
 import { DepartmentService } from '../services/department.service';
@@ -41,7 +42,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
   private distributionService = inject(EvaluationDistributionService);
   private ratingsService = inject(EvaluationRatingsService);
-  private formQuestionsService = inject(FormQuestionsService);
   private staffService = inject(StaffService);
   private projectService = inject(ProjectService);
   private departmentService = inject(DepartmentService);
@@ -260,18 +260,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     const ft = (dist.formType ?? '').toUpperCase();
     const ss = (dist.skillSet ?? '').toUpperCase();
 
-    // Load all available skill sets for this form type to show the cards
-    if (ft && this.availableSkillSets().length === 0) {
-      this.formQuestionsService.getSkillSets(ft).subscribe({
-        next: (sets) => { this.availableSkillSets.set(sets); this.cdr.markForCheck(); },
-        error: () => {
-          // Fallback: at minimum show the current skill set as a card
-          if (ss) this.availableSkillSets.set([ss]);
-          this.cdr.markForCheck();
-        },
-      });
-    }
-
     if (!ft || !ss) {
       this.loadingState.set('error');
       this.errorMessage.set(
@@ -282,32 +270,24 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
       this.cdr.markForCheck();
       return;
     }
-    this.formQuestionsService.getFormQuestions(ft, ss).subscribe({
-      next: (qs) => {
-        if (qs.length === 0) {
-          this.loadingState.set('error');
-          this.errorMessage.set(
-            this.currentLang() === 'en'
-              ? `No questions found for form type "${ft}" / skill set "${ss}". Please contact the administrator.`
-              : `未找到表格类型"${ft}"/ 技能级别"${ss}"的问题。请联系管理员。`,
-          );
-        } else {
-          this.questions.set(qs);
-          this.answers.set(new Array(qs.length).fill(0));
-          this.loadingState.set('loaded');
-        }
-        this.cdr.markForCheck();
-      },
-      error: () => {
-        this.loadingState.set('error');
-        this.errorMessage.set(
-          this.currentLang() === 'en'
-            ? 'Failed to load evaluation questions. Please try again.'
-            : '无法加载评估问题。请重试。',
-        );
-        this.cdr.markForCheck();
-      },
-    });
+
+    const skillSets = Object.keys(QUESTION_REGISTRY[ft] ?? {});
+    this.availableSkillSets.set(skillSets.length > 0 ? skillSets : [ss]);
+
+    const qs = QUESTION_REGISTRY[ft]?.[ss] ?? [];
+    if (qs.length === 0) {
+      this.loadingState.set('error');
+      this.errorMessage.set(
+        this.currentLang() === 'en'
+          ? `No questions found for form type "${ft}" / skill set "${ss}". Please contact the administrator.`
+          : `未找到表格类型"${ft}"/ 技能级别"${ss}"的问题。请联系管理员。`,
+      );
+    } else {
+      this.questions.set(qs);
+      this.answers.set(new Array(qs.length).fill(0));
+      this.loadingState.set('loaded');
+    }
+    this.cdr.markForCheck();
   }
 
   onEvaluateeChange(): void {
@@ -344,6 +324,9 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   getRatingDescription(rating: number): string {
+    const q = this.questions()[this.selectedQuestionIndex()];
+    const specific = q?.ratings?.[rating];
+    if (specific) return this.currentLang() === 'zh' ? specific.zh : specific.en;
     const desc = this.translationService.genericRatingDescriptions[rating];
     if (!desc) return '';
     return this.currentLang() === 'zh' ? desc.zh : desc.en;

@@ -9,6 +9,7 @@ export interface FormQuestion {
   questionnaireZh: string | null;
   weightedScore: number;
   skillCategory: string;
+  ratings?: Record<number, { en: string; zh: string }>;
 }
 
 @Injectable({ providedIn: 'root' })
