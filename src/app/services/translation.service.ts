@@ -54,6 +54,30 @@ export class TranslationService {
     return text[lang] || text.en;
   }
 
+  skillCategoryTranslations: Record<string, string> = {
+    'Technical Skills': '技术技能',
+    'Adaptability': '适应能力',
+    'Self-Management': '自我管理',
+    'Project Standard': '项目标准',
+    'Teamwork and Communication': '团队协作与沟通',
+  };
+
+  genericRatingDescriptions: Record<number, { en: string; zh: string }> = {
+    1: { en: 'Very Poor – Does not meet expectations', zh: '非常差 – 未达到预期' },
+    2: { en: 'Poor – Partially meets expectations', zh: '差 – 部分达到预期' },
+    3: { en: 'Average – Meets basic expectations', zh: '一般 – 符合基本预期' },
+    4: { en: 'Good – Exceeds expectations', zh: '好 – 超出预期' },
+    5: { en: 'Excellent – Far exceeds expectations', zh: '优秀 – 远超预期' },
+  };
+
+  translateSkillCategory(category: string): string {
+    const lang = this.getCurrentLanguage();
+    if (lang === 'zh' && this.skillCategoryTranslations[category]) {
+      return this.skillCategoryTranslations[category];
+    }
+    return category;
+  }
+
   // Common UI translations
   translations = {
     header: {

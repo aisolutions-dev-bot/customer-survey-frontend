@@ -1,0 +1,536 @@
+<div class="deprecated-notice" style="background:#fff3cd;border:2px solid #ffc107;padding:14px 20px;margin-bottom:0;text-align:center;font-size:0.95rem;font-weight:500;position:sticky;top:0;z-index:999;">
+  ⚠️ <strong>Deprecated:</strong> This form type will be removed. Please use the new evaluation link provided by your administrator.
+</div>
+<div class="evaluation-container">
+  <!-- Language Toggle Button (Fixed Position) -->
+  <button class="language-toggle" (click)="toggleLanguage()" title="Switch Language / 切换语言">
+    <i class="fas fa-language"></i>
+    <span>{{ currentLang === 'en' ? '中文' : 'English' }}</span>
+  </button>
+
+  <!-- Success Screen -->
+  <div *ngIf="submitted" class="success-screen">
+    <div class="success-card">
+      <div class="success-icon">🎉</div>
+      <h2 class="success-title">{{ t(translationService.translations.success.title) }}</h2>
+      <p class="success-message">
+        {{ t(translationService.translations.success.message) }}
+      </p>
+      <div class="success-score">
+        <strong>{{ t(translationService.translations.success.weightedScore) }}</strong>
+        {{ calculateWeightedScore().toFixed(0) }}/100
+      </div>
+      <div class="success-evaluator">
+        <strong>{{ currentLang === 'en' ? 'Carpenter Level:' : '木工级别：' }}</strong>
+        {{ getCarpenterLevelLabel(selectedLevel) }}
+      </div>
+      <div class="success-evaluator">
+        <strong>{{ t(translationService.translations.success.evaluatedBy) }}</strong>
+        {{ evaluatorName }} ({{ evaluatorId }})
+      </div>
+      <div *ngIf="isGroupMode" class="success-evaluator">
+        Please wait for a moment. You will be redirected to the previous page to complete the rest
+        of the evaluation. If it doesn't, please refresh the page.
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isGroupMode && allGroupEvaluationsCompleted" class="success-screen">
+    <div class="success-card">
+      <div class="success-icon">🎉</div>
+      <h2 class="success-title">
+        {{ currentLang === 'en' ? 'All evaluations completed!' : '本组评估已全部完成！' }}
+      </h2>
+      <p class="success-message">
+        {{
+          currentLang === 'en'
+            ? 'Congratulations, you have finished every evaluation in this group.'
+            : '恭喜，您已完成本组中的所有评估。'
+        }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Form -->
+  <div *ngIf="!submitted && !allGroupEvaluationsCompleted" class="main-form">
+    <!-- Header -->
+    <div class="header-card">
+      <h1 class="header-title">{{ t(translationService.translations.header.title) }}</h1>
+      <div class="header-info">
+        <!-- Staff ID Field -->
+        <div *ngIf="isGroupMode" class="info-item">
+          <i class="fas fa-id-badge"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.staffId) }}:</strong>
+            <select
+              [(ngModel)]="staffId"
+              (change)="onEvaluateeChangeForGroup()"
+              class="info-select"
+            >
+              <option *ngFor="let rec of groupEvaluations" [value]="rec.evaluateeId">
+                {{ rec.evaluateeId }} - {{ rec.evaluateeName }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="!isGroupMode" class="info-item">
+          <i class="fas fa-id-badge"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.staffId) }}:</strong>
+            <select
+              *ngIf="!isStaffIdLocked"
+              [(ngModel)]="staffId"
+              (change)="onStaffChange()"
+              class="info-select"
+              [class.input-error]="staffId.trim() === '' && errorMessage"
+              [disabled]="isLoadingStaff"
+            >
+              <option value="">
+                {{
+                  isLoadingStaff
+                    ? t(translationService.translations.fields.loading)
+                    : t(translationService.translations.fields.selectStaff)
+                }}
+              </option>
+              <option *ngFor="let staff of staffList" [value]="staff.staffId">
+                {{ staff.staffId }} - {{ staff.name }}
+              </option>
+            </select>
+            <div *ngIf="isStaffIdLocked" class="locked-value-container">
+              <span class="locked-value">{{ staffId }}</span>
+              <span *ngIf="staffName" class="staff-name-hint">{{ staffName }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project ID Field -->
+        <div class="info-item">
+          <i class="fas fa-project-diagram"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.projectId) }}:</strong>
+            <select
+              *ngIf="!isProjectIdLocked && !projectId"
+              [(ngModel)]="projectId"
+              (change)="onProjectChange()"
+              class="info-select"
+              [class.input-error]="projectId.trim() === '' && errorMessage"
+              [disabled]="isLoadingProjects"
+            >
+              <option value="">
+                {{
+                  isLoadingProjects
+                    ? t(translationService.translations.fields.loading)
+                    : t(translationService.translations.fields.selectProject)
+                }}
+              </option>
+              <option *ngFor="let project of projectList" [value]="project.projectId">
+                {{ project.projectId }} - {{ project.projectName }}
+              </option>
+            </select>
+            <div *ngIf="!isProjectIdLocked && projectId" class="selected-display">
+              <div class="selected-content">
+                <span class="selected-id">{{ projectId }}</span>
+                <span class="selected-name">{{ projectName }}</span>
+              </div>
+              <button
+                class="change-btn"
+                (click)="clearProjectSelection()"
+                [title]="currentLang === 'en' ? 'Change project' : '更换项目'"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+
+            <div *ngIf="isProjectIdLocked" class="locked-value-container">
+              <span class="locked-value">{{ projectId }}</span>
+              <span *ngIf="projectName" class="staff-name-hint">{{ projectName }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role Type Field -->
+        <div class="info-item">
+          <!-- <i class="fas fa-user-tie"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.role) }}:</strong>
+            <input
+              *ngIf="!isRoleTypeLocked"
+              type="text"
+              [(ngModel)]="roleType"
+              [placeholder]="t(translationService.translations.fields.enterRole)"
+              class="info-input"
+              [class.input-error]="roleType.trim() === '' && errorMessage"
+            />
+            <span *ngIf="isRoleTypeLocked" class="locked-value">{{ roleType.toUpperCase() }}</span>
+          </div> -->
+          <i class="fas fa-building"></i>
+          <div class="info-content">
+            <strong>{{ t(translationService.translations.fields.role) }}:</strong>
+            <select
+              *ngIf="!isDepartmentIdLocked && !departmentId"
+              [(ngModel)]="departmentId"
+              (change)="onDepartmentChange()"
+              class="info-select"
+              [class.input-error]="departmentName.trim() === '' && errorMessage"
+              [disabled]="isLoadingDepartments"
+            >
+              <option value="">
+                {{
+                  isLoadingDepartments
+                    ? t(translationService.translations.fields.loading)
+                    : t(translationService.translations.fields.selectDepartment)
+                }}
+              </option>
+              <option *ngFor="let department of departmentList" [value]="department.departmentId">
+                {{ department.departmentId }} - {{ department.departmentName }}
+              </option>
+            </select>
+            <div *ngIf="!isDepartmentIdLocked && departmentId" class="selected-display">
+              <div class="selected-content">
+                <span class="selected-id">{{ departmentId }}</span>
+                <span class="selected-name">{{ departmentName }}</span>
+              </div>
+              <button
+                class="change-btn"
+                (click)="clearDepartmentSelection()"
+                [title]="currentLang === 'en' ? 'Change role/dept' : '更换角色/部门'"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+
+            <div *ngIf="isDepartmentIdLocked" class="locked-value-container">
+              <span class="locked-value">{{ departmentId }}</span>
+              <span *ngIf="departmentName" class="staff-name-hint">{{ departmentName }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carpenter Level Selection Section -->
+    <div class="carpenter-level-section">
+      <h3 class="section-title">
+        <i class="fas fa-hard-hat"></i>
+        {{ currentLang === 'en' ? 'Carpenter Level' : '木工级别' }}
+        <span class="required">*</span>
+      </h3>
+      <p class="section-description">
+        {{
+          currentLang === 'en'
+            ? 'Select the appropriate carpenter level to load the corresponding questionnaire'
+            : '选择适当的木工级别以加载相应的问卷'
+        }}
+      </p>
+
+      <div class="carpenter-level-options">
+        <label
+          *ngFor="let level of carpenterLevels"
+          class="level-option"
+          [class.selected]="selectedLevel === level.id"
+          [class.disabled]="isCarpenterLevelLocked && selectedLevel !== level.id"
+        >
+          <input
+            type="radio"
+            name="carpenterLevel"
+            [value]="level.id"
+            [(ngModel)]="selectedLevel"
+            (change)="onCarpenterLevelChange(level.id)"
+            [disabled]="isCarpenterLevelLocked"
+          />
+          <div class="level-card">
+            <div class="level-icon">
+              <i
+                class="fas"
+                [ngClass]="{
+                  'fa-seedling': level.id === 'junior',
+                  'fa-wrench': level.id === 'journeyman',
+                  'fa-trophy': level.id === 'senior',
+                }"
+              ></i>
+            </div>
+            <div class="level-info">
+              <h4 class="level-title">{{ t(level.label) }}</h4>
+              <span class="level-questions">
+                {{ level.questions.length }} {{ currentLang === 'en' ? 'Questions' : '个问题' }}
+              </span>
+            </div>
+            <div class="level-checkmark" *ngIf="selectedLevel === level.id">
+              <i class="fas fa-check-circle"></i>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <!-- Lock indicator for carpenter level -->
+      <div *ngIf="isCarpenterLevelLocked" class="lock-notice">
+        <i class="fas fa-lock"></i>
+        {{
+          currentLang === 'en'
+            ? 'Carpenter level is pre-selected and cannot be changed'
+            : '木工级别已预先选择，无法更改'
+        }}
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Show message when no level selected -->
+    <div *ngIf="!selectedLevel && !isCarpenterLevelLocked" class="selection-prompt">
+      <div class="prompt-icon">📋</div>
+      <p class="prompt-text">
+        {{
+          currentLang === 'en'
+            ? 'Please select a carpenter level above to display the evaluation questions'
+            : '请在上方选择木工级别以显示评估问题'
+        }}
+      </p>
+    </div>
+
+    <!-- Questions Section with Category Headers (only show when level is selected) -->
+    <div *ngIf="selectedLevel && questions.length > 0">
+      <ng-container *ngFor="let question of questions; let qIndex = index">
+        <!-- Category Header (show only when it's a new category) -->
+        <div *ngIf="shouldShowCategoryHeader(qIndex)" class="category-header">
+          <div class="category-icon">
+            <i class="fas" [ngClass]="getCategoryIcon(question.groupCategory)"></i>
+          </div>
+          <h2 class="category-title">{{ t(question.groupCategory!) }}</h2>
+        </div>
+
+        <div class="question-card">
+          <!-- Question Header -->
+          <div class="question-header">
+            <div class="question-title-row">
+              <div class="question-info">
+                <h3 class="question-title">
+                  <span class="question-number">{{ qIndex + 1 }}</span>
+                  {{ t(question.category) }}
+                </h3>
+                <span class="weight-badge"
+                  >{{ t(translationService.translations.modal.weight) }}
+                  {{ question.weight }}%</span
+                >
+              </div>
+              <button
+                class="help-button"
+                (click)="openExplanation(qIndex)"
+                [title]="
+                  currentLang === 'en' ? 'Click for rating explanations' : '点击查看评分说明'
+                "
+              >
+                <i class="fas fa-question"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Rating Section -->
+          <div class="rating-section">
+            <div class="rating-container">
+              <button
+                *ngFor="let smiley of smileys"
+                class="smiley-button"
+                [class]="
+                  'smiley-button-' +
+                  smiley.value +
+                  (answers[qIndex] === smiley.value ? ' selected selected-' + smiley.value : '')
+                "
+                (click)="selectAnswer(qIndex, smiley.value)"
+              >
+                <span class="smiley-icon">{{ smiley.icon }}</span>
+                <span class="smiley-value">{{ smiley.value }}</span>
+              </button>
+            </div>
+
+            <!-- Selected Answer Display -->
+            <div *ngIf="answers[qIndex] > 0" class="selected-indicator">
+              <span class="selected-badge"
+                >{{ currentLang === 'en' ? 'Selected:' : '已选择：' }} {{ answers[qIndex] }}/5</span
+              >
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Remark Section -->
+      <div class="remark-section" *ngIf="questions.length > 0">
+        <div class="remark-title">
+          <i class="fas fa-comment-dots"></i>
+          {{ currentLang === 'en' ? 'Remark' : '备注' }}
+          <span class="required">*</span>
+        </div>
+        <div class="remark-description">
+          {{
+            currentLang === 'en'
+              ? "Please provide comments, observations, or feedback about the carpenter's performance. This field is required."
+              : '请提供关于木工表现的评论、观察或反馈。此字段为必填。'
+          }}
+        </div>
+        <textarea
+          [(ngModel)]="remarks"
+          name="remark"
+          #remarkRef="ngModel"
+          required
+          class="remark-textarea"
+          [class.input-error]="remarkRef.invalid && (remarkRef.touched || submitted)"
+          [maxlength]="8000"
+          rows="6"
+          [placeholder]="
+            currentLang === 'en'
+              ? 'Enter your remarks here... (e.g., strengths, areas for improvement, specific examples)'
+              : '在此输入您的备注...（例如：优势、改进领域、具体例子）'
+          "
+        ></textarea>
+
+        <!-- Error message -->
+        <div class="error-message" *ngIf="remarkRef.invalid && (remarkRef.touched || submitted)">
+          <small *ngIf="remarkRef.errors?.['required']">
+            {{ currentLang === 'en' ? 'Remark is required.' : '备注为必填项。' }}
+          </small>
+        </div>
+      </div>
+
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <div class="progress-header">
+          <span>{{ t(translationService.translations.progress.title) }}</span>
+          <span>{{ getAnsweredCount() }}/{{ questions.length }}</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluator Section (positioned above submit button) -->
+    <div class="evaluator-section" *ngIf="selectedLevel && questions.length > 0">
+      <h3 class="evaluator-title">
+        <i class="fas fa-user-check"></i>
+        {{ t(translationService.translations.evaluator.title) }}
+      </h3>
+      <div class="evaluator-fields">
+        <!-- Evaluator ID Field -->
+        <div class="evaluator-field">
+          <label class="field-label">
+            <i class="fas fa-id-card"></i>
+            {{ t(translationService.translations.fields.evaluatorId) }}
+            <span class="required">*</span>
+          </label>
+
+          <!-- Dropdown when not locked -->
+          <select
+            *ngIf="!isEvaluatorIdLocked"
+            [(ngModel)]="evaluatorId"
+            (change)="onEvaluatorChange()"
+            class="evaluator-select"
+            [class.input-error]="evaluatorId.trim() === '' && errorMessage"
+            [disabled]="isLoadingStaff"
+          >
+            <option value="">
+              {{
+                isLoadingStaff
+                  ? t(translationService.translations.fields.loading)
+                  : t(translationService.translations.fields.selectEvaluator)
+              }}
+            </option>
+            <option *ngFor="let staff of staffList" [value]="staff.staffId">
+              {{ staff.staffId }} - {{ staff.name }}
+            </option>
+          </select>
+          <!-- Locked display -->
+          <div *ngIf="isEvaluatorIdLocked" class="locked-value">
+            {{ evaluatorId }}
+          </div>
+        </div>
+
+        <!-- Evaluator Name Field (Auto-populated) -->
+        <div class="evaluator-field">
+          <label class="field-label">
+            <i class="fas fa-user"></i>
+            {{ t(translationService.translations.fields.evaluatorName) }}
+            <span class="required">*</span>
+          </label>
+
+          <div
+            class="evaluator-name-display"
+            [class.empty]="!evaluatorName"
+            [class.input-error]="evaluatorName.trim() === '' && errorMessage"
+          >
+            {{ evaluatorName || t(translationService.translations.fields.nameWillAppear) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Evaluator Section -->
+
+    <!-- Submit Section -->
+    <div class="submit-section" *ngIf="selectedLevel && questions.length > 0">
+      <button
+        class="submit-button"
+        [disabled]="!canSubmit() || isLoading"
+        (click)="submitEvaluation()"
+      >
+        <span *ngIf="isLoading" class="loading-content">
+          <i class="fas fa-spinner fa-spin"></i>
+          {{ t(translationService.translations.submit.submitting) }}
+        </span>
+        <span *ngIf="!isLoading">{{ t(translationService.translations.submit.button) }}</span>
+      </button>
+
+      <p class="submit-help" [class.success-help]="canSubmit()">
+        {{ getSubmitHelpText() }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Rating Explanation Modal -->
+  <div *ngIf="showExplanation" class="modal-backdrop" (click)="closeExplanation()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h3 class="modal-title">
+          {{ t(translationService.translations.modal.ratingExplanations) }}
+          {{ t(questions[selectedQuestion].category) }}
+        </h3>
+        <button class="modal-close" (click)="closeExplanation()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <table class="explanation-table">
+          <thead>
+            <tr>
+              <th>{{ t(translationService.translations.modal.rating) }}</th>
+              <th>{{ t(translationService.translations.modal.smiley) }}</th>
+              <th>{{ t(translationService.translations.modal.description) }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rating of [1, 2, 3, 4, 5]">
+              <td class="rating-cell">{{ rating }}/5</td>
+              <td class="smiley-cell">{{ getSmileyIcon(rating) }}</td>
+              <td class="description-cell">
+                <div [class]="'description-content ' + getRatingBgClass(rating)">
+                  {{ getRatingDescription(selectedQuestion, rating) }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button class="modal-close-btn" (click)="closeExplanation()">
+          {{ t(translationService.translations.modal.close) }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
