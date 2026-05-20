@@ -18,9 +18,9 @@ export interface FormTypeConfig {
 }
 
 // Import individual question sets
-import { BS_PROJECT_STANDARD_QUESTIONS } from '../models/bs-proj-eval-questions';
-import { BS_TENDER_STANDARD_QUESTIONS } from '../models/bs-tender-eval-questions';
-//import { DRAFTER_QUESTIONS } from '../models/drafter-eval-questions';
+import { BS_PROJECT_STANDARD_QUESTIONS } from './models/bs-proj-eval-questions';
+import { BS_TENDER_STANDARD_QUESTIONS } from './models/bs-tender-eval-questions';
+//import { DRAFTER_QUESTIONS } from './models/drafter-eval-questions';
 
 /**
  * Master configuration for all evaluation form types

@@ -76,7 +76,7 @@
             <i class="fas fa-id-badge"></i>
             <div class="info-content">
               <strong>{{ t(translationService.translations.fields.staffId) }}:</strong>
-              @if (isGroupMode() && !isStaffLocked()) {
+              @if (isGroupMode()) {
                 <select [(ngModel)]="staffId" (ngModelChange)="onEvaluateeChange()" class="info-select">
                   @for (rec of groupEvaluations(); track rec.uniqId) {
                     <option [value]="rec.evaluateeId">{{ rec.evaluateeId }} - {{ rec.evaluateeName }}</option>
@@ -121,18 +121,34 @@
             </div>
           </div>
 
-          <!-- Skill Set -->
-          @if (skillSet()) {
-            <div class="info-item">
-              <i class="fas fa-layer-group"></i>
-              <div class="info-content">
-                <strong>{{ currentLang() === 'en' ? 'Level:' : '级别：' }}</strong>
-                <span class="locked-value">{{ skillSet().toUpperCase() }}</span>
-              </div>
-            </div>
-          }
         </div>
       </div>
+
+      <!-- Skill Set / Level Card -->
+      @if (skillSet()) {
+        <div class="carpenter-level-section">
+          <h3 class="section-title">
+            <i class="fas fa-layer-group"></i>
+            {{ currentLang() === 'en' ? 'Skill Level' : '技能级别' }}
+          </h3>
+          <div class="carpenter-level-options">
+            <div class="level-option selected">
+              <div class="level-card">
+                <div class="level-icon"><i class="fas fa-star"></i></div>
+                <div class="level-info">
+                  <h4 class="level-title">{{ skillSet().toUpperCase() }}</h4>
+                  <span class="level-questions">{{ questions().length }} {{ currentLang() === 'en' ? 'Questions' : '个问题' }}</span>
+                </div>
+                <div class="level-checkmark"><i class="fas fa-check-circle"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="lock-notice">
+            <i class="fas fa-lock"></i>
+            {{ currentLang() === 'en' ? 'Skill level is pre-assigned and cannot be changed' : '技能级别已预先分配，无法更改' }}
+          </div>
+        </div>
+      }
 
       <!-- Error banner (non-fatal, e.g. validation) -->
       @if (errorMessage()) {

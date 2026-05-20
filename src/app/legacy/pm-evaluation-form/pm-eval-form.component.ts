@@ -3,13 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil, switchMap, catchError, EMPTY } from 'rxjs';
-import { PMEvaluationService } from '../../services/pm-evaluation.service';
+import { PMEvaluationService } from '../services/pm-evaluation.service';
 import { StaffService, Staff } from '../../services/staff.service';
 import { ProjectService, Project } from '../../services/project.service';
 import { DepartmentService, Department } from '../../services/department.service';
 import { EvaluationDistributionService } from '../../services/evaluation-distribution.service';
-import { PMEvaluationResponse } from '../../models/pm-eval-response';
-import { PM_STANDARD_QUESTIONS, SMILEYS, QuestionDefinition } from '../../models/pm-eval-questions';
+import { PMEvaluationResponse } from '../models/pm-eval-response';
+import { PM_STANDARD_QUESTIONS, SMILEYS, QuestionDefinition } from '../models/pm-eval-questions';
 import { TranslationService, Language, Translation } from '../../services/translation.service';
 import { EvaluationDistribution } from '../../models/evaluation-distribution';
 

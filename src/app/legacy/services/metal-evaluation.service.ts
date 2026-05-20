@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BSProjEvaluationResponse } from '../models/bs-proj-eval-response';
-import { environment } from '../../environments/environment';
+import { MetalEvaluationResponse } from '../models/metal-eval-response';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class BSProjectEvaluationService {
-  /* private apiUrl = `${environment.apiUrl}/bs-project-evaluation`;
-  
-  constructor(private http: HttpClient) {}
-
-  submitEvaluation(evaluation: BSProjEvaluationResponse): Observable<any> {
-    return this.http.post(this.apiUrl, evaluation);
-  } */
+export class MetalEvaluationService {
 
   private apiUrl = `${environment.apiUrl}/evaluation-ratings`;
   
@@ -20,7 +13,7 @@ export class BSProjectEvaluationService {
   /**
    * Submit evaluation to m17EvaluationRatings table
    */
-  submitEvaluation(evaluation: BSProjEvaluationResponse): Observable<any> {
+  submitEvaluation(evaluation: MetalEvaluationResponse): Observable<any> {
     return this.http.post(this.apiUrl, evaluation);
   }
 

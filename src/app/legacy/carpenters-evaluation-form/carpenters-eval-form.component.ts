@@ -14,7 +14,7 @@ import {
   CarpenterLevel,
   SMILEYS,
   QuestionDefinition,
-} from '../../models/carpenters-eval-questions';
+} from '../models/carpenters-eval-questions';
 import { TranslationService, Language, Translation } from '../../services/translation.service';
 import { switchMap, catchError, EMPTY } from 'rxjs';
 import { EvaluationDistribution } from '../../models/evaluation-distribution';

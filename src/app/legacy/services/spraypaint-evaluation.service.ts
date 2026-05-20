@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CeilingEvaluationResponse } from '../models/ceiling-eval-response';
-import { environment } from '../../environments/environment';
+import { SpraypaintEvaluationResponse } from '../models/spraypaint-eval-response';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class CeilingEvaluationService {
+export class SpraypaintEvaluationService {
 
   private apiUrl = `${environment.apiUrl}/evaluation-ratings`;
   
@@ -13,7 +13,7 @@ export class CeilingEvaluationService {
   /**
    * Submit evaluation to m17EvaluationRatings table
    */
-  submitEvaluation(evaluation: CeilingEvaluationResponse): Observable<any> {
+  submitEvaluation(evaluation: SpraypaintEvaluationResponse): Observable<any> {
     return this.http.post(this.apiUrl, evaluation);
   }
 

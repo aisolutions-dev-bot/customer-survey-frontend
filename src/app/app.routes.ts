@@ -1,5 +1,12 @@
 import { Routes } from '@angular/router';
 
+function toEvaluation(queryParams: Record<string, string>): string {
+  const qs = Object.entries(queryParams)
+    .map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`)
+    .join('&');
+  return qs ? `/evaluation?${qs}` : '/evaluation';
+}
+
 export const routes: Routes = [
   // Customer satisfaction survey (unchanged)
   {
@@ -34,20 +41,20 @@ export const routes: Routes = [
   { path: 'evaluation/:staff_id/project/:project_id/role/:role_type/evaluator/:evaluator', loadComponent: () => import('./legacy/evaluation-form/evaluation-form.component').then((m) => m.EvaluationFormComponent) },
   { path: 'evaluation/:staff_id/project/:project_id/role/:role_type', loadComponent: () => import('./legacy/evaluation-form/evaluation-form.component').then((m) => m.EvaluationFormComponent) },
 
-  // ─── Simple legacy routes (no path params) — redirect to /evaluation, query params preserved ─
+  // ─── Simple legacy routes — redirect to /evaluation WITH all query params (uniq_id, group_id) ─
 
-  { path: 'carpenters-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'bs-project-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'bs-tender-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'drafter-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'operation-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'ceiling-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'spraypaint-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'metal-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'metalcut-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'me-project-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'team-d-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
-  { path: 'pm-evaluation', redirectTo: '/evaluation', pathMatch: 'full' },
+  { path: 'carpenters-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'bs-project-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'bs-tender-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'drafter-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'operation-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'ceiling-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'spraypaint-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'metal-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'metalcut-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'me-project-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'team-d-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
+  { path: 'pm-evaluation', redirectTo: ({ queryParams }) => toEvaluation(queryParams) },
 
   // Default: redirect to /evaluation
   {

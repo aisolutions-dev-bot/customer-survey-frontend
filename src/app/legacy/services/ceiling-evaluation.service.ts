@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DrafterEvaluationResponse } from '../models/drafter-eval-response';
-import { environment } from '../../environments/environment';
+import { CeilingEvaluationResponse } from '../models/ceiling-eval-response';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class DrafterEvaluationService {
-  /* private apiUrl = `${environment.apiUrl}/bs-project-evaluation`;
-  
-  constructor(private http: HttpClient) {}
-
-  submitEvaluation(evaluation: DrafterEvaluationResponse): Observable<any> {
-    return this.http.post(this.apiUrl, evaluation);
-  } */
+export class CeilingEvaluationService {
 
   private apiUrl = `${environment.apiUrl}/evaluation-ratings`;
   
@@ -20,7 +13,7 @@ export class DrafterEvaluationService {
   /**
    * Submit evaluation to m17EvaluationRatings table
    */
-  submitEvaluation(evaluation: DrafterEvaluationResponse): Observable<any> {
+  submitEvaluation(evaluation: CeilingEvaluationResponse): Observable<any> {
     return this.http.post(this.apiUrl, evaluation);
   }
 

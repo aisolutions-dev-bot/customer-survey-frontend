@@ -1,4 +1,4 @@
-import { Translation } from '../services/translation.service';
+import { Translation } from '../../services/translation.service';
 
 export interface QuestionDefinition {
   category: Translation;

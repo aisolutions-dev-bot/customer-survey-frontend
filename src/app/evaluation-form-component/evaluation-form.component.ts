@@ -203,7 +203,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.skillSet.set(dist.skillSet ?? '');
     this.formType.set(dist.formType ?? '');
     this.currentUniqId.set(dist.uniqId ?? null);
-    this.isStaffLocked.set(true);
+    this.isStaffLocked.set(!this.isGroupMode());
     this.isEvaluatorLocked.set(true);
 
     // Resolve names from distribution (group endpoint has them, single doesn't)

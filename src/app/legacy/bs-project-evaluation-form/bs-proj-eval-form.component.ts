@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { BSProjectEvaluationService } from '../../services/bs-project-evaluation.service';
+import { BSProjectEvaluationService } from '../services/bs-project-evaluation.service';
 import { StaffService, Staff } from '../../services/staff.service';
 import { ProjectService, Project } from '../../services/project.service';
 import { DepartmentService, Department } from '../../services/department.service';
@@ -13,7 +13,7 @@ import {
   BS_PROJECT_STANDARD_QUESTIONS,
   SMILEYS,
   QuestionDefinition,
-} from '../../models/bs-proj-eval-questions';
+} from '../models/bs-proj-eval-questions';
 import { TranslationService, Language, Translation } from '../../services/translation.service';
 import { switchMap, catchError, EMPTY } from 'rxjs';
 import { EvaluationDistribution } from '../../models/evaluation-distribution';

@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MeProjectEvaluationResponse } from '../models/me-project-eval.response';
-import { environment } from '../../environments/environment';
+import { OperationEvaluationResponse } from '../models/operation-eval-response';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class MeProjectEvaluationService {
-
+export class OperationEvaluationService { 
   private apiUrl = `${environment.apiUrl}/evaluation-ratings`;
   
   constructor(private http: HttpClient) {}
   /**
    * Submit evaluation to m17EvaluationRatings table
    */
-  submitEvaluation(evaluation: MeProjectEvaluationResponse): Observable<any> {
+  submitEvaluation(evaluation: OperationEvaluationResponse): Observable<any> {
     return this.http.post(this.apiUrl, evaluation);
   }
 

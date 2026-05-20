@@ -6,8 +6,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { EvaluationService } from '../../services/evaluation.service';
 import { StaffService, Staff } from '../../services/staff.service';
 import { ProjectService, Project } from '../../services/project.service';
-import { EvaluationResponse } from '../../models/evaluation-response';
-import { DRAFTER_QUESTIONS, SMILEYS, QuestionDefinition } from '../../models/evaluation-questions';
+import { EvaluationResponse } from '../models/evaluation-response';
+import { DRAFTER_QUESTIONS, SMILEYS, QuestionDefinition } from '../models/evaluation-questions';
 import { TranslationService, Language, Translation } from '../../services/translation.service';
 
 @Component({

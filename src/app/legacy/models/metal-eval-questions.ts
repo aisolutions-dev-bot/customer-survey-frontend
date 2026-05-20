@@ -1,4 +1,4 @@
-import { Translation } from '../services/translation.service';
+import { Translation } from '../../services/translation.service';
 
 export interface QuestionDefinition {
   category: Translation;
@@ -9,23 +9,20 @@ export interface QuestionDefinition {
   };
 }
 
-export interface CarpenterLevel {
+export interface CeilingLevel {
   id: string;
   label: Translation;
   questions: QuestionDefinition[];
 }
 
-// Junior Carpenter Questionnaire with Categories (10 questions)
-const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
+// Level 1 Questionnaire with Categories (9 questions)
+const LEVEL_1_QUESTIONS: QuestionDefinition[] = [
   // ========== TECHNICAL SKILLS CATEGORY (4 questions - 60%) ==========
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q1
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Basic knowledge of tools (hammer, saw, drill, screw gun)',
-      zh: '认识并能安全使用常见手工具（锤子、螺丝刀、卷尺）和电动工具（电钻、打磨机）'
+      en: 'Understand basic metal types and common surface finishes (polishing, hairline)',
+      zh: '了解基本金属类型及常见表面处理（抛光、拉丝）'
     },
     weight: 15,
     ratings: {
@@ -36,14 +33,11 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q2
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Able to assist in material handling (timber, plywood, boards)',
-      zh: '能协助搬运、移动和整理材料（木料、板材），且不造成损坏'
+      en: 'Assist with material handling and preparation safely and correctly',
+      zh: '协助材料搬运及准备工作，确保安全与正确'
     },
     weight: 15,
     ratings: {
@@ -54,14 +48,11 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q3
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Performs simple, repetitive tasks: sanding, cutting assistance, nailing',
-      zh: '能在指导下完成简单的重复性工作：打磨、在切割时扶稳板材、基本清洁、取送工具/材料'
+      en: 'Understand and use basic tools (drill, screw gun, measuring tools, putty knife)',
+      zh: '会使用基本工具（钻孔机、螺丝枪、测量工具、批刀）'
     },
     weight: 15,
     ratings: {
@@ -72,14 +63,11 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - The carpenter consistently performs the skill independently, with high accuracy and confidence.', zh: '卓越 - 能独立、稳定且准确地完成技能操作，表现出高熟练度。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q4
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Reads simple instructions but cannot interpret technical drawings',
-      zh: '能阅读简单说明，但无法理解技术图纸'
+      en: 'Able to complete basic cleaning, sanding, and preparation work accurately according to instructions given',
+      zh: '员工能准确完成基础清理、打磨或准备工作'
     },
     weight: 15,
     ratings: {
@@ -92,7 +80,7 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 question - 5%) ==========
-  {
+  { //Q5
     groupCategory: {
       en: 'Problem Solving',
       zh: '问题解决'
@@ -112,7 +100,7 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== ADAPTABILITY CATEGORY (1 question - 5%) ==========
-  {
+  { //Q6
     groupCategory: {
       en: 'Adaptability',
       zh: '适应能力'
@@ -132,14 +120,14 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== SELF-MANAGEMENT CATEGORY (1 question - 15%) ==========
-  {
+  { //Q7
     groupCategory: {
       en: 'Self-Management',
       zh: '自我管理'
     },
     category: {
-      en: 'Self-Management - Able to handle assigned tasks and complete tasks on time',
-      zh: '自我管理 - 是否能够处理分配的任务并按时完成任务'
+      en: 'Able to handle assigned tasks and complete tasks on time',
+      zh: '是否能够处理分配的任务并按时完成任务'
     },
     weight: 15,
     ratings: {
@@ -152,7 +140,7 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROJECT STANDARD CATEGORY (1 question - 5%) ==========
-  {
+  { //Q8
     groupCategory: {
       en: 'Project Standard',
       zh: '项目标准'
@@ -172,14 +160,14 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 question - 10%) ==========
-  {
+  { //Q9
     groupCategory: {
       en: 'Teamwork & Communication',
       zh: '团队合作与沟通'
     },
     category: {
-      en: 'Teamwork & Communication - Works well with team and able to communicate updates clearly',
-      zh: '团队合作与沟通 - 是否能够很好地与团队合作，并能够清晰地传达任务或项目进展'
+      en: 'Works well with team and able to communicate updates clearly',
+      zh: '是否能够很好地与团队合作，并能够清晰地传达任务或项目进展'
     },
     weight: 10,
     ratings: {
@@ -192,17 +180,14 @@ const JUNIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   }
 ];
 
-// Journeyman Carpenter Questionnaire (11 questions)
-const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
-  // ========== TECHNICAL SKILLS CATEGORY (6 questions - 50%) ==========
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+// Level 2 Questionnaire (10 questions)
+const LEVEL_2_QUESTIONS: QuestionDefinition[] = [
+  // ========== TECHNICAL SKILLS CATEGORY (5 questions - 50%) ==========
+  { //Q1
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Proficient in measuring, cutting, and assembling furniture or fittings',
-      zh: '能熟练使用测量工具、电锯、电钻和修边机进行精确的切割和组装'
+      en: 'Independently perform polishing, hairline finishing and basic welding work',
+      zh: '员工能独立完成抛光、Hairline 表面处理及基础焊接任务'
     },
     weight: 10,
     ratings: {
@@ -213,14 +198,11 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q2
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Able to read and follow simple carpentry drawings',
-      zh: '能独立根据简单图纸完成标准柜子、架子或家具的测量、切割和组装'
+      en: 'Measure, cut, and prepare materials accurately according to drawings or instructions',
+      zh: '能根据图纸或指示准确测量、裁剪及准备材料'
     },
     weight: 10,
     ratings: {
@@ -231,14 +213,11 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q3
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Understands different types of boards (plywood, MDF, particleboard) and basic joinery',
-      zh: '能分辨常用材料（MDF，胶合板，刨花板）并选择合适的螺丝和连接件'
+      en: 'Identify surface defects and carry out corrective work independently',
+      zh: '能发现表面缺陷并独立进行修复'
     },
     weight: 10,
     ratings: {
@@ -249,14 +228,11 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q4
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Can operate woodworking machines (table saw, band saw, router, edge-banding machine)',
-      zh: '能够操作木工机械（台锯、带锯、刨床、边带机）'
+      en: 'Operate machines safely and perform minor adjustments or basic maintenance when required',
+      zh: '能安全操作机器，并在需要时进行基本调整或维护'
     },
     weight: 10,
     ratings: {
@@ -267,34 +243,13 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q5
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Assists in installation of doors, panels, cabinets under supervision',
-      zh: '在监督下协助安装门、面板和橱柜'
+      en: 'Consistently deliver work that meets quality, alignment, and finishing standards',
+      zh: '稳定输出符合质量、平整度及表面效果要求的成品'
     },
-    weight: 5,
-    ratings: {
-      1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
-      2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
-      3: { en: 'Meets Expectations - Can perform the task about half of the time correctly, but still needs reminders or guidance.', zh: '符合期望 - 约有一半时间能正确完成，但仍需提醒或指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision and good consistency.', zh: '超出期望 - 大部分时间能熟练完成，几乎不需监督，表现稳定。' },
-      5: { en: 'Exceptional - Performs the skill independently, accurately, and consistently with high workmanship quality.', zh: '卓越 - 能独立、准确且持续地完成任务，工作质量高。' }
-    }
-  },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
-    category: {
-      en: 'Maintains tools and ensures safe work practices',
-      zh: '维护工具并确保安全的工作实践'
-    },
-    weight: 5,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - Cannot perform the task even when shown or instructed.', zh: '较差 - 即使在指导或示范下，也无法完成该项技能。' },
       2: { en: 'Needs Improvement - Can perform the task occasionally but requires frequent supervision or correction.', zh: '需改进 - 偶尔能完成任务，但经常需要监督或纠正。' },
@@ -305,11 +260,8 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
-  {
-    groupCategory: {
-      en: 'Problem Solving',
-      zh: '问题解决'
-    },
+  { //Q6
+    groupCategory: { en: 'Problem Solving', zh: '问题解决'},
     category: {
       en: 'Able to solve problems when faced with challenges',
       zh: '在面对挑战时能否解决问题'
@@ -325,14 +277,11 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== ADAPTIBILITY CATEGORY (1 questions - 5%) ==========
-  {
-    groupCategory: {
-      en: 'Adaptability',
-      zh: '适应能力'
-    },
+  { //Q7
+    groupCategory: { en: 'Adaptability', zh: '适应能力' },
     category: {
-      en: 'Adaptability - Able to adapt to changes to tasks and things happening at site/factory',
-      zh: '适应能力 - 是否能够适应现场或任务中发生的变化'
+      en: 'Able to adapt to changes to tasks and things happening at site/factory',
+      zh: '是否能够适应现场或任务中发生的变化'
     },
     weight: 5,
     ratings: {
@@ -345,11 +294,8 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== ADAPTIBILITY CATEGORY (1 questions - 10%) ==========
-  {
-    groupCategory: {
-      en: 'Self-Management',
-      zh: '自我管理'
-    },
+  { //Q8
+    groupCategory: { en: 'Self-Management', zh: '自我管理' },
     category: {
       en: 'Able to handle assigned tasks and complete tasks on time',
       zh: '是否能够处理分配的任务并按时完成任务'
@@ -365,11 +311,8 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== PROJECT STANDARD CATEGORY (1 questions - 10%) ==========
-  {
-    groupCategory: {
-      en: 'Project Standard',
-      zh: '项目标准'
-    },
+  { //Q9
+    groupCategory: { en: 'Project Standard', zh: '项目标准' },
     category: {
       en: 'Delivers work that meets project standards',
       zh: '是否做到项目标准的工作'
@@ -385,11 +328,8 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 questions - 15%) ==========
-  {
-    groupCategory: {
-      en: 'Teamwork & Communication',
-      zh: '团队合作与沟通'
-    },
+  { //Q10
+    groupCategory: { en: 'Teamwork & Communication', zh: '团队合作与沟通'},
     category: {
       en: 'Works well with team and able to communicate updates clearly',
       zh: '是否能够很好地与团队合作，并能够清晰地传达任务或项目进展'
@@ -406,16 +346,13 @@ const JOURNEYMAN_CARPENTER_QUESTIONS: QuestionDefinition[] = [
 ];
 
 // Senior Carpenter Questionnaire (11 questions)
-const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [  
-  // ========== TECHNICAL SKILLS CATEGORY (6 questions - 35%) ==========
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+const LEVEL_3_QUESTIONS: QuestionDefinition[] = [  
+  // ========== TECHNICAL SKILLS CATEGORY (5 questions - 35%) ==========
+  { //Q1
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Reads and interprets detailed technical drawings and shop drawings',
-      zh: '会看和了解详细的技术图纸和施工图'
+      en: 'Lead and supervise a metalwork team performing polishing, hairline finishing, and welding tasks',
+      zh: '带领并监督金属加工团队进行抛光、拉丝及焊接作业'
     },
     weight: 10,
     ratings: {
@@ -426,14 +363,11 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q2
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Skilled in custom furniture making, fit-out works, and joinery details',
-      zh: '会独立定制家具制作、装修工程和木工细节'
+      en: 'Plan workflow, allocate manpower, and manage materials efficiently',
+      zh: '员工能规划施工流程、分配任务并高效监督材料使用'
     },
     weight: 5,
     ratings: {
@@ -444,14 +378,11 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q3
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Knowledge of finishing methods (laminate, veneer, painting, polishing)',
-      zh: '对表面处理方法（层压、单板、喷漆、抛光）的了解很强'
+      en: 'Handle complex surface finishing and precision welding',
+      zh: '员工能处理复杂表面处理及精密焊接'
     },
     weight: 5,
     ratings: {
@@ -462,16 +393,13 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q4
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Can troubleshoot installation issues on-site',
-      zh: '可以在现场排除安装问题。不需要指导'
+      en: 'Able to inspect completed work to ensure quality, accuracy, and compliance with standards',
+      zh: '员工能检查施工质量，确保符合标准及安全要求'
     },
-    weight: 5,
+    weight: 10,
     ratings: {
       1: { en: 'Poor - Cannot perform the skill even when instructed or shown; lacks required technical understanding.', zh: '较差 - 即使在指导或示范下，也无法完成技能操作，对相关技术缺乏理解。' },
       2: { en: 'Needs Improvement - Can perform the skill occasionally with frequent supervision; results are inconsistent or inaccurate.', zh: '需改进 - 偶尔能完成，但需要频繁监督或指导，结果不稳定或不准确。' },
@@ -480,32 +408,11 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
       5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
     }
   },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
+  { //Q5
+    groupCategory: { en: 'Technical Skills', zh: '技术技能' },
     category: {
-      en: 'Understands material properties (solid wood vs. engineered boards, fittings, adhesives)',
-      zh: '理解材料特性（例如：实木与人造板，五金配件，胶水）'
-    },
-    weight: 5,
-    ratings: {
-      1: { en: 'Poor - Cannot perform the skill even when instructed or shown; lacks required technical understanding.', zh: '较差 - 即使在指导或示范下，也无法完成技能操作，对相关技术缺乏理解。' },
-      2: { en: 'Needs Improvement - Can perform the skill occasionally with frequent supervision; results are inconsistent or inaccurate.', zh: '需改进 - 偶尔能完成，但需要频繁监督或指导，结果不稳定或不准确。' },
-      3: { en: 'Meets Expectations - Performs the skill correctly about half of the time; still needs guidance on complex tasks.', zh: '符合期望 - 能在一般情况下完成，但遇到复杂工作时仍需指导。' },
-      4: { en: 'Exceeds Expectations - Performs the skill well most of the time, with minimal supervision; work meets project standards.', zh: '超出期望 - 大部分时间能独立完成，偶尔需监督，工作质量符合项目标准。' },
-      5: { en: 'Exceptional - Consistently performs at a high technical level; independently solves problems and delivers precise, high-quality results.', zh: '卓越 - 始终保持高技术水平，能独立解决问题并交付高质量的成果。' }
-    }
-  },
-  {
-    groupCategory: {
-      en: 'Technical Skills',
-      zh: '技术技能'
-    },
-    category: {
-      en: 'Uses precision tools and ensures quality standards',
-      zh: '使用精密工具并确保质量标准'
+      en: 'Able to train junior workers on correct techniques, quality expectations, and safe operation',
+      zh: '员工能培训新手掌握技术技能和安全操作'
     },
     weight: 5,
     ratings: {
@@ -518,11 +425,8 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
 
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 20%) ==========
-  {
-    groupCategory: {
-      en: 'Problem Solving',
-      zh: '问题解决'
-    },
+  { //Q6
+    groupCategory: { en: 'Problem Solving', zh: '问题解决'},
     category: {
       en: 'Able to solve problems when faced with challenges',
       zh: '在面对挑战时能否解决问题'
@@ -538,11 +442,8 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 5%) ==========
-  {
-    groupCategory: {
-      en: 'Adaptability',
-      zh: '适应能力'
-    },
+  { //Q7
+    groupCategory: { en: 'Adaptability', zh: '适应能力' },
     category: {
       en: 'Able to adapt to changes to tasks and things happening at site/factory',
       zh: '是否能够适应现场或任务中发生的变化'
@@ -558,11 +459,8 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== PROBLEM SOLVING CATEGORY (1 questions - 10%) ==========
-  {
-    groupCategory: {
-      en: 'Self-Management',
-      zh: '自我管理'
-    },
+  { //Q8
+    groupCategory: { en: 'Self-Management', zh: '自我管理' },
     category: {
       en: 'Able to handle assigned tasks and complete tasks on time',
       zh: '是否能够处理分配的任务并按时完成任务'
@@ -577,17 +475,14 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
     }
   },
 
-  // ========== PROJECT STANDARD CATEGORY (1 questions - 10%) ==========
-  {
-    groupCategory: {
-      en: 'Project Standard',
-      zh: '项目标准'
-    },
+  // ========== PROJECT STANDARD CATEGORY (1 questions - 15%) ==========
+  { //Q9
+    groupCategory: { en: 'Project Standard', zh: '项目标准' },
     category: {
       en: 'Delivers work that meets project standards',
       zh: '是否做到项目标准的工作'
     },
-    weight: 10,
+    weight: 15,
     ratings: {
       1: { en: 'Poor - Work fails to meet Project needs and does not communicate proactively.', zh: '较差 - 工作无法满足项目需求，也不主动沟通。' },
       2: { en: 'Needs Improvement - Occasionally meets project requirements but communication is insufficient.', zh: '需改进 - 偶尔满足项目要求，但沟通不充分。' },
@@ -598,11 +493,8 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
   },
   
   // ========== TEAMWORK & COMMUNICATION CATEGORY (1 questions - 15%) ==========
-  {
-    groupCategory: {
-      en: 'Teamwork & Communication',
-      zh: '团队合作与沟通'
-    },
+  { //Q10
+    groupCategory: { en: 'Teamwork & Communication', zh: '团队合作与沟通'},
     category: {
       en: 'Works well with team and able to communicate updates clearly',
       zh: '是否能够很好地与团队合作，并能够清晰地传达任务或项目进展'
@@ -619,30 +511,30 @@ const SENIOR_CARPENTER_QUESTIONS: QuestionDefinition[] = [
 ];
 
 // EXPORT CARPENTER_LEVELS - This was missing!
-export const CARPENTER_LEVELS: CarpenterLevel[] = [
+export const CARPENTER_LEVELS: CeilingLevel[] = [
   {
-    id: 'junior',
+    id: 'level1',
     label: {
-      en: 'Junior Carpenter',
-      zh: '初级木工'
+      en: 'Level 1',
+      zh: '初级'
     },
-    questions: JUNIOR_CARPENTER_QUESTIONS
+    questions: LEVEL_1_QUESTIONS
   },
   {
-    id: 'journeyman',
+    id: 'level2',
     label: {
-      en: 'Journeyman Carpenter',
-      zh: '中级木工'
+      en: 'Level 2',
+      zh: '中级'
     },
-    questions: JOURNEYMAN_CARPENTER_QUESTIONS
+    questions: LEVEL_2_QUESTIONS
   },
   {
-    id: 'senior',
+    id: 'level3',
     label: {
-      en: 'Senior Carpenter',
-      zh: '高级木工'
+      en: 'Level 3',
+      zh: '高级'
     },
-    questions: SENIOR_CARPENTER_QUESTIONS
+    questions: LEVEL_3_QUESTIONS
   }
 ];
 
@@ -653,11 +545,3 @@ export const SMILEYS = [
   { value: 4, icon: '😊', color: '#22c55e' },
   { value: 5, icon: '😍', color: '#059669' }
 ];
-
-/* export const SMILEYS = [
-  { value: 1, icon: '😤', color: 'bg-red-500', textColor: 'text-red-500' },
-  { value: 2, icon: '😕', color: 'bg-orange-500', textColor: 'text-orange-500' },
-  { value: 3, icon: '😐', color: 'bg-blue-500', textColor: 'text-blue-500' },
-  { value: 4, icon: '😊', color: 'bg-green-400', textColor: 'text-green-400' },
-  { value: 5, icon: '😍', color: 'bg-green-600', textColor: 'text-green-600' }
-]; */

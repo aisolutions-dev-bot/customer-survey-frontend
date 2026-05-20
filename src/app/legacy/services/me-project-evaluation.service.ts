@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MetalCutEvaluationResponse } from '../models/metalcut-eval-response';
-import { environment } from '../../environments/environment';
+import { MeProjectEvaluationResponse } from '../models/me-project-eval.response';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class MetalCutEvaluationService {
+export class MeProjectEvaluationService {
 
   private apiUrl = `${environment.apiUrl}/evaluation-ratings`;
   
@@ -13,7 +13,7 @@ export class MetalCutEvaluationService {
   /**
    * Submit evaluation to m17EvaluationRatings table
    */
-  submitEvaluation(evaluation: MetalCutEvaluationResponse): Observable<any> {
+  submitEvaluation(evaluation: MeProjectEvaluationResponse): Observable<any> {
     return this.http.post(this.apiUrl, evaluation);
   }
 
