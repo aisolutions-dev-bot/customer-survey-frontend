@@ -264,7 +264,11 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     if (ft && this.availableSkillSets().length === 0) {
       this.formQuestionsService.getSkillSets(ft).subscribe({
         next: (sets) => { this.availableSkillSets.set(sets); this.cdr.markForCheck(); },
-        error: () => {},
+        error: () => {
+          // Fallback: at minimum show the current skill set as a card
+          if (ss) this.availableSkillSets.set([ss]);
+          this.cdr.markForCheck();
+        },
       });
     }
 
