@@ -60,6 +60,23 @@ export class TranslationService {
     'Self-Management': '自我管理',
     'Project Standard': '项目标准',
     'Teamwork and Communication': '团队协作与沟通',
+    'Teamwork & Communication': '团队合作与沟通',
+    'Problem Solving': '问题解决',
+    'Teamwork': '团队合作',
+    'Tender Control': '投标控制',
+    'Document control': '文件控制',
+    'Customer Service/Relations': '客户服务与关系维护',
+    'Work Progress Management': '工作进度管理',
+    'Accuracy': '准确性',
+    'Job Knowledge & Technical Skills': '工作知识与技术技能',
+    'Dependability & Initiative': '可靠性和主动性',
+    'Communication & Responsiveness': '沟通与响应能力',
+    'Project Production Output & Work Progress Management': '项目生产产出与工程进度管理',
+    'Quality Performance & Accuracy – Product Quality & Wastage Control': '质量绩效与准确性 – 产品质量与废料控制',
+    'Operational Efficiency & Job Knowledge & Technical Skills': '运营效率、工作知识与技术技能',
+    'Dependability, Initiative & Communication': '可靠性、主动性与沟通',
+    'Team Management & Leadership': '团队管理与领导力',
+    'Continuous Improvement Initiatives': '持续改进举措',
   };
 
   genericRatingDescriptions: Record<number, { en: string; zh: string }> = {
