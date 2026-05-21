@@ -77,9 +77,9 @@
             <div class="info-content">
               <strong>{{ t(translationService.translations.fields.staffId) }}:</strong>
               @if (isGroupMode()) {
-                <select [(ngModel)]="staffId" (ngModelChange)="onEvaluateeChange()" class="info-select">
+                <select [ngModel]="selectedGroupUniqId()" (ngModelChange)="onEvaluateeChange($event)" class="info-select">
                   @for (rec of groupEvaluations(); track rec.uniqId) {
-                    <option [value]="rec.evaluateeId">{{ rec.evaluateeId }} - {{ rec.evaluateeName }}</option>
+                    <option [value]="rec.uniqId">{{ rec.evaluateeId }} - {{ rec.evaluateeName }} ({{ rec.formType }})</option>
                   }
                 </select>
               } @else {

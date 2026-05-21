@@ -82,6 +82,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   isGroupMode = signal(false);
   availableSkillSets = signal<string[]>([]);
 
+  selectedGroupUniqId = signal<number | null>(null);
+
   // Lock flags
   isStaffLocked = signal(false);
   isEvaluatorLocked = signal(false);
@@ -178,6 +180,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
         }
         this.groupEvaluations.set(list);
         const first = pending[0];
+        this.selectedGroupUniqId.set(first.uniqId ?? null);
         this.applyDistribution(first);
         this.loadQuestionsForDistribution(first);
         this.isStaffLocked.set(false);
@@ -290,8 +293,9 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  onEvaluateeChange(): void {
-    const selected = this.groupEvaluations().find((r) => r.evaluateeId === this.staffId());
+  onEvaluateeChange(uniqId: number): void {
+    this.selectedGroupUniqId.set(Number(uniqId));
+    const selected = this.groupEvaluations().find((r) => r.uniqId === Number(uniqId));
     if (!selected) return;
     this.answers.set([]);
     this.availableSkillSets.set([]);
