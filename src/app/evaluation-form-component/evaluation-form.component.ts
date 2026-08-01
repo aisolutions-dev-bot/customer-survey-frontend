@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, catchError, switchMap, takeUntil } from 'rxjs';
+import { Subject, catchError, takeUntil } from 'rxjs';
 import { EMPTY } from 'rxjs';
 import { EvaluationDistributionService } from '../services/evaluation-distribution.service';
 import { EvaluationRatingsService } from '../services/evaluation-ratings.service';
@@ -398,32 +398,19 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
     this.ratingsService.submitEvaluation(payload as any).subscribe({
       next: () => {
+        this.submitted.set(true);
+        this.isSubmitting.set(false);
+        this.cdr.markForCheck();
+        if (this.isGroupMode()) {
+          setTimeout(() => window.location.reload(), 5000);
+        }
         if (this.currentUniqId() !== null) {
-          this.distributionService
-            .updateStatus(this.currentUniqId()!, 'SUBMITTED')
-            .pipe(
-              switchMap(() => this.distributionService.notifyEvaluator(payload)),
-              catchError((err) => {
-                console.error('[EvalForm] Status update or notification failed:', err);
-                // Still mark as submitted — rating was saved; notify failure is non-blocking
-                this.submitted.set(true);
-                this.isSubmitting.set(false);
-                this.cdr.markForCheck();
-                return EMPTY;
-              }),
-            )
-            .subscribe(() => {
-              this.submitted.set(true);
-              this.isSubmitting.set(false);
-              this.cdr.markForCheck();
-              if (this.isGroupMode()) {
-                setTimeout(() => window.location.reload(), 5000);
-              }
-            });
-        } else {
-          this.submitted.set(true);
-          this.isSubmitting.set(false);
-          this.cdr.markForCheck();
+          this.distributionService.notifyEvaluator(payload).pipe(
+            catchError((err) => {
+              console.error('[EvalForm] Notification failed:', err);
+              return EMPTY;
+            }),
+          ).subscribe();
         }
       },
       error: () => {
