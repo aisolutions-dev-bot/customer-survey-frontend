@@ -59,6 +59,9 @@
               ? 'Please wait. You will be redirected to the next evaluation shortly.'
               : '请稍候。您将很快被重定向到下一个评估。' }}
           </p>
+          <button type="button" class="submit-button" style="margin-top:16px;" (click)="goToNextEvaluation()">
+            {{ currentLang() === 'en' ? 'Continue to Next Evaluation' : '继续下一项评估' }}
+          </button>
         }
       </div>
     </div>

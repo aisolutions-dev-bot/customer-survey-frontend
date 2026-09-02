@@ -421,6 +421,10 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  goToNextEvaluation(): void {
+    window.location.reload();
+  }
+
   computeWeightedScore(): number {
     const qs = this.questions();
     const as = this.answers();
