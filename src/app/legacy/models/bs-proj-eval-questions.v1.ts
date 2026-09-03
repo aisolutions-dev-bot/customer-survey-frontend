@@ -1,16 +1,6 @@
-// ACTIVE v2 — BS-Project scorecard, effective 2026-09-03.
-// Prior version frozen at bs-proj-eval-questions.v1.ts (BS_PROJECT_STANDARD_QUESTIONS_V1)
-// for audit purposes — do not delete it when editing this file.
-//
-// Changed vs v1: Documental control collapses from 2 questions (internal/external,
-// 10% each) into 1 combined question (10%). Customer Service/Relations gains a new
-// second question ("Collaboration with Other Teams - Internal", 10%). Per-slot
-// weights are unchanged (15/35/10/10/10/10/10), so historical scores remain
-// numerically comparable — only question wording/meaning differs from v1.
-//
-// NOTE: zh translations for the two new/changed criteria (Documental control combined,
-// Collaboration with Other Teams) are drafted below and should be reviewed by a
-// Chinese-speaking reviewer before this goes live.
+// FROZEN v1 — audit copy of the BS-Project scorecard active until 2026-09-03.
+// Superseded by bs-proj-eval-questions.ts (v2). Do not edit; only referenced
+// when rendering/reporting on historical submissions tagged questionSetVersion "v1".
 import { Translation } from '../../services/translation.service';
 
 export interface QuestionDefinition {
@@ -29,7 +19,7 @@ export interface CarpenterLevel {
 }
 
 // Standard Questionnaire with Categories (7 questions)
-export const BS_PROJECT_STANDARD_QUESTIONS: QuestionDefinition[] = [
+export const BS_PROJECT_STANDARD_QUESTIONS_V1: QuestionDefinition[] = [
   // ========== COSTING CATEGORY (2 questions - 50%) ==========
   {
     groupCategory: {
@@ -113,18 +103,37 @@ export const BS_PROJECT_STANDARD_QUESTIONS: QuestionDefinition[] = [
       zh: '文件控制'
     },
     category: {
-      en: 'Proper documental system control - Accuracy of Project document (Internally & External).',
-      zh: '文件系统管控 - 项目文件的准确性（内部及外部）。'
+      en: 'Submission of document & Proper documental system control - On-time submission & accuracy of Project document (Internally)',
+      zh: '文档提交与系统控制 - 按时提交并确保项目文档的准确性（内部）。'
     },
     weight: 10,
     ratings: {
-      1: { en: 'Poor - <50% on-time, poor document management, non-compliance with documentation SOP.', zh: '较差 - 少于50%按时完成，文件管理不佳，未遵守文件管理标准作业程序。' },
-      2: { en: 'Needs Improvement - 50-69% on-time, frequent document issues such as misfiling, documents lost or duplicated.', zh: '需改进 - 50-69%按时完成，文件问题频繁，如归档错误、文件遗失或重复。' },
-      3: { en: 'Meets Expectations - 70-84% on-time, occasionally delay, acceptable document control.', zh: '符合期望 - 70-84%按时完成，偶尔延误，文件管控尚可接受。' },
-      4: { en: 'Exceeds Expectations - 85-94% on-time, well-organized documentation.', zh: '超出期望 - 85-94%按时完成，文件组织良好。' },
-      5: { en: 'Exceptional - 95-100% on-time, excellent documentation control, audit readiness.', zh: '卓越 - 95-100%按时完成，文件管控优异，随时可供审计。' }
+      1: { en: 'Poor - < 50% on-time, poor document management.', zh: '较差 - < 50% 按时完成，文档管理不佳。' },
+      2: { en: 'Needs Improvement - 50-69% on-time, frequent document issues.', zh: '需改进 - 50-69% 按时完成，文档问题频繁。' },
+      3: { en: 'Meets Expectations - 70-84% on-time, acceptable document control.', zh: '符合期望 - 70-84% 按时完成，文档控制可接受。' },
+      4: { en: 'Exceeds Expectations - 85-94% on-time, well-organized documentation.', zh: '超出期望 - 85-94% 按时完成，文档组织良好。' },
+      5: { en: 'Exceptional - 95-100% on-time, excellent documentation control.', zh: '卓越 - 95-100% 按时完成，文档控制优秀。' }
     }
   },
+  {
+    groupCategory: {
+      en: 'Documental control',
+      zh: '文件控制'
+    },
+    category: {
+      en: 'Submission of document & Proper documental system control - On-time submission & accuracy of document to Client (Externally)',
+      zh: '文档提交与系统控制 - 按时提交并确保客户文档的准确性。'
+    },
+    weight: 10,
+    ratings: {
+      1: { en: 'Poor - < 50% on-time, poor document management.', zh: '较差 - < 50% 按时完成，文档管理不佳。' },
+      2: { en: 'Needs Improvement - 50-69% on-time, frequent document issues.', zh: '需改进 - 50-69% 按时完成，文档问题频繁。' },
+      3: { en: 'Meets Expectations - 70-84% on-time, acceptable document control.', zh: '符合期望 - 70-84% 按时完成，文档控制可接受。' },
+      4: { en: 'Exceeds Expectations - 85-94% on-time, well-organized documentation.', zh: '超出期望 - 85-94% 按时完成，文档组织良好。' },
+      5: { en: 'Exceptional - 95-100% on-time, excellent documentation control.', zh: '卓越 - 95-100% 按时完成，文档控制优秀。' }
+    }
+  },
+
 
   // ========== CUSTOMER RELATIONS CATEGORY (2 questions - 20%) ==========
   {
@@ -133,36 +142,18 @@ export const BS_PROJECT_STANDARD_QUESTIONS: QuestionDefinition[] = [
       zh: '客户服务与关系维护'
     },
     category: {
-      en: 'Responsive to Enquires (external) - Response to requests/queries from Client/subcon.',
-      zh: '对询问的响应能力（外部）- 回应客户/分包商的请求与查询。'
+      en: 'Responsive to Enquires - Based on project duration, actions to requests & queries. Refer to employee handbook (both Internally & Externally)',
+      zh: '对客户咨询的响应能力 - 根据项目周期，对请求和查询的响应动作。参考员工手册（内部和外部）。'
     },
     weight: 10,
     ratings: {
-      1: { en: 'Poor - Slow/No response, relationships damaged.', zh: '较差 - 响应缓慢/无响应，关系受损。' },
-      2: { en: 'Needs Improvement - Delayed responses (within 48 hours), unresolved issues pile up.', zh: '需改进 - 响应延迟（48小时内），未解决问题不断累积。' },
-      3: { en: 'Meets Expectations - Satisfactory response time (within 24 hours), follow-ups required.', zh: '符合期望 - 响应时间令人满意（24小时内），仍需跟进。' },
-      4: { en: 'Exceeds Expectations - Good response time (within 24 hours), most issues resolved promptly.', zh: '超出期望 - 响应时间良好（24小时内），大多数问题及时解决。' },
-      5: { en: 'Exceptional - Excellent response time (within 24 hours), all queries resolved efficiently.', zh: '卓越 - 响应时间优异（24小时内），所有查询均高效解决。' }
+      1: { en: 'Poor - Slow response, unresolved issues.', zh: '较差 - 响应缓慢，问题未解决。' },
+      2: { en: 'Needs Improvement - Delayed responses, incomplete resolutions.', zh: '需改进 - 响应延迟，问题未完全解决。' },
+      3: { en: 'Meets Expectations - Satisfactory response time, follow-ups required.', zh: '符合期望 - 响应时间可接受，但需后续跟进。' },
+      4: { en: 'Exceeds Expectations - Good response time, most issues resolved promptly.', zh: '超出期望 - 响应时间良好，大多数问题能及时解决。' },
+      5: { en: 'Exceptional - Excellent response time, all queries resolved efficiently.', zh: '卓越 - 响应时间优秀，所有问题都能高效解决。' }
     }
-  },
-  {
-    groupCategory: {
-      en: 'Customer Service/Relations',
-      zh: '客户服务与关系维护'
-    },
-    category: {
-      en: 'Collaboration with Other Teams (Internal) - Collaboration with project team/other depts in terms of communication, advice, and support.',
-      zh: '与其他团队的协作（内部）- 在沟通、建议及支持方面与项目团队/其他部门的协作情况。'
-    },
-    weight: 10,
-    ratings: {
-      1: { en: 'Poor - Slow response, resists collaboration, creates bottlenecks that derail project timelines.', zh: '较差 - 响应缓慢，抗拒协作，造成阻碍，影响项目进度。' },
-      2: { en: 'Needs Improvement - Rarely shares information/engages unless pressured, advice unhelpful, communication causing confusion/duplication of work.', zh: '需改进 - 很少主动分享信息或参与，除非被施压，建议无益，沟通导致混乱或重复工作。' },
-      3: { en: 'Meets Expectations - Collaborates when required but rarely takes initiative, provides basic support, communication unclear, delayed replies.', zh: '符合期望 - 有需要时会配合，但很少主动，提供基本支持，沟通不够清晰，回复延迟。' },
-      4: { en: 'Exceeds Expectations - Actively engages with other teams, responds promptly to requests, minor delays or gaps in communication.', zh: '超出期望 - 积极与其他团队互动，及时回应请求，沟通上仅有轻微延迟或疏漏。' },
-      5: { en: 'Exceptional - Proactive, resolves conflicts constructively, clear communications, anticipates needs of other teams and provides actionable advice/support.', zh: '卓越 - 主动积极，以建设性方式化解冲突，沟通清晰，能预见其他团队的需求并提供可执行的建议与支持。' }
-    }
-  }
+  }  
 ];
 
 export const SMILEYS = [
