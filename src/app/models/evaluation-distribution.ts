@@ -11,4 +11,6 @@ export interface EvaluationDistribution {
   skillSet: string; // 'junior', 'journeyman', or 'senior'
   status?: string; // NEW: Status field - Values: 'PENDING', 'SUBMITTED', 'COMPLETED', etc.
   formType: string;
+  distributionType?: string; // 'PROJECT' or 'NON_PROJECT'
+  linkProjId?: string; // linked project code, Non-Project distributions only
 }

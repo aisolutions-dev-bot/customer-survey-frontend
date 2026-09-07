@@ -79,6 +79,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   skillSet = signal('');
   formType = signal('');
   currentUniqId = signal<number | null>(null);
+  currentDistributionType = signal<string | null>(null);
+  currentLinkProjId = signal<string | null>(null);
   isGroupMode = signal(false);
   availableSkillSets = signal<string[]>([]);
 
@@ -110,12 +112,9 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
       this.cdr.markForCheck();
     });
 
-    const uniqId = this.route.snapshot.queryParamMap.get('uniq_id');
     const groupId = this.route.snapshot.queryParamMap.get('group_id');
 
-    if (uniqId) {
-      this.loadFromUniqId(parseInt(uniqId, 10));
-    } else if (groupId) {
+    if (groupId) {
       this.isGroupMode.set(true);
       this.loadFromGroupId(parseInt(groupId, 10));
     } else {
@@ -140,26 +139,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   toggleLanguage(): void {
     this.translationService.toggleLanguage();
-  }
-
-  private loadFromUniqId(uniqId: number): void {
-    this.currentUniqId.set(uniqId);
-    this.distributionService.getByUniqId(uniqId).subscribe({
-      next: (dist) => {
-        this.applyDistribution(dist);
-        this.loadQuestionsForDistribution(dist);
-        this.cdr.markForCheck();
-      },
-      error: () => {
-        this.loadingState.set('error');
-        this.errorMessage.set(
-          this.currentLang() === 'en'
-            ? 'Failed to load evaluation data. The link may be invalid or expired.'
-            : '无法加载评估数据。链接可能无效或已过期。',
-        );
-        this.cdr.markForCheck();
-      },
-    });
   }
 
   private loadFromGroupId(groupId: number): void {
@@ -207,6 +186,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.skillSet.set(dist.skillSet ?? '');
     this.formType.set(dist.formType ?? '');
     this.currentUniqId.set(dist.uniqId ?? null);
+    this.currentDistributionType.set(dist.distributionType ?? null);
+    this.currentLinkProjId.set(dist.linkProjId ?? null);
     this.isStaffLocked.set(!this.isGroupMode());
     this.isEvaluatorLocked.set(true);
 
@@ -390,6 +371,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
       weightedScore: this.computeWeightedScore(),
       remarks: this.remarks().trim(),
       evaluationDistributionMgmtUniqId: this.currentUniqId() ?? null,
+      distributionType: this.currentDistributionType() ?? null,
+      linkProjId: this.currentLinkProjId() ?? null,
     };
 
     answersArr.forEach((answer, index) => {
