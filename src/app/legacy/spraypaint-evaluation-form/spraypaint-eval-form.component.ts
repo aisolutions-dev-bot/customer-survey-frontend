@@ -184,7 +184,7 @@ export class SpraypaintEvaluationFormComponent implements OnInit, OnDestroy {
             // Map SkillSet to carpenter_level (only if not null/empty and valid)
             if (distribution.skillSet && distribution.skillSet.trim() !== '') {
               const skillSetLower = distribution.skillSet.toLowerCase();
-              if (['level1', 'level2', 'level3'].includes(skillSetLower)) {
+              if (['level1', 'level2', 'level3', 'level4'].includes(skillSetLower)) {
                 this.selectedLevel = skillSetLower;
                 this.isCarpenterLevelLocked = true;
                 this.loadQuestionsForLevel(skillSetLower);
@@ -405,7 +405,7 @@ export class SpraypaintEvaluationFormComponent implements OnInit, OnDestroy {
         const finalCarpenterLevel = carpenterLevelParam || queryCarpenterLevel;
         if (
           finalCarpenterLevel &&
-          ['level1', 'level2', 'level3'].includes(finalCarpenterLevel)
+          ['level1', 'level2', 'level3', 'level4'].includes(finalCarpenterLevel)
         ) {
           this.selectedLevel = finalCarpenterLevel;
           this.isCarpenterLevelLocked = true;

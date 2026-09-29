@@ -654,6 +654,200 @@ const LEVEL_3_QUESTIONS: QuestionDefinition[] = [
   }
 ];
 
+const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
+  // ========== TECHNICAL SKILLS CATEGORY (5 questions - 35%) ==========
+  { //Q1
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
+    category: {
+      en: 'Master complex custom finishes (e.g., metallic, pearlescent, multi-coat textured, high-durability coatings) and formulate bespoke paint mixtures for non-standard substrates.',
+      zh: '精通复杂特殊涂层（如金属漆、珠光漆、多层纹理漆、高耐候/耐化学工业涂料），并能针对特殊基材调制专属涂料配方。'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Cannot reproduce complex finishes or mix non-standard coatings even with instruction or reference samples.', zh: '较差 - 即使在指导或参考样板下，也无法复现复杂涂层或调制非标涂料。' },
+      2: { en: 'Needs Improvement - Can reproduce complex finishes occasionally but requires close supervision and frequent rework.', zh: '需改进 - 偶尔能复现复杂涂层，但需要密切监督且返工频繁。' },
+      3: { en: 'Meets Expectations - Reproduces complex finishes to specification about half of the time; still needs guidance on unfamiliar substrates.', zh: '符合期望 - 约有一半时间能按规格复现复杂涂层，遇到陌生基材时仍需指导。' },
+      4: { en: 'Exceeds Expectations - Reproduces complex finishes reliably with minimal supervision and mixes coatings correctly for most non-standard substrates.', zh: '超出期望 - 大部分时间能稳定复现复杂涂层，几乎不需监督，并能正确调制多数非标基材涂料。' },
+      5: { en: 'Exceptional - Consistently masters metallic, pearlescent and multi-coat finishes, and formulates bespoke mixtures for any non-standard substrate with documented results.', zh: '卓越 - 能持续精通金属漆、珠光漆及多层涂层，并能为任何非标基材调制专属配方且留有记录。' }
+    }
+  },
+  { //Q2
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
+    category: {
+      en: 'Perform complex color matching for faded, aged, or custom-blend surfaces, establishing standard color cards and gloss metrics for factory-wide quality assurance.',
+      zh: '针对老化、退色或特殊混合表面进行精准色差调整，制定工厂级标准色卡与光泽度指标。'
+    },
+    weight: 10,
+    ratings: {
+      1: { en: 'Poor - Cannot adjust colour discrepancies; matches by eye only and fails on faded or aged surfaces.', zh: '较差 - 无法调整色差，仅凭肉眼比色，面对退色或老化表面即失效。' },
+      2: { en: 'Needs Improvement - Can adjust simple colour differences but needs frequent correction on custom-blend or aged surfaces.', zh: '需改进 - 能调整简单色差，但遇到特殊混合或老化表面时需频繁纠正。' },
+      3: { en: 'Meets Expectations - Achieves acceptable colour matches about half of the time; standard colour cards are still incomplete.', zh: '符合期望 - 约有一半时间能达成可接受的配色，标准色卡仍不完整。' },
+      4: { en: 'Exceeds Expectations - Matches faded, aged and custom-blend surfaces reliably and maintains usable colour and gloss references.', zh: '超出期望 - 能稳定匹配退色、老化及特殊混合表面，并维护可用的颜色与光泽参照。' },
+      5: { en: 'Exceptional - Delivers precise colour and gloss matching across all surface conditions and establishes factory-wide standard colour cards and gloss metrics.', zh: '卓越 - 能在各种表面条件下精准匹配颜色与光泽，并制定工厂级标准色卡与光泽度指标。' }
+    }
+  },
+  { //Q3
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
+    category: {
+      en: 'Design, evaluate, and optimize standard operating procedures (SOPs) for spraying, curing, and booth air-flow to minimize material waste, reduce cycle time, and maximize throughput.',
+      zh: '设计并优化喷涂、烘干及喷漆房气流SOP，降低涂料损耗、缩短生产周期并提升产能。'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Follows existing procedures but cannot evaluate or improve them.', zh: '较差 - 仅能遵循现有流程，无法评估或改进。' },
+      2: { en: 'Needs Improvement - Suggests occasional process improvements but cannot document or validate them.', zh: '需改进 - 偶尔提出流程改进建议，但无法形成文件或验证效果。' },
+      3: { en: 'Meets Expectations - Identifies process weaknesses about half of the time and documents workable SOP revisions.', zh: '符合期望 - 约有一半时间能识别流程弱点并编写可行的SOP修订。' },
+      4: { en: 'Exceeds Expectations - Designs and validates SOPs for spraying, curing and booth air-flow that measurably reduce waste or cycle time.', zh: '超出期望 - 能设计并验证喷涂、烘干及气流SOP，并实际降低损耗或缩短周期。' },
+      5: { en: 'Exceptional - Systematically optimizes the full spray process, delivering documented gains in material yield and throughput across projects.', zh: '卓越 - 系统性优化整个喷涂流程，在各项目上实现可量化的用料率与产能提升。' }
+    }
+  },
+  { //Q4
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
+    category: {
+      en: 'Troubleshooting: Conduct advanced diagnostics, preventive maintenance, and precise calibration of high-end spraying equipment, automated spray systems, and ventilation filtration units.',
+      zh: '具备高端喷涂设备、自动化喷涂系统及通风过滤系统的故障诊断、精密校准与定期预防性维护能力。'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Cannot diagnose or calibrate spraying equipment; relies entirely on others for maintenance.', zh: '较差 - 无法诊断或校准喷涂设备，完全依赖他人维护。' },
+      2: { en: 'Needs Improvement - Performs basic maintenance but requires supervision for diagnostics and calibration.', zh: '需改进 - 能进行基础维护，但诊断与校准仍需监督。' },
+      3: { en: 'Meets Expectations - Diagnoses and calibrates standard equipment about half of the time; automated systems still need specialist help.', zh: '符合期望 - 约有一半时间能诊断与校准标准设备，自动化系统仍需专业人员协助。' },
+      4: { en: 'Exceeds Expectations - Diagnoses and calibrates high-end and automated spray systems reliably, and schedules preventive maintenance.', zh: '超出期望 - 能稳定诊断与校准高端及自动化喷涂系统，并安排预防性维护。' },
+      5: { en: 'Exceptional - Maintains full equipment availability through advanced diagnostics, precise calibration and preventive programmes, with minimal unplanned downtime.', zh: '卓越 - 通过先进诊断、精密校准与预防性计划保障设备可用率，将非计划停机降至最低。' }
+    }
+  },
+  { //Q5
+    groupCategory: {
+      en: 'Technical Skills',
+      zh: '技术技能'
+    },
+    category: {
+      en: 'Diagnose underlying causes of complex spray defects (e.g., micro-blistering, adhesion failure, fish-eyes) across environmental, material, and operator variables, implementing permanent corrective actions.',
+      zh: '从环境、材料和人员多维度诊断复杂喷涂缺陷（如微气泡、附着力失效、鱼眼等）的根本原因，并制定纠正防错措施。'
+    },
+    weight: 10,
+    ratings: {
+      1: { en: 'Poor - Cannot identify defect causes; defects recur without resolution.', zh: '较差 - 无法识别缺陷成因，问题反复出现且无法解决。' },
+      2: { en: 'Needs Improvement - Identifies obvious defects but treats symptoms rather than root causes.', zh: '需改进 - 能识别明显缺陷，但仅处理表象而非根本原因。' },
+      3: { en: 'Meets Expectations - Traces common defects to their causes about half of the time and applies effective corrections.', zh: '符合期望 - 约有一半时间能追溯常见缺陷成因并有效纠正。' },
+      4: { en: 'Exceeds Expectations - Diagnoses micro-blistering, adhesion failure and fish-eyes across environmental, material and operator factors, and prevents recurrence.', zh: '超出期望 - 能从环境、材料和人员因素诊断微气泡、附着力失效及鱼眼等问题，并防止复发。' },
+      5: { en: 'Exceptional - Resolves complex multi-factor defects permanently, embeds corrective and preventive actions into process standards, and shares findings across teams.', zh: '卓越 - 能永久解决多因素复杂缺陷，将纠正与预防措施纳入工艺标准，并在各团队间推广。' }
+    }
+  },
+
+  // ========== PROBLEM SOLVING CATEGORY (1 question - 20%) ==========
+  { //Q6
+    groupCategory: {
+      en: 'Problem Solving',
+      zh: '问题解决'
+    },
+    category: {
+      en: 'Solve critical, high-risk technical bottlenecks, establish defect-prevention frameworks, and drive continuous process improvement across teams.',
+      zh: '在面对重大或高难度技术瓶颈时能主动解决，建立防错与质量预防机制，推动团队持续工艺改进。'
+    },
+    weight: 20,
+    ratings: {
+      1: { en: 'Poor - Avoids or escalates technical problems without contributing to a solution.', zh: '较差 - 回避技术问题或直接上报，未参与解决。' },
+      2: { en: 'Needs Improvement - Attempts solutions for routine problems but struggles with high-risk technical issues.', zh: '需改进 - 能尝试解决常规问题，但面对高风险技术问题则力不从心。' },
+      3: { en: 'Meets Expectations - Resolves routine problems independently about half of the time; major bottlenecks still require escalation.', zh: '符合期望 - 约有一半时间能独立解决常规问题，重大瓶颈仍需上报。' },
+      4: { en: 'Exceeds Expectations - Takes ownership of critical bottlenecks and delivers workable solutions that hold.', zh: '超出期望 - 主动承担重大瓶颈，并交付可持续奏效的解决方案。' },
+      5: { en: 'Exceptional - Resolves critical, high-risk bottlenecks, builds defect-prevention frameworks, and drives continuous process improvement across teams.', zh: '卓越 - 能解决重大高风险瓶颈，建立防错与质量预防机制，并推动跨团队持续工艺改进。' }
+    }
+  },
+
+  // ========== ADAPTABILITY CATEGORY (1 question - 5%) ==========
+  { //Q7
+    groupCategory: {
+      en: 'Adaptability',
+      zh: '适应能力'
+    },
+    category: {
+      en: 'Proactively evaluate and integrate new spray technologies, eco-friendly/waterborne paint systems, and regulatory environmental standards into daily operations.',
+      zh: '是否能够主动评估并引入新型喷涂技术、环保水性漆系统及最新环保合规标准。'
+    },
+    weight: 5,
+    ratings: {
+      1: { en: 'Poor - Resists changes to methods, materials or site conditions.', zh: '较差 - 抗拒方法、材料或现场条件的变化。' },
+      2: { en: 'Needs Improvement - Adapts to changes slowly and needs repeated guidance.', zh: '需改进 - 适应变化较慢，需要反复指导。' },
+      3: { en: 'Meets Expectations - Adjusts to new methods or site conditions about half of the time without major disruption.', zh: '符合期望 - 约有一半时间能顺利适应新方法或现场条件，不致重大影响。' },
+      4: { en: 'Exceeds Expectations - Adapts readily and evaluates new technologies or eco-friendly systems for practical use.', zh: '超出期望 - 能迅速适应，并评估新技术或环保系统的实用性。' },
+      5: { en: 'Exceptional - Proactively introduces new spray technologies, waterborne systems and environmental standards into daily operations.', zh: '卓越 - 主动将新型喷涂技术、水性漆系统及环保合规标准引入日常作业。' }
+    }
+  },
+
+  // ========== SELF-MANAGEMENT CATEGORY (1 question - 10%) ==========
+  { //Q8
+    groupCategory: {
+      en: 'Self-Management',
+      zh: '自我管理'
+    },
+    category: {
+      en: 'Oversee site-wide paint inventory, material yield rates, and safety/EHS compliance while managing overall production schedules efficiently.',
+      zh: '是否能够统筹喷涂材料库存、用料出漆率及现场EHS安全合规，高效调控总体生产进度。'
+    },
+    weight: 10,
+    ratings: {
+      1: { en: 'Poor - Does not track materials or schedules; safety and EHS requirements are frequently missed.', zh: '较差 - 不跟进材料与进度，安全与EHS要求经常被忽略。' },
+      2: { en: 'Needs Improvement - Manages assigned tasks but needs reminders on inventory, yield or compliance.', zh: '需改进 - 能完成分配任务，但库存、用料率或合规事项需他人提醒。' },
+      3: { en: 'Meets Expectations - Handles assigned tasks on time about half of the time and follows EHS requirements.', zh: '符合期望 - 约有一半时间能按时完成任务，并遵守EHS要求。' },
+      4: { en: 'Exceeds Expectations - Manages own workload, tracks material usage, and keeps safety and EHS records current.', zh: '超出期望 - 能自主管理工作量，跟进材料用量，并保持安全与EHS记录更新。' },
+      5: { en: 'Exceptional - Oversees site-wide paint inventory, yield rates and EHS compliance while keeping overall production schedules on track.', zh: '卓越 - 统筹全场喷涂材料库存、用料出漆率及EHS合规，并高效调控总体生产进度。' }
+    }
+  },
+
+  // ========== PROJECT STANDARD CATEGORY (1 question - 15%) ==========
+  { //Q9
+    groupCategory: {
+      en: 'Project Standard',
+      zh: '项目标准'
+    },
+    category: {
+      en: 'Establish rigorous Quality Control (QC) inspection standards, lead client sign-offs on high-value custom projects, and maintain zero-defect standards.',
+      zh: '是否能够制定严格的QC检验标准，负责高价值定制项目的客户验收，维持零缺陷交付。'
+    },
+    weight: 15,
+    ratings: {
+      1: { en: 'Poor - Delivered work fails QC inspection and requires rework.', zh: '较差 - 交付成果未通过QC检验，需要返工。' },
+      2: { en: 'Needs Improvement - Meets project standards occasionally but requires repeated correction before acceptance.', zh: '需改进 - 偶尔达到项目标准，但验收前需反复纠正。' },
+      3: { en: 'Meets Expectations - Meets project standards about half of the time; high-value work still needs senior review.', zh: '符合期望 - 约有一半时间能达到项目标准，高价值项目仍需资深人员复核。' },
+      4: { en: 'Exceeds Expectations - Consistently delivers to standard and applies QC checks before handover.', zh: '超出期望 - 能持续按标准交付，并在移交前执行QC检查。' },
+      5: { en: 'Exceptional - Establishes rigorous QC inspection standards, leads client sign-off on high-value custom projects, and sustains zero-defect delivery.', zh: '卓越 - 制定严格的QC检验标准，主导高价值定制项目的客户验收，维持零缺陷交付。' }
+    }
+  },
+
+  // ========== TEAMWORK & COMMUNICATION CATEGORY (1 question - 15%) ==========
+  { //Q10
+    groupCategory: {
+      en: 'Teamwork & Communication',
+      zh: '团队合作与沟通'
+    },
+    category: {
+      en: 'Train, mentor, and evaluate Level 1-3 spray painters, cross-communicate effectively with project managers, and lead safety and technical briefings.',
+      zh: '是否能够很好地培训与考核技能等级1-3的员工，与项目经理及各部门有效沟通协调，并主持现场安全与技术例会。'
+    },
+    weight: 15,
+    ratings: {
+      1: { en: 'Poor - Does not train or communicate with team members.', zh: '较差 - 不培训也不与团队成员沟通。' },
+      2: { en: 'Needs Improvement - Occasionally guides colleagues but avoids formal training or briefing duties.', zh: '需改进 - 偶尔指导同事，但回避正式培训或会议职责。' },
+      3: { en: 'Meets Expectations - Supports and briefs team members about half of the time; formal assessment skills are still developing.', zh: '符合期望 - 约有一半时间能支持并简报团队成员，正式考核能力尚在培养。' },
+      4: { en: 'Exceeds Expectations - Trains and mentors Level 1-3 painters and communicates clearly with project managers.', zh: '超出期望 - 能培训与指导1-3级喷涂人员，并与项目经理清晰沟通。' },
+      5: { en: 'Exceptional - Trains, mentors and assesses Level 1-3 spray painters, coordinates across departments, and leads site safety and technical briefings.', zh: '卓越 - 能培训、指导并考核1-3级喷涂人员，跨部门协调，并主持现场安全与技术例会。' }
+    }
+  }
+];
+
 // EXPORT CARPENTER_LEVELS - This was missing!
 export const CARPENTER_LEVELS: CeilingLevel[] = [
   {
@@ -679,6 +873,14 @@ export const CARPENTER_LEVELS: CeilingLevel[] = [
       zh: '高级'
     },
     questions: LEVEL_3_QUESTIONS
+  },
+  {
+    id: 'level4',
+    label: {
+      en: 'Level 4',
+      zh: '专家'
+    },
+    questions: LEVEL_4_QUESTIONS
   }
 ];
 
