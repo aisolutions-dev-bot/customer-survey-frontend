@@ -662,8 +662,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '技术技能'
     },
     category: {
-      en: 'Master complex custom finishes (e.g., metallic, pearlescent, multi-coat textured, high-durability coatings) and formulate bespoke paint mixtures for non-standard substrates.',
-      zh: '精通复杂特殊涂层（如金属漆、珠光漆、多层纹理漆、高耐候/耐化学工业涂料），并能针对特殊基材调制专属涂料配方。'
+      en: 'Master complex custom finishes (e.g., metallic, pearlescent, multi-coat textured, high-durability coatings) and formulate bespoke paint mixtures for non-standard substrates',
+      zh: '精通复杂特殊涂层（如金属漆、珠光漆、多层纹理漆、高耐候/耐化学工业涂料），并能针对特殊基材调制专属涂料配方'
     },
     weight: 5,
     ratings: {
@@ -680,8 +680,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '技术技能'
     },
     category: {
-      en: 'Perform complex color matching for faded, aged, or custom-blend surfaces, establishing standard color cards and gloss metrics for factory-wide quality assurance.',
-      zh: '针对老化、退色或特殊混合表面进行精准色差调整，制定工厂级标准色卡与光泽度指标。'
+      en: 'Perform complex color matching for faded, aged, or custom-blend surfaces, establishing standard color cards and gloss metrics for factory-wide quality assurance',
+      zh: '针对老化、退色或特殊混合表面进行精准色差调整，制定工厂级标准色卡与光泽度指标'
     },
     weight: 10,
     ratings: {
@@ -698,8 +698,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '技术技能'
     },
     category: {
-      en: 'Design, evaluate, and optimize standard operating procedures (SOPs) for spraying, curing, and booth air-flow to minimize material waste, reduce cycle time, and maximize throughput.',
-      zh: '设计并优化喷涂、烘干及喷漆房气流SOP，降低涂料损耗、缩短生产周期并提升产能。'
+      en: 'Design, evaluate, and optimize standard operating procedures (SOPs) for spraying, curing, and booth air-flow to minimize material waste, reduce cycle time, and maximize throughput',
+      zh: '设计并优化喷涂、烘干及喷漆房气流SOP，降低涂料损耗、缩短生产周期并提升产能'
     },
     weight: 5,
     ratings: {
@@ -716,8 +716,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '技术技能'
     },
     category: {
-      en: 'Troubleshooting: Conduct advanced diagnostics, preventive maintenance, and precise calibration of high-end spraying equipment, automated spray systems, and ventilation filtration units.',
-      zh: '具备高端喷涂设备、自动化喷涂系统及通风过滤系统的故障诊断、精密校准与定期预防性维护能力。'
+      en: 'Troubleshooting: Conduct advanced diagnostics, preventive maintenance, and precise calibration of high-end spraying equipment, automated spray systems, and ventilation filtration units',
+      zh: '具备高端喷涂设备、自动化喷涂系统及通风过滤系统的故障诊断、精密校准与定期预防性维护能力'
     },
     weight: 5,
     ratings: {
@@ -734,8 +734,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '技术技能'
     },
     category: {
-      en: 'Diagnose underlying causes of complex spray defects (e.g., micro-blistering, adhesion failure, fish-eyes) across environmental, material, and operator variables, implementing permanent corrective actions.',
-      zh: '从环境、材料和人员多维度诊断复杂喷涂缺陷（如微气泡、附着力失效、鱼眼等）的根本原因，并制定纠正防错措施。'
+      en: 'Diagnose underlying causes of complex spray defects (e.g., micro-blistering, adhesion failure, fish-eyes) across environmental, material, and operator variables, implementing permanent corrective actions',
+      zh: '从环境、材料和人员多维度诊断复杂喷涂缺陷（如微气泡、附着力失效、鱼眼等）的根本原因，并制定纠正防错措施'
     },
     weight: 10,
     ratings: {
@@ -754,8 +754,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '问题解决'
     },
     category: {
-      en: 'Solve critical, high-risk technical bottlenecks, establish defect-prevention frameworks, and drive continuous process improvement across teams.',
-      zh: '在面对重大或高难度技术瓶颈时能主动解决，建立防错与质量预防机制，推动团队持续工艺改进。'
+      en: 'Solve critical, high-risk technical bottlenecks, establish defect-prevention frameworks, and drive continuous process improvement across teams',
+      zh: '在面对重大或高难度技术瓶颈时能主动解决，建立防错与质量预防机制，推动团队持续工艺改进'
     },
     weight: 20,
     ratings: {
@@ -774,8 +774,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '适应能力'
     },
     category: {
-      en: 'Proactively evaluate and integrate new spray technologies, eco-friendly/waterborne paint systems, and regulatory environmental standards into daily operations.',
-      zh: '是否能够主动评估并引入新型喷涂技术、环保水性漆系统及最新环保合规标准。'
+      en: 'Proactively evaluate and integrate new spray technologies, eco-friendly/waterborne paint systems, and regulatory environmental standards into daily operations',
+      zh: '是否能够主动评估并引入新型喷涂技术、环保水性漆系统及最新环保合规标准'
     },
     weight: 5,
     ratings: {
@@ -794,8 +794,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '自我管理'
     },
     category: {
-      en: 'Oversee site-wide paint inventory, material yield rates, and safety/EHS compliance while managing overall production schedules efficiently.',
-      zh: '是否能够统筹喷涂材料库存、用料出漆率及现场EHS安全合规，高效调控总体生产进度。'
+      en: 'Oversee site-wide paint inventory, material yield rates, and safety/EHS compliance while managing overall production schedules efficiently',
+      zh: '是否能够统筹喷涂材料库存、用料出漆率及现场EHS安全合规，高效调控总体生产进度'
     },
     weight: 10,
     ratings: {
@@ -814,8 +814,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '项目标准'
     },
     category: {
-      en: 'Establish rigorous Quality Control (QC) inspection standards, lead client sign-offs on high-value custom projects, and maintain zero-defect standards.',
-      zh: '是否能够制定严格的QC检验标准，负责高价值定制项目的客户验收，维持零缺陷交付。'
+      en: 'Establish rigorous Quality Control (QC) inspection standards, lead client sign-offs on high-value custom projects, and maintain zero-defect standards',
+      zh: '是否能够制定严格的QC检验标准，负责高价值定制项目的客户验收，维持零缺陷交付'
     },
     weight: 15,
     ratings: {
@@ -834,8 +834,8 @@ const LEVEL_4_QUESTIONS: QuestionDefinition[] = [
       zh: '团队合作与沟通'
     },
     category: {
-      en: 'Train, mentor, and evaluate Level 1-3 spray painters, cross-communicate effectively with project managers, and lead safety and technical briefings.',
-      zh: '是否能够很好地培训与考核技能等级1-3的员工，与项目经理及各部门有效沟通协调，并主持现场安全与技术例会。'
+      en: 'Train, mentor, and evaluate Level 1-3 spray painters, cross-communicate effectively with project managers, and lead safety and technical briefings',
+      zh: '是否能够很好地培训与考核技能等级1-3的员工，与项目经理及各部门有效沟通协调，并主持现场安全与技术例会'
     },
     weight: 15,
     ratings: {
