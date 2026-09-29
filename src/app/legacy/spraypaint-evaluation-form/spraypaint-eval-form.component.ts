@@ -402,7 +402,7 @@ export class SpraypaintEvaluationFormComponent implements OnInit, OnDestroy {
         }
 
         // Handle Carpenter Level parameter
-        const finalCarpenterLevel = carpenterLevelParam || queryCarpenterLevel;
+        const finalCarpenterLevel = (carpenterLevelParam || queryCarpenterLevel || '').toLowerCase();
         if (
           finalCarpenterLevel &&
           ['level1', 'level2', 'level3', 'level4'].includes(finalCarpenterLevel)
@@ -730,7 +730,8 @@ export class SpraypaintEvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   canSubmit(): boolean {
-    const allQuestionsAnswered = this.answers.every((answer) => answer > 0);
+    const allQuestionsAnswered =
+      this.answers.length > 0 && this.answers.every((answer) => answer > 0);
     const allFieldsFilled =
       this.staffId.trim() !== '' &&
       this.projectId.trim() !== '' &&
